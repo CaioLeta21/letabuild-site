@@ -16,6 +16,7 @@ inject_theme()
 
 # ── Sidebar ──────────────────────────────────────────────
 with st.sidebar:
+    st.markdown("[← letabuild.com](https://letabuild.com)", unsafe_allow_html=True)
     st.markdown("# Análise de Ativos")
     st.markdown("---")
 

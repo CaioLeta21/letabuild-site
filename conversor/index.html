@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor Satoshi ↔ BRL ↔ USD | Tempo Real</title>
+    <meta name="description" content="Converta Satoshis para Reais e Dólares em tempo real. Cotação ao vivo do Bitcoin com poder de compra em sats.">
+    <meta property="og:title" content="Conversor Satoshi ↔ BRL ↔ USD | Tempo Real">
+    <meta property="og:description" content="Converta Satoshis para Reais e Dólares em tempo real. Cotação ao vivo do Bitcoin com poder de compra em sats.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://letabuild.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 32 32" width="32" height="32">
+                    <circle cx="16" cy="16" r="16" fill="#F7931A"/>
+                    <text x="16" y="22" text-anchor="middle" fill="#fff" font-size="20" font-weight="700" font-family="Inter, sans-serif">₿</text>
+                </svg>
+                <h1>SAT Converter</h1>
+            </div>
+            <div class="status-bar">
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText">Conectando...</span>
+            </div>
+        </header>
+
+        <section class="market-info" id="marketInfo">
+            <div class="market-card">
+                <span class="market-label">BTC/BRL</span>
+                <span class="market-value" id="btcBrl">--</span>
+                <span class="market-change" id="btcBrlChange">--</span>
+            </div>
+            <div class="market-card">
+                <span class="market-label">BTC/USD</span>
+                <span class="market-value" id="btcUsd">--</span>
+                <span class="market-change" id="btcUsdChange">--</span>
+            </div>
+            <div class="market-card">
+                <span class="market-label">Market Cap</span>
+                <span class="market-value" id="marketCap">--</span>
+                <span class="market-change market-change-neutral">USD</span>
+            </div>
+        </section>
+
+        <section class="converter-card">
+            <h2 class="section-title">Conversor</h2>
+            <div class="converter-fields">
+                <div class="input-group">
+                    <label for="satsInput">
+                        <span class="input-icon">⚡</span>
+                        Satoshis
+                    </label>
+                    <input type="text" id="satsInput" inputmode="numeric" placeholder="0" autocomplete="off">
+                    <span class="input-hint">1 BTC = 100.000.000 sats</span>
+                </div>
+                <div class="input-group">
+                    <label for="brlInput">
+                        <span class="input-icon">R$</span>
+                        Reais
+                    </label>
+                    <input type="text" id="brlInput" inputmode="decimal" placeholder="0,00" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="usdInput">
+                        <span class="input-icon">$</span>
+                        Dólares
+                    </label>
+                    <input type="text" id="usdInput" inputmode="decimal" placeholder="0.00" autocomplete="off">
+                </div>
+            </div>
+            <div class="last-update">
+                Atualizado: <span id="lastUpdate">--</span>
+            </div>
+        </section>
+
+        <section class="purchasing-card">
+            <div class="purchasing-header">
+                <h2 class="section-title">Poder de Compra em Sats</h2>
+            </div>
+            <div class="purchasing-list" id="purchasingList">
+                <!-- Items rendered by JS -->
+            </div>
+            <div class="add-item-form" id="addItemForm">
+                <input type="text" id="newItemName" placeholder="Nome do item" maxlength="40" autocomplete="off">
+                <input type="text" id="newItemPrice" inputmode="decimal" placeholder="Preço em R$" autocomplete="off">
+                <button id="addItemBtn" class="btn-add" title="Adicionar item">+</button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Cotações via CoinGecko API. Atualização a cada 30s.</p>
+            <p>Feito por <a href="https://letabuild.com" target="_blank" rel="noopener">letabuild.com</a></p>
+        </footer>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/converter.js"></script>
+    <script src="js/purchasing.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

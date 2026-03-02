@@ -12,7 +12,7 @@ const TUTORIAL_CONTENT = {
         title: 'Instale a Blue Wallet',
         content: 'A Blue Wallet é uma carteirá Bitcoin open-source disponível para iOS e Android. Baixe apenas das lojas oficiais:<br><br><strong>iOS:</strong> App Store, busque "BlueWallet Bitcoin"<br><strong>Android:</strong> Google Play Store, busque "BlueWallet Bitcoin"<br><br>Verifique o desenvolvedor: deve ser "BlueWallet Services, S.R.L." Nunca baixe de links desconhecidos ou sites de terceiros.',
         warning: 'Cuidado com aplicativos falsos. Existem clones maliciosos que imitam a Blue Wallet. Sempre confirme o nome do desenvolvedor antes de instalar.',
-        video: { label: 'Tutorial BlueWallet — Bitcoinheiros', url: 'https://www.youtube.com/@Bitcoinheiros' }
+        video: { label: 'Tutorial BlueWallet — Bitcoinheiros', url: 'https://www.youtube.com/watch?v=pJMDWel_9k0' }
       },
       {
         title: 'Crie uma nova carteira',
@@ -55,7 +55,7 @@ const TUTORIAL_CONTENT = {
         title: 'Install Blue Wallet',
         content: 'Blue Wallet is an open-source Bitcoin wallet available for iOS and Android. Download only from official stores:<br><br><strong>iOS:</strong> App Store, search "BlueWallet Bitcoin"<br><strong>Android:</strong> Google Play Store, search "BlueWallet Bitcoin"<br><br>Check the developer: it should be "BlueWallet Services, S.R.L." Never download from unknown links or third-party sites.',
         warning: 'Beware of fake apps. Malicious clones that mimic Blue Wallet exist. Always confirm the developer name before installing.',
-        video: { label: 'BlueWallet Tutorial — BTC Sessions', url: 'https://www.youtube.com/@BTCSessions' }
+        video: { label: 'BlueWallet Tutorial — BTC Sessions', url: 'https://www.youtube.com/watch?v=imMX7i4qpmg' }
       },
       {
         title: 'Create a new wallet',
@@ -104,7 +104,7 @@ const TUTORIAL_CONTENT = {
         title: 'Baixe e verifique o Sparrow Wallet',
         content: 'O Sparrow Wallet é uma carteirá Bitcoin de desktop, open-source, focada em privacidade e controle total. Disponivel para Windows, macOS e Linux.<br><br>1. Acesse o site oficial: <strong>sparrowwallet.com</strong><br>2. Clique em <strong>"Download"</strong> e escolha a versao para o seu sistema operacional<br>3. Na mesma página de download, baixe também o arquivo de assinatura GPG (.asc)<br>4. Verifique a assinatura para garantir que o arquivo não foi adulterado<br><br>A verificação GPG confirma que o software foi assinado pelo desenvolvedor (Craig Raw). Se você nunca fez isso antes, siga o guia de verificação no próprio site do Sparrow.',
         warning: 'Nunca baixe o Sparrow de links em redes sociais, forums ou sites de terceiros. Use exclusivamente sparrowwallet.com. Ataques de phishing com versoes falsas de carteiras Bitcoin são comuns.',
-        video: { label: 'Tutorial Sparrow Wallet — Bitcoinheiros', url: 'https://www.youtube.com/@Bitcoinheiros' }
+        video: { label: 'Tutorial Sparrow Wallet — Bitcoinheiros', url: 'https://www.youtube.com/watch?v=x78uWY6cVws' }
       },
       {
         title: 'Instale e configure a conexão',
@@ -157,7 +157,7 @@ const TUTORIAL_CONTENT = {
         title: 'Download and verify Sparrow Wallet',
         content: 'Sparrow Wallet is an open-source desktop Bitcoin wallet focused on privacy and full control. Available for Windows, macOS, and Linux.<br><br>1. Go to the official website: <strong>sparrowwallet.com</strong><br>2. Click <strong>"Download"</strong> and choose the version for your operating system<br>3. On the same download page, also download the GPG signature file (.asc)<br>4. Verify the signature to ensure the file has not been tampered with<br><br>GPG verification confirms that the software was signed by the developer (Craig Raw). If you have never done this before, follow the verification guide on the Sparrow website itself.',
         warning: 'Never download Sparrow from links on social media, forums, or third-party sites. Use exclusively sparrowwallet.com. Phishing attacks with fake versions of Bitcoin wallets are common.',
-        video: { label: 'Sparrow Wallet Tutorial — BTC Sessions', url: 'https://www.youtube.com/@BTCSessions' }
+        video: { label: 'Sparrow Wallet Tutorial — BTC Sessions', url: 'https://www.youtube.com/watch?v=yJpvfRl03Tw' }
       },
       {
         title: 'Install and configure the connection',
@@ -969,7 +969,7 @@ const TUTORIAL_CONTENT = {
       {
         title: 'Instale o Nunchuk',
         content: 'O Nunchuk é um coordenador de multisig Bitcoin. Ele gerencia as chaves públicas, cria transações e coordena as assinaturas entre os dispositivos. As chaves privadas nunca ficam no Nunchuk.<br><br>1. Acesse <strong>nunchuk.io</strong><br>2. Baixe a versao para o seu sistema: <strong>iOS, Android, Windows, Mac ou Linux</strong><br>3. Instale e abra o aplicativo<br>4. Crie uma conta gratuita (permite sincronizar entre dispositivos) ou use sem conta para um setup completamente air-gapped<br><br>O Nunchuk funciona como um "maestro" que coordena suas hardware wallets. Ele ve apenas as chaves públicas (xpubs) — as chaves privadas nunca saem dos dispositivos físicos.',
-        video: { label: 'Tutorial Nunchuk — BTC Sessions', url: 'https://www.youtube.com/@BTCSessions' }
+        video: { label: 'Tutorial Nunchuk — BTC Sessions', url: 'https://www.youtube.com/watch?v=gV4bAjX_ivA' }
       },
       {
         title: 'Crie uma nova carteirá multisig no Nunchuk',
@@ -1031,7 +1031,7 @@ const TUTORIAL_CONTENT = {
       {
         title: 'Install Nunchuk',
         content: 'Nunchuk is a Bitcoin multisig coordinator. It manages the public keys, creates transactions, and coordinates signatures between devices. Private keys never reside in Nunchuk.<br><br>1. Go to <strong>nunchuk.io</strong><br>2. Download the version for your system: <strong>iOS, Android, Windows, Mac, or Linux</strong><br>3. Install and open the application<br>4. Create a free account (allows syncing between devices) or use without an account for a completely air-gapped setup<br><br>Nunchuk works as a "conductor" that coordinates your hardware wallets. It sees only the public keys (xpubs) — private keys never leave the physical devices.',
-        video: { label: 'Nunchuk Tutorial — BTC Sessions', url: 'https://www.youtube.com/@BTCSessions' }
+        video: { label: 'Nunchuk Tutorial — BTC Sessions', url: 'https://www.youtube.com/watch?v=gV4bAjX_ivA' }
       },
       {
         title: 'Create a new multisig wallet in Nunchuk',

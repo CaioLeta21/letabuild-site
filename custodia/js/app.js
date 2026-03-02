@@ -430,13 +430,6 @@
     $('stepTitle').textContent = step.title;
     $('stepContent').innerHTML = step.content;
 
-    if (step.image) {
-      $('stepImage').innerHTML =
-        '<img class="step-image" src="' + step.image + '" alt="' + step.title + '" loading="lazy">';
-    } else {
-      $('stepImage').innerHTML = '';
-    }
-
     if (step.warning) {
       $('stepWarning').innerHTML =
         '<div class="step-warning">' +

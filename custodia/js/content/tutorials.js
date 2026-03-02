@@ -16,13 +16,11 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Crie uma nova carteira',
-        image: 'assets/screenshots/bluewallet-pt-add-wallet.jpg',
         content: 'Abra a Blue Wallet e toque em <strong>"Adicionar carteira"</strong> (ou "Add Wallet").<br><br>Escolha:<br>• <strong>Nome:</strong> dê um nome descritivo (ex: "Meus primeiros sats")<br>• <strong>Tipo:</strong> selecione "Bitcoin"<br>• <strong>Tipo de endereço:</strong> deixe o padrão (SegWit / HD / BIP84)<br><br>Toque em <strong>"Criar"</strong>.',
         tip: 'O tipo de endereço "HD SegWit (BIP84)" é o mais moderno e eficiente. Endereços começam com "bc1q". Não mude a menos que saiba o que éstá fazendo.'
       },
       {
         title: 'Anote sua seed phrase',
-        image: 'assets/screenshots/bluewallet-pt-seed.jpg',
         content: 'A Blue Wallet vai mostrar <strong>12 palavras</strong> na tela. Essas palavras são sua seed phrase — a única forma de recuperar seus bitcoins se algo acontecer com seu celular.<br><br><strong>Pegue papel e caneta agora.</strong> Anote as 12 palavras na ordem exata, numerando cada uma (1 a 12). Confirá letra por letra. Letras trocadas inválidam a palavra.',
         warning: 'Este é o passo mais importante de todo o tutorial. Se você pular ou errar, pode perder seus bitcoins no futuro. Não faça screenshot. Não copie para notas do celular. Escreva no papel, à mão.'
       },
@@ -38,7 +36,6 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Receba seus primeiros sats',
-        image: 'assets/screenshots/bluewallet-pt-receive.jpg',
         content: 'Agora você tem uma carteirá funcional. Para receber bitcoins:<br><br>1. Abra a Blue Wallet e toque na carteirá que você criou<br>2. Toque em <strong>"Receber"</strong><br>3. Um endereço Bitcoin é um QR code serão gerados<br>4. Copie o endereço ou compartilhe o QR code com quem vai te enviar<br><br>Endereços Bitcoin são descartáveis: a cada recebimento, um novo endereço é gerado automáticamente. Todos continuam funcionando.',
         tip: 'Repita este processo pelo menos 10 vezes antes de usar valores significativos. Envie R$10 de cada vez, receba, confira, envie de volta. Pense que você vai gastar até R$100 em taxas nesse treino — e isso é o custo do seu aprendizado. Vale muito a pena pagar R$100 para dominar o processo e não ter dores de cabeça quando estiver movimentando patrimônio de verdade.'
       },
@@ -62,7 +59,6 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Create a new wallet',
-        image: 'assets/screenshots/bluewallet-en-add-wallet.jpg',
         content: 'Open Blue Wallet and tap <strong>"Add Wallet"</strong>.<br><br>Choose:<br>• <strong>Name:</strong> give it a descriptive name (e.g., "My first sats")<br>• <strong>Type:</strong> select "Bitcoin"<br>• <strong>Address type:</strong> leave the default (SegWit / HD / BIP84)<br><br>Tap <strong>"Create"</strong>.',
         tip: 'The "HD SegWit (BIP84)" address type is the most modern and efficient. Addresses start with "bc1q". Don\'t change it unless you know what you\'re doing.'
       },
@@ -83,13 +79,11 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Receive your first sats',
-        image: 'assets/screenshots/bluewallet-en-receive.jpg',
         content: 'Now you have a working wallet. To receive bitcoin:<br><br>1. Open Blue Wallet and tap the wallet you created<br>2. Tap <strong>"Receive"</strong><br>3. A Bitcoin address and QR code will be generated<br>4. Copy the address or share the QR code with whoever is sending to you<br><br>Bitcoin addresses are disposable: a new address is generated automátically with each receive. All previous ones still work.',
         tip: 'Repeat this process at least 10 times before using significant amounts. Send $5 each time, receive, verify, send back. Think of it as spending up to $50 in fees for training — that\'s the cost of learning. It\'s well worth paying $50 to master the process and avoid headaches when you\'re moving real wealth.'
       },
       {
         title: 'Sending bitcoin',
-        image: 'assets/screenshots/bluewallet-en-send.jpg',
         content: 'To send bitcoin from your Blue Wallet:<br><br>1. Tap the wallet and then <strong>"Send"</strong><br>2. Paste the destination address or scan the QR code<br>3. Enter the amount in BTC or your local currency<br>4. Adjust the mining fee: <strong>economic</strong> for no-rush transactions, <strong>priority</strong> if you need fast confirmation<br>5. Check the destination address (compare the first and last 6 characters)<br>6. Tap <strong>"Send"</strong>',
         warning: 'Always check the destination address before confirming. Bitcoin transactions are irreversible. If you send to the wrong address, there\'s no way to undo it.'
       },
@@ -108,32 +102,27 @@ const TUTORIAL_CONTENT = {
     pt: [
       {
         title: 'Baixe e verifique o Sparrow Wallet',
-        image: 'assets/screenshots/sparrow-pt-website.jpg',
         content: 'O Sparrow Wallet é uma carteirá Bitcoin de desktop, open-source, focada em privacidade e controle total. Disponivel para Windows, macOS e Linux.<br><br>1. Acesse o site oficial: <strong>sparrowwallet.com</strong><br>2. Clique em <strong>"Download"</strong> e escolha a versao para o seu sistema operacional<br>3. Na mesma página de download, baixe também o arquivo de assinatura GPG (.asc)<br>4. Verifique a assinatura para garantir que o arquivo não foi adulterado<br><br>A verificação GPG confirma que o software foi assinado pelo desenvolvedor (Craig Raw). Se você nunca fez isso antes, siga o guia de verificação no próprio site do Sparrow.',
         warning: 'Nunca baixe o Sparrow de links em redes sociais, forums ou sites de terceiros. Use exclusivamente sparrowwallet.com. Ataques de phishing com versoes falsas de carteiras Bitcoin são comuns.',
         video: { label: 'Tutorial Sparrow Wallet — Bitcoinheiros', url: 'https://www.youtube.com/watch?v=x78uWY6cVws' }
       },
       {
         title: 'Instale e configure a conexão',
-        image: 'assets/screenshots/sparrow-pt-server.jpg',
         content: 'Execute o instalador e abra o Sparrow Wallet pela primeirá vez.<br><br>Na tela inicial de configuração, o Sparrow vai pedir que você escolha um servidor para se conectar a rede Bitcoin:<br><br><strong>Para iniciantes:</strong> selecione <strong>"Public Electrum Server"</strong>. Isso permite usar o Sparrow imediatamente sem configuração extra. O Sparrow já vem com uma lista de servidores públicos confiaveis.<br><br><strong>Para usuarios avançados:</strong> selecione <strong>"Private Electrum Server"</strong> e insirá os dados do seu próprio node (Bitcoin Core + Electrum Server, ou Umbrel, Start9, etc.).<br><br>Clique em <strong>"Test Connection"</strong> para confirmar que a conexão funciona, depois clique em <strong>"Close"</strong>.',
         tip: 'Conectar ao seu próprio node é o ideal para privacidade, mas não é obrigatório para começar. Você pode mudar a configuração de servidor a qualquer momento em Preferences > Server.'
       },
       {
         title: 'Crie uma nova carteira',
-        image: 'assets/screenshots/sparrow-pt-create.jpg',
         content: 'Com o Sparrow aberto e conectado:<br><br>1. Va em <strong>File > New Wallet</strong><br>2. Escolha um nome para a carteirá (ex: "Custodia Simples") e clique em <strong>"Create Wallet"</strong><br>3. Na tela de configuração da carteira, em "Policy Type" deixe <strong>"Single Signature"</strong><br>4. Em "Script Type" selecione <strong>"Native SegWit (P2WPKH)"</strong> — endereços que começam com bc1q, o padrão mais eficiente<br>5. Em "Keystores" clique em <strong>"New or Imported Software Wallet"</strong>',
         tip: 'O Sparrow mostra muitas opções avançadas nesta tela (Script Type, derivation path, etc.). Para custódia simples, deixe tudo no padrão. Altere apenas se você entender exatamente o que cada opção faz.'
       },
       {
         title: 'Gere sua seed phrase',
-        image: 'assets/screenshots/sparrow-pt-seed.jpg',
         content: 'Na tela de criação da chave:<br><br>1. Selecione o número de palavras: <strong>12 palavras</strong> (padrão) ou <strong>24 palavras</strong> (segurança extra)<br>2. Clique em <strong>"Generate New"</strong><br>3. O Sparrow vai exibir suas palavras na tela<br><br><strong>Pegue papel e caneta agora.</strong> Anote todas as palavras na ordem exata, numerando cada uma. Confirá letra por letra. Uma única letra errada inválida a palavra e pode tornar o backup inútilizavel.<br><br>Depois de anotar, clique em <strong>"Confirm Backup"</strong>.',
         warning: 'Estas palavras são a única forma de recuperar seus bitcoins. Se você perder este backup e algo acontecer com seu computador, seus bitcoins estarão perdidos para sempre. Não faça screenshot. Não salve em arquivo de texto. Escreva no papel, a mão.'
       },
       {
         title: 'Verifique é confirme o backup',
-        image: 'assets/screenshots/sparrow-pt-verify.jpg',
         content: 'O Sparrow vai pedir para você <strong>digitar todas as palavras novamente</strong> para confirmar que o backup está correto.<br><br>1. Marque a caixa <strong>"I have written the seed words down"</strong><br>2. Clique em <strong>"Re-enter Words..."</strong><br>3. Digite cada palavra na ordem correta, usando o papel que você acabou de anotar<br>4. Se todas as palavras estiverem corretas, o Sparrow vai confirmar e permitir que você continue<br><br>Se houver erro, volte e confirá o que anotou. Não prossiga até ter certeza absoluta de que o backup está correto.',
         tip: 'Faça este teste com calma. E melhor gastar 5 minutos extras conferindo do que descobrir um erro meses depois quando precisar recuperar a carteira.'
       },
@@ -144,19 +133,16 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Receba seus primeiros sats',
-        image: 'assets/screenshots/sparrow-pt-receive.jpg',
         content: 'Agora você tem uma carteirá funcional no Sparrow. Para receber bitcoins:<br><br>1. Clique na aba <strong>"Receive"</strong> no menu lateral esquerdo<br>2. O Sparrow vai gerar um endereço Bitcoin é um QR code<br>3. Copie o endereço clicando no icone de copia, ou use o QR code<br>4. Envie este endereço ou QR code para quem vai te enviar bitcoin<br><br>Enderecos Bitcoin são descartaveis: a cada recebimento, um novo endereço é gerado automáticamente. Todos os endereços anteriores continuam funcionando.',
         tip: 'Repita este processo pelo menos 10 vezes antes de usar valores significativos. Envie R$10 de cada vez, receba, confira, envie de volta. Pense que você vai gastar até R$100 em taxas nesse treino — e isso é o custo do seu aprendizado. Vale muito a pena pagar R$100 para dominar o processo e não ter dores de cabeça quando estiver movimentando patrimônio de verdade.'
       },
       {
         title: 'Enviando bitcoin',
-        image: 'assets/screenshots/sparrow-pt-send.jpg',
         content: 'Para enviar bitcoin pelo Sparrow:<br><br>1. Clique na aba <strong>"Send"</strong> no menu lateral esquerdo<br>2. Cole o endereço de destino no campo <strong>"Pay to"</strong> ou escaneie o QR code<br>3. Preencha o campo <strong>"Label"</strong> com uma descrição (ex: "Pagamento fulano") — isso fica salvo apenas localmente para sua organizacao<br>4. Digite o valor em BTC no campo <strong>"Amount"</strong><br>5. Ajuste a taxa de mineracao (fee) na barra inferior: arraste para a esquerda para taxas mais baratas (mais lento) ou para a direita para taxas mais altas (mais rápido)<br>6. Confirá o endereço de destino (compare os primeiros e ultimos 6 caracteres)<br>7. Clique em <strong>"Create Transaction"</strong>, depois <strong>"Sign"</strong> e por fim <strong>"Broadcast Transaction"</strong>',
         warning: 'Sempre confirá o endereço de destino antes de assinar. Transacoes Bitcoin são irreversíveis. Se enviar para o endereço errado, não tem como desfazer. O Sparrow separa os passos de criar, assinar e transmitir a transação — use isso a seu favor para revisar com calma antes de transmitir.'
       },
       {
         title: 'Funcionalidades avançadas do Sparrow',
-        image: 'assets/screenshots/sparrow-pt-utxos.jpg',
         content: 'O Sparrow Wallet tem recursos poderosos que você pode explorar aos poucos:<br><br><strong>Gerenciamento de UTXOs:</strong> na aba "UTXOs" você ve cada "moeda" individual que possui. Isso permite fazer <strong>coin control</strong> — escolher exatamente quais UTXOs usar em cada transação, protegendo sua privacidade.<br><br><strong>Historico detalhado:</strong> na aba "Transactions" você ve todas as transações com detalhes completos, incluindo taxas pagas e confirmacoes.<br><br><strong>Conexao ao seu node:</strong> a qualquer momento você pode ir em <strong>Preferences > Server</strong> e trocar do servidor público para o seu próprio node Bitcoin, ganhando privacidade total.<br><br><strong>Labels:</strong> o Sparrow permite etiquetar endereços e transações, fácilitando sua organizacao financeira.',
         tip: 'O coin control é uma das maiores vantagens do Sparrow sobre carteiras mobile. Com ele, você evita "misturar" UTXOs de origens diferentes, o que protege sua privacidade na blockchain.'
       },
@@ -175,13 +161,11 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Install and configure the connection',
-        image: 'assets/screenshots/sparrow-en-welcome.jpg',
         content: 'Run the installer and open Sparrow Wallet for the first time.<br><br>On the initial setup screen, Sparrow will ask you to choose a server to connect to the Bitcoin network:<br><br><strong>For beginners:</strong> select <strong>"Public Electrum Server"</strong>. This lets you use Sparrow immediately without extra configuration. Sparrow comes with a list of trusted public servers.<br><br><strong>For advanced users:</strong> select <strong>"Private Electrum Server"</strong> and enter your own node details (Bitcoin Core + Electrum Server, or Umbrel, Start9, etc.).<br><br>Click <strong>"Test Connection"</strong> to confirm it works, then click <strong>"Close"</strong>.',
         tip: 'Connecting to your own node is ideal for privacy, but not required to get started. You can change the server configuration at any time in Preferences > Server.'
       },
       {
         title: 'Create a new wallet',
-        image: 'assets/screenshots/sparrow-en-create.jpg',
         content: 'With Sparrow open and connected:<br><br>1. Go to <strong>File > New Wallet</strong><br>2. Choose a name for the wallet (e.g., "Simple Custody") and click <strong>"Create Wallet"</strong><br>3. On the wallet configuration screen, under "Policy Type" leave <strong>"Single Signature"</strong><br>4. Under "Script Type" select <strong>"Native SegWit (P2WPKH)"</strong> — addresses starting with bc1q, the most efficient standard<br>5. Under "Keystores" click <strong>"New or Imported Software Wallet"</strong>',
         tip: 'Sparrow shows many advanced options on this screen (Script Type, derivation path, etc.). For simple custody, leave everything at default. Only change settings if you understand exactly what each option does.'
       },
@@ -202,19 +186,16 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Receive your first sats',
-        image: 'assets/screenshots/sparrow-en-transactions.jpg',
         content: 'Now you have a working wallet in Sparrow. To receive bitcoin:<br><br>1. Click the <strong>"Receive"</strong> tab in the left sidebar<br>2. Sparrow will generate a Bitcoin address and a QR code<br>3. Copy the address by clicking the copy icon, or use the QR code<br>4. Send this address or QR code to whoever is sending you bitcoin<br><br>Bitcoin addresses are disposable: a new address is generated automátically with each receive. All previous addresses still work.',
         tip: 'Repeat this process at least 10 times before using significant amounts. Send $5 each time, receive, verify, send back. Think of it as spending up to $50 in fees for training — that\'s the cost of learning. It\'s well worth paying $50 to master the process and avoid headaches when you\'re moving real wealth.'
       },
       {
         title: 'Sending bitcoin',
-        image: 'assets/screenshots/sparrow-en-send.jpg',
         content: 'To send bitcoin from Sparrow:<br><br>1. Click the <strong>"Send"</strong> tab in the left sidebar<br>2. Paste the destination address in the <strong>"Pay to"</strong> field or scan the QR code<br>3. Fill in the <strong>"Label"</strong> field with a description (e.g., "Payment to John") — this is saved locally only for your organization<br>4. Enter the amount in BTC in the <strong>"Amount"</strong> field<br>5. Adjust the mining fee using the bottom slider: drag left for cheaper fees (slower) or right for higher fees (faster)<br>6. Check the destination address (compare the first and last 6 characters)<br>7. Click <strong>"Create Transaction"</strong>, then <strong>"Sign"</strong>, and finally <strong>"Broadcast Transaction"</strong>',
         warning: 'Always check the destination address before signing. Bitcoin transactions are irreversible. If you send to the wrong address, there is no way to undo it. Sparrow separates the steps of creating, signing, and broadcasting the transaction — use this to your advantage to review carefully before broadcasting.'
       },
       {
         title: 'Understanding Sparrow features',
-        image: 'assets/screenshots/sparrow-en-txdetail.jpg',
         content: 'Sparrow Wallet has powerful features you can explore over time:<br><br><strong>UTXO management:</strong> in the "UTXOs" tab you can see each individual "coin" you own. This allows <strong>coin control</strong> — choosing exactly which UTXOs to use in each transaction, protecting your privacy.<br><br><strong>Detailed history:</strong> in the "Transactions" tab you can see all transactions with full details, including fees paid and confirmations.<br><br><strong>Connect to your own node:</strong> at any time you can go to <strong>Preferences > Server</strong> and switch from the public server to your own Bitcoin node, gaining full privacy.<br><br><strong>Labels:</strong> Sparrow lets you label addresses and transactions, making financial organization easier.',
         tip: 'Coin control is one of Sparrow\'s biggest advantages over mobile wallets. With it, you avoid "mixing" UTXOs from different sources, which protects your privacy on the blockchain.'
       },
@@ -982,25 +963,21 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Pre-requisitos',
-        image: 'assets/screenshots/nunchuk-devices.jpg',
         content: 'Para configurar uma multisig 2-de-3 com segurança real, você precisa de pelo menos <strong>2 hardware wallets de fábricantes DIFERENTES</strong>.<br><br><strong>Combinacoes recomendadas:</strong><br>• Coldcard + Jade<br>• Coldcard + Trezor<br>• Trezor + Jade<br>• Qualquer combinação de fábricantes distintos<br><br>A terceirá chave pode ser:<br>• Uma terceirá hardware wallet (ideal)<br>• Uma chave de software gerada no próprio Nunchuk (aceitavel como backup de emergencia)<br><br><strong>Onde comprar:</strong> apenas nos sites oficiais dos fábricantes. Nunca compre hardware wallets usadas, de terceiros ou de marketplaces. Dispositivos adulterados são um vetor de ataque real.',
         warning: 'Use hardware wallets de fábricantes DIFERENTES. Se um fábricante tiver uma vulnerabilidade de firmware, as chaves nos dispositivos do outro fábricante continuam protegendo seus bitcoins. Diversificacao de fábricantes é uma camada de segurança crítica.'
       },
       {
         title: 'Instale o Nunchuk',
-        image: 'assets/screenshots/nunchuk-website.jpg',
         content: 'O Nunchuk é um coordenador de multisig Bitcoin. Ele gerencia as chaves públicas, cria transações e coordena as assinaturas entre os dispositivos. As chaves privadas nunca ficam no Nunchuk.<br><br>1. Acesse <strong>nunchuk.io</strong><br>2. Baixe a versao para o seu sistema: <strong>iOS, Android, Windows, Mac ou Linux</strong><br>3. Instale e abra o aplicativo<br>4. Crie uma conta gratuita (permite sincronizar entre dispositivos) ou use sem conta para um setup completamente air-gapped<br><br>O Nunchuk funciona como um "maestro" que coordena suas hardware wallets. Ele ve apenas as chaves públicas (xpubs) — as chaves privadas nunca saem dos dispositivos físicos.',
         video: { label: 'Tutorial Nunchuk — BTC Sessions', url: 'https://www.youtube.com/watch?v=gV4bAjX_ivA' }
       },
       {
         title: 'Crie uma nova carteirá multisig no Nunchuk',
-        image: 'assets/screenshots/nunchuk-setup.jpg',
         content: 'Com o Nunchuk aberto:<br><br>1. Toque em <strong>"Create New Wallet"</strong> (ou "Criar Nova Carteira")<br>2. Selecione <strong>"Multisig Wallet"</strong><br>3. Configure como <strong>2-de-3</strong> (2 assinaturas necessarias, 3 chaves no total)<br>4. De um nome descritivo a carteirá (ex: "Cofre Principal" ou "Custodia Multisig")<br><br>O Nunchuk vai agora guiar você para adicionar as 3 chaves. Cada chave e adicionada uma de cada vez, nos próximos passos.',
         tip: 'Escolha um nome que faça sentido para você, mas que não revele informações sensiveis caso alguem veja a tela do seu celular.'
       },
       {
         title: 'Adicione as chaves das hardware wallets',
-        image: 'assets/screenshots/nunchuk-add-coldcard.jpg',
         content: 'Agora você vai conectar cada hardware wallet ao Nunchuk, uma de cada vez.<br><br>Para cada dispositivo:<br>1. Selecione o tipo de hardware wallet (Coldcard, Trezor, Jade, etc.)<br>2. Conecte o dispositivo via USB, NFC ou QR code (depende do modelo)<br>3. O Nunchuk vai extrair a <strong>chave pública estendida (xpub)</strong> do dispositivo<br>4. <strong>Verifique na tela do dispositivo</strong> que o xpub exibido confere com o que aparece no Nunchuk<br>5. Confirme a adicao no dispositivo<br><br>Repita este processo para cada hardware wallet que você vai usar como signataria.<br><br>A chave privada <strong>NUNCA</strong> sai da hardware wallet. O Nunchuk recebe apenas a chave pública, que permite gerar endereços e monitorar saldos, mas não gastar.',
         warning: 'Sempre verifique o xpub na tela da própria hardware wallet. Se o xpub mostrado no Nunchuk não corresponder ao do dispositivo, pare imediatamente. Isso pode indicar um ataque man-in-the-middle.'
       },
@@ -1011,7 +988,6 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Finalize a criação da carteira',
-        image: 'assets/screenshots/nunchuk-configure.jpg',
         content: 'Depois de adicionar as 3 chaves, o Nunchuk vai gerar o <strong>descritor da carteirá multisig</strong> (wallet descriptor).<br><br>O descritor é um arquivo que contem:<br>• As chaves públicas de todos os 3 signatarios<br>• O tipo de multisig (2-de-3)<br>• Os caminhos de derivação (derivation paths)<br>• Todas as informações necessarias para reconstruir a carteira<br><br>Revise a configuração na tela do Nunchuk. Confirme que os 3 signatarios estão corretos. Clique em <strong>"Create Wallet"</strong> (ou "Finalizar") para concluir.<br><br>O Nunchuk vai gerar o primeiro endereço de recebimento da carteirá multisig. Ainda não deposite nada — primeiro, faça o backup do descritor.',
         warning: 'O descritor da carteirá e tao importante quanto as seeds. Sem ele, mesmo tendo 2 das 3 seeds, reconstruir a carteirá e extremamente difícil ou impossível. Trate o descritor com o mesmo nivel de cuidado que você trata suas seeds.'
       },
@@ -1022,20 +998,17 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Receba bitcoin na carteirá multisig',
-        image: 'assets/screenshots/nunchuk-receive.jpg',
         content: 'Antes de depositar valores significativos, você precisa verificar o endereço de recebimento em múltiplos dispositivos.<br><br>1. No Nunchuk, toque na carteirá multisig e depois em <strong>"Receber"</strong><br>2. Um endereço de recebimento será gerado (endereços multisig geralmente começam com "bc1q" para Native SegWit)<br>3. <strong>Verifique éste endereço em pelo menos 2 das suas 3 hardware wallets</strong><br>4. Cada dispositivo deve mostrar o mesmo endereço na sua tela<br>5. Se o endereço confere em múltiplos dispositivos independentes, é seguro depositar<br><br>Essa verificação cruzada garante que o Nunchuk está gerando endereços corretos é que nenhum software malicioso alterou o endereço.',
         tip: 'Repita este processo pelo menos 10 vezes antes de usar valores significativos. Envie R$10 de cada vez, receba, confira, envie de volta. Pense que você vai gastar até R$100 em taxas nesse treino — e isso é o custo do seu aprendizado. Vale muito a pena pagar R$100 para dominar o processo e não ter dores de cabeça quando estiver movimentando patrimônio de verdade.',
         warning: 'Sempre verifique o endereço de recebimento em pelo menos 2 dispositivos independentes antes de fazer depósitos. Se o endereço não corresponder entre os dispositivos, não deposite. Investigue o problema primeiro.'
       },
       {
         title: 'Envie bitcoin (assinatura com 2 chaves)',
-        image: 'assets/screenshots/nunchuk-sign.jpg',
         content: 'Gastar bitcoin de uma carteirá multisig 2-de-3 exige a assinatura de 2 das 3 chaves. O processo funciona assim:<br><br>1. No Nunchuk, toque na carteirá multisig e depois em <strong>"Enviar"</strong><br>2. Insirá o endereço de destino e o valor<br>3. Ajuste a taxa de mineracao e revise a transação<br>4. Toque em <strong>"Criar Transacao"</strong><br><br><strong>Primeirá assinatura:</strong><br>5. Conecte a primeirá hardware wallet<br>6. Revise os detalhes da transação na tela do dispositivo<br>7. Confirme e assine no dispositivo<br><br><strong>Segunda assinatura:</strong><br>8. Conecte a segunda hardware wallet<br>9. Revise novamente na tela do dispositivo<br>10. Confirme e assine no dispositivo<br><br>11. Com 2 assinaturas coletadas, toque em <strong>"Broadcast"</strong> para transmitir a transação<br><br>Você só precisa de 2 das 3 chaves. A terceirá não e necessaria para gastar.',
         warning: 'Revise o endereço de destino e o valor na tela de cada hardware wallet antes de assinar. A tela do computador ou celular pode ser adulterada por malware; a tela da hardware wallet não.'
       },
       {
         title: 'Proximos passos e manutenção',
-        image: 'assets/screenshots/nunchuk-inheritance.jpg',
         content: 'Sua carteirá multisig está configurada. Agora, mantenha-a segura ao longo do tempo.<br><br><strong>Teste de recuperação:</strong> antes de depositar valores grandes, simule uma recuperação completa. Pegue o descritor da carteirá + 2 das 3 seeds e tente reconstruir a carteirá em uma nova instalação do Nunchuk. Se conseguir ver o saldo e gastar, seu backup está funcional.<br><br><strong>Distribuicao geografica:</strong> armazene cada chave em um local físico diferente (ex: sua casa, cofre de banco, casa de familiar de confiança). Cada local deve ter também uma copia do descritor.<br><br><strong>Revisao anual:</strong> uma vez por ano, verifique se todas as hardware wallets ainda funcionam, se os backups de seed éstão legíveis e se os descritores estão intactos.<br><br><strong>Planejamento de herança:</strong> considere como seus herdeiros acessariam os fundos. Um familiar de confiança pode guardar uma chave é uma copia do descritor, sem ter acesso a segunda chave necessaria para gastar.<br><br>Multisig e o nivel mais alto de auto-custódia Bitcoin. Você acabou de implementar o mesmo modelo usado por custódiantes institucionais.',
         tip: 'Mantenha o Nunchuk e o firmware das hardware wallets atualizados. Atualizacoes corrigem vulnerabilidades de segurança. Sempre baixe atualizacoes dos sites oficiais e verifique as assinaturas.'
       }
@@ -1052,25 +1025,21 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Prerequisites',
-        image: 'assets/screenshots/nunchuk-devices.jpg',
         content: 'To set up a 2-of-3 multisig with real security, you need at least <strong>2 hardware wallets from DIFFERENT manufacturers</strong>.<br><br><strong>Recommended combinations:</strong><br>• Coldcard + Jade<br>• Coldcard + Trezor<br>• Trezor + Jade<br>• Any combination of distinct manufacturers<br><br>The third key can be:<br>• A third hardware wallet (ideal)<br>• A software key generated in Nunchuk itself (acceptable as an emergency backup)<br><br><strong>Where to buy:</strong> only from the manufacturers\' official websites. Never buy used hardware wallets, from third parties, or from marketplaces. Tampered devices are a real attack vector.',
         warning: 'Use hardware wallets from DIFFERENT manufacturers. If one manufacturer has a firmware vulnerability, the keys on devices from the other manufacturer continue to protect your bitcoin. Manufacturer diversification is a crítical security layer.'
       },
       {
         title: 'Install Nunchuk',
-        image: 'assets/screenshots/nunchuk-website.jpg',
         content: 'Nunchuk is a Bitcoin multisig coordinator. It manages the public keys, creates transactions, and coordinates signatures between devices. Private keys never reside in Nunchuk.<br><br>1. Go to <strong>nunchuk.io</strong><br>2. Download the version for your system: <strong>iOS, Android, Windows, Mac, or Linux</strong><br>3. Install and open the application<br>4. Create a free account (allows syncing between devices) or use without an account for a completely air-gapped setup<br><br>Nunchuk works as a "conductor" that coordinates your hardware wallets. It sees only the public keys (xpubs) — private keys never leave the physical devices.',
         video: { label: 'Nunchuk Tutorial — BTC Sessions', url: 'https://www.youtube.com/watch?v=gV4bAjX_ivA' }
       },
       {
         title: 'Create a new multisig wallet in Nunchuk',
-        image: 'assets/screenshots/nunchuk-setup.jpg',
         content: 'With Nunchuk open:<br><br>1. Tap <strong>"Create New Wallet"</strong><br>2. Select <strong>"Multisig Wallet"</strong><br>3. Configure as <strong>2-of-3</strong> (2 signatures required, 3 total keys)<br>4. Give the wallet a descriptive name (e.g., "Main Vault" or "Multisig Custody")<br><br>Nunchuk will now guide you to add the 3 keys. Each key is added one at a time in the following steps.',
         tip: 'Choose a name that makes sense to you, but that does not reveal sensitive information if someone sees your phone screen.'
       },
       {
         title: 'Add hardware wallet keys',
-        image: 'assets/screenshots/nunchuk-add-coldcard.jpg',
         content: 'Now you will connect each hardware wallet to Nunchuk, one at a time.<br><br>For each device:<br>1. Select the type of hardware wallet (Coldcard, Trezor, Jade, etc.)<br>2. Connect the device via USB, NFC, or QR code (depends on the model)<br>3. Nunchuk will extract the <strong>extended public key (xpub)</strong> from the device<br>4. <strong>Verify on the device screen</strong> that the displayed xpub matches what Nunchuk shows<br>5. Confirm the addition on the device<br><br>Repeat this process for each hardware wallet you will use as a signer.<br><br>The private key <strong>NEVER</strong> leaves the hardware wallet. Nunchuk receives only the public key, which allows generating addresses and monitoring balances, but not spending.',
         warning: 'Always verify the xpub on the hardware wallet screen itself. If the xpub shown in Nunchuk does not match the device, stop immediately. This may indicate a man-in-the-middle attack.'
       },
@@ -1081,7 +1050,6 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Finalize wallet creation',
-        image: 'assets/screenshots/nunchuk-configure.jpg',
         content: 'After adding all 3 keys, Nunchuk will generate the <strong>multisig wallet descriptor</strong>.<br><br>The descriptor is a file that contains:<br>• The public keys of all 3 signers<br>• The multisig type (2-of-3)<br>• The derivation paths<br>• All information needed to reconstruct the wallet<br><br>Review the configuration on the Nunchuk screen. Confirm that all 3 signers are correct. Tap <strong>"Create Wallet"</strong> (or "Finalize") to complete.<br><br>Nunchuk will generate the first receive address for the multisig wallet. Do not deposit anything yet — first, back up the descriptor.',
         warning: 'The wallet descriptor is as important as the seeds. Without it, even having 2 of the 3 seeds, reconstructing the wallet is extremely difficult or impossible. Treat the descriptor with the same level of care as your seeds.'
       },
@@ -1092,20 +1060,17 @@ const TUTORIAL_CONTENT = {
       },
       {
         title: 'Receive bitcoin in the multisig wallet',
-        image: 'assets/screenshots/nunchuk-receive.jpg',
         content: 'Before depositing significant amounts, you need to verify the receive address on multiple devices.<br><br>1. In Nunchuk, tap the multisig wallet and then <strong>"Receive"</strong><br>2. A receive address will be generated (multisig addresses typically start with "bc1q" for Native SegWit)<br>3. <strong>Verify this address on at least 2 of your 3 hardware wallets</strong><br>4. Each device should display the same address on its screen<br>5. If the address matches across multiple independent devices, it is safe to deposit<br><br>This cross-verification ensures that Nunchuk is generating correct addresses and that no malicious software has altered the address.',
         tip: 'Repeat this process at least 10 times before using significant amounts. Send $5 each time, receive, verify, send back. Think of it as spending up to $50 in fees for training — that\'s the cost of learning. It\'s well worth paying $50 to master the process and avoid headaches when you\'re moving real wealth.',
         warning: 'Always verify the receive address on at least 2 independent devices before making deposits. If the address does not match between devices, do not deposit. Investigate the issue first.'
       },
       {
         title: 'Send bitcoin (signing with 2 keys)',
-        image: 'assets/screenshots/nunchuk-sign.jpg',
         content: 'Spending bitcoin from a 2-of-3 multisig wallet requires the signature of 2 of the 3 keys. The process works as follows:<br><br>1. In Nunchuk, tap the multisig wallet and then <strong>"Send"</strong><br>2. Enter the destination address and the amount<br>3. Adjust the mining fee and review the transaction<br>4. Tap <strong>"Create Transaction"</strong><br><br><strong>First signature:</strong><br>5. Connect the first hardware wallet<br>6. Review the transaction details on the device screen<br>7. Confirm and sign on the device<br><br><strong>Second signature:</strong><br>8. Connect the second hardware wallet<br>9. Review again on the device screen<br>10. Confirm and sign on the device<br><br>11. With 2 signatures collected, tap <strong>"Broadcast"</strong> to transmit the transaction<br><br>You only need 2 of the 3 keys. The third is not required to spend.',
         warning: 'Review the destination address and amount on each hardware wallet screen before signing. The computer or phone screen can be tampered with by malware; the hardware wallet screen cannot.'
       },
       {
         title: 'Next steps and maintenance',
-        image: 'assets/screenshots/nunchuk-inheritance.jpg',
         content: 'Your multisig wallet is set up. Now, keep it secure over time.<br><br><strong>Recovery test:</strong> before depositing large amounts, simulate a full recovery. Take the wallet descriptor + 2 of the 3 seeds and try to reconstruct the wallet in a fresh Nunchuk installation. If you can see the balance and spend, your backup is functional.<br><br><strong>Geographic distribution:</strong> store each key in a different physical location (e.g., your home, a bank safe deposit box, a trusted family member\'s home). Each location should also have a copy of the descriptor.<br><br><strong>Annual review:</strong> once a year, verify that all hardware wallets still function, that the seed backups are legible, and that the descriptors are intact.<br><br><strong>Inheritance planning:</strong> consider how your heirs would access the funds. A trusted family member can hold one key and a copy of the descriptor, without having access to the second key needed to spend.<br><br>Multisig is the highest level of Bitcoin self-custody. You have just implemented the same model used by institutional custódians.',
         tip: 'Keep Nunchuk and your hardware wallet firmware updated. Updates fix security vulnerabilities. Always download updates from official sites and verify signatures.'
       }

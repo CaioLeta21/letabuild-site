@@ -712,16 +712,6 @@ a:hover { color: var(--accent-hover); }
 }
 .step-content strong { color: var(--text); }
 
-/* Step image */
-.step-image {
-  width: 100%;
-  max-width: 500px;
-  margin: 16px auto;
-  display: block;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
 /* Warning box */
 .step-warning {
   background: var(--red-bg);

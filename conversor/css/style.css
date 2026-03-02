@@ -50,6 +50,26 @@ body {
     padding: 12px 0 20px;
 }
 
+.back-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.back-home:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
 .logo {
     display: flex;
     align-items: center;

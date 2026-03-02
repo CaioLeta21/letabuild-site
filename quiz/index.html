@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Você Entende Bitcoin? — Quiz</title>
+<meta name="description" content="Teste seus conhecimentos sobre Bitcoin com 20 perguntas — de conceitos básicos a análise on-chain. Descubra seu nível bitcoiner.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Você Entende Bitcoin? — Quiz">
+<meta property="og:description" content="20 perguntas sobre Bitcoin. De conceitos básicos a análise on-chain. Descubra seu nível bitcoiner.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://letabuild.com/quiz/">
+<meta property="og:image" content="https://letabuild.com/quiz/assets/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Você Entende Bitcoin? — Quiz">
+<meta name="twitter:description" content="20 perguntas sobre Bitcoin. Descubra seu nível bitcoiner.">
+<meta name="twitter:image" content="https://letabuild.com/quiz/assets/og-image.png">
+
+<link rel="icon" href="/conversor/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <a href="/" class="back-home" title="letabuild.com">&larr; letabuild.com</a>
+  <button class="lang-toggle" id="langToggle" title="Switch language">EN</button>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+  <!-- ═══ LANDING SCREEN ═══ -->
+  <div class="screen active" id="screenLanding">
+    <div class="landing">
+      <span class="landing-icon">₿</span>
+      <h1 id="landingTitle">Você Entende <span class="highlight">Bitcoin</span>?</h1>
+      <p class="subtitle" id="landingSubtitle">Teste seus conhecimentos com 20 perguntas sobre Bitcoin — de conceitos básicos a análise on-chain.</p>
+      <p class="meta" id="landingMeta">20 perguntas &middot; 5 níveis &middot; Descubra o seu</p>
+      <button class="btn-start" id="btnStart">
+        Começar Quiz
+        <span>&rarr;</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ QUIZ SCREEN ═══ -->
+  <div class="screen" id="screenQuiz">
+    <div class="quiz-screen">
+      <!-- Progress -->
+      <div class="progress-wrapper">
+        <div class="progress-info">
+          <span class="progress-count" id="progressCount">1 de 20</span>
+          <span class="difficulty-badge" id="difficultyBadge">Fácil</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 5%"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="question-card" id="questionCard">
+        <h2 class="question-text" id="questionText"></h2>
+        <div class="options-list" id="optionsList"></div>
+        <div class="feedback-banner" id="feedbackBanner">
+          <span class="feedback-icon"></span>
+          <span class="feedback-text"></span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="quiz-nav">
+        <span class="answered-count" id="answeredCount">0/20</span>
+        <div class="quiz-nav-buttons">
+          <button class="btn-nav btn-prev" id="btnPrev" style="display:none">
+            <span>&larr;</span>
+          </button>
+          <button class="btn-nav btn-next" id="btnNext" disabled>
+            <span id="btnNextText">Próxima</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RESULT SCREEN ═══ -->
+  <div class="screen" id="screenResult">
+    <div class="result-screen">
+
+      <!-- Hero -->
+      <div class="result-hero" id="resultHero">
+        <span class="result-icon" id="resultIcon"></span>
+        <div class="result-level" id="resultLevel"></div>
+        <div class="score-ring-wrapper">
+          <svg class="score-ring" viewBox="0 0 140 140">
+            <circle class="score-ring-bg" cx="70" cy="70" r="58"></circle>
+            <circle class="score-ring-fill" id="scoreRingFill" cx="70" cy="70" r="58"
+              stroke-dasharray="364.42" stroke-dashoffset="364.42"></circle>
+          </svg>
+        </div>
+        <div class="result-score" id="resultScore"></div>
+        <div class="result-score-label" id="resultScoreLabel"></div>
+        <p class="result-desc" id="resultDesc"></p>
+      </div>
+
+      <!-- Weak Areas -->
+      <div class="weak-areas" id="weakAreas">
+        <h3 class="section-title" id="weakAreasTitle"></h3>
+        <div id="weakAreasContent"></div>
+      </div>
+
+      <!-- Answer Review -->
+      <div class="review-section" id="reviewSection" style="display:none">
+        <h3 class="section-title" id="reviewTitle">Revisão das respostas</h3>
+        <div id="reviewContent"></div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recommendations" id="recommendations">
+        <h3 class="section-title" id="recsTitle"></h3>
+        <div id="recsContent"></div>
+      </div>
+
+      <!-- Share -->
+      <div class="share-row">
+        <button class="btn-share btn-save-img" id="btnSaveImg">
+          <span>&#x1F4F7;</span>
+          <span id="btnSaveImgText">Salvar Imagem</span>
+        </button>
+        <button class="btn-share btn-copy-link" id="btnCopyLink">
+          <span>&#x1F517;</span>
+          <span id="btnCopyLinkText">Copiar Link</span>
+        </button>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-card">
+        <div class="cta-title" id="ctaTitle">Quer se aprofundar?</div>
+        <p class="cta-desc" id="ctaDesc">Consultoria personalizada sobre Bitcoin</p>
+        <a class="btn-cta" id="ctaButton" href="https://caioleta.com/contato" target="_blank" rel="noopener noreferrer">
+          <span id="ctaButtonText">Fale comigo</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Retake -->
+      <div class="retake-row">
+        <button class="btn-retake" id="btnRetake">
+          <span id="btnRetakeText">Refazer Quiz</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  feito por <a href="https://caioleta.com" target="_blank" rel="noopener noreferrer">leta</a>
+</footer>
+
+<!-- Scripts -->
+<script src="js/questions.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/results.js"></script>
+<script src="js/share.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -550,7 +550,7 @@
     btn.disabled = true;
 
     var html = '';
-    html += '<div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif; color: #1a1a1a; padding: 40px 32px; max-width: 700px; margin: 0 auto;">';
+    html += '<div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif; color: #1a1a1a; padding: 40px 32px;">';
 
     // Header
     html += '<div style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid #f7931a;">';
@@ -589,9 +589,11 @@
 
     html += '</div>';
 
-    var container = $('pdfContent');
+    // Create temporary on-screen container (behind everything, for html2canvas)
+    var container = document.createElement('div');
+    container.style.cssText = 'position:fixed;left:0;top:0;width:700px;background:#fff;z-index:-1;';
     container.innerHTML = html;
-    container.style.display = 'block';
+    document.body.appendChild(container);
 
     var filename = 'Tutorial-' + wallet.name.replace(/\s+/g, '-') + '-' + levelLabel.replace(/\s+/g, '-') + '.pdf';
 
@@ -604,17 +606,13 @@
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
-    html2pdf().set(opt).from(container).save().then(function () {
-      container.style.display = 'none';
-      container.innerHTML = '';
+    function cleanup() {
+      if (container.parentNode) container.parentNode.removeChild(container);
       btnText.textContent = originalText;
       btn.disabled = false;
-    }).catch(function () {
-      container.style.display = 'none';
-      container.innerHTML = '';
-      btnText.textContent = originalText;
-      btn.disabled = false;
-    });
+    }
+
+    html2pdf().set(opt).from(container).save().then(cleanup).catch(cleanup);
   }
 
   // ── Event Handlers ─────────────────────────────────────

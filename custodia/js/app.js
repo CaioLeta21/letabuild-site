@@ -550,12 +550,12 @@
     btn.disabled = true;
 
     var html = '';
-    html += '<div style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', system-ui, sans-serif; color: #1a1a1a; padding: 16px 24px;">';
+    html += '<div style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', system-ui, sans-serif; color: #1a1a1a; padding: 0 24px;">';
 
     // Header
-    html += '<div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #f7931a;">';
-    html += '<div style="font-size: 24px; font-weight: 700; margin-bottom: 4px;">' + wallet.name + '</div>';
-    html += '<div style="font-size: 12px; color: #f7931a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">' + levelLabel + '</div>';
+    html += '<div style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid #f7931a;">';
+    html += '<span style="font-size: 20px; font-weight: 700;">' + wallet.name + '</span>';
+    html += '<span style="font-size: 11px; color: #f7931a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-left: 10px;">' + levelLabel + '</span>';
     html += '</div>';
 
     // Steps

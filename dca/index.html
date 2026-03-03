@@ -748,7 +748,7 @@ async function simulate() {
 
   const monthly    = parseFloat($('monthly-amount').value);
   const startInput = `${$('start-year').value}-${$('start-month').value}`;
-  const displayCcy = document.querySelector('#currency-toggle .toggle-opt.active').dataset.currency;
+  const displayCcy = (document.querySelector('#currency-toggle .toggle-opt.active') || document.querySelector('#currency-toggle .toggle-opt')).dataset.currency;
 
   if (!monthly || monthly <= 0) { showError('Informe um valor mensal válido.'); return; }
   if (!startInput)               { showError('Selecione a data de início.'); return; }
@@ -807,9 +807,9 @@ $('explainer-btn').addEventListener('click', () => {
   $('explainer-arrow').classList.toggle('open');
 });
 
-document.querySelectorAll('.toggle-opt').forEach(opt => {
+document.querySelectorAll('#currency-toggle .toggle-opt').forEach(opt => {
   opt.addEventListener('click', function () {
-    document.querySelectorAll('.toggle-opt').forEach(o => o.classList.remove('active'));
+    document.querySelectorAll('#currency-toggle .toggle-opt').forEach(o => o.classList.remove('active'));
     this.classList.add('active');
     $('currency-sym').textContent = this.dataset.currency === 'BRL' ? 'R$' : '$';
   });

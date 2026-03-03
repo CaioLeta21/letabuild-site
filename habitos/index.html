@@ -380,6 +380,7 @@
       <div class="chart-tabs" id="chartTabs">
         <button class="chart-tab active" data-chart="weight">Peso</button>
         <button class="chart-tab" data-chart="bodyfat">Gordura</button>
+        <button class="chart-tab" data-chart="glucose">Glicemia</button>
         <button class="chart-tab" data-chart="sleep">Sono</button>
         <button class="chart-tab" data-chart="steps">Passos</button>
         <button class="chart-tab" data-chart="bike">Bike</button>
@@ -500,6 +501,26 @@
       <div class="habit-info"><div class="habit-label">Leitura 30 min</div></div>
       <label class="toggle"><input type="checkbox" id="inputReading"><span class="toggle-slider"></span></label>
     </div>
+    <div class="habit-item">
+      <div class="habit-emoji">🩸</div>
+      <div class="habit-info">
+        <div class="habit-label">Glicemia em jejum</div>
+        <div class="habit-input-row">
+          <input type="number" class="num-input" id="inputGlucoseFasting" placeholder="0" min="0" step="1" inputmode="numeric">
+          <span class="input-suffix">mg/dL</span>
+        </div>
+      </div>
+    </div>
+    <div class="habit-item">
+      <div class="habit-emoji">🍽️</div>
+      <div class="habit-info">
+        <div class="habit-label">Glicemia pré-refeição</div>
+        <div class="habit-input-row">
+          <input type="number" class="num-input" id="inputGlucoseMeal" placeholder="0" min="0" step="1" inputmode="numeric">
+          <span class="input-suffix">mg/dL</span>
+        </div>
+      </div>
+    </div>
     <button class="save-btn" id="saveBtn">Salvar</button>
     <button class="clear-btn" id="clearBtn">Limpar dia</button>
   </div>
@@ -507,7 +528,7 @@
 
 <script>
 const STORAGE_KEY = 'habit-calendar-data';
-const HABITS_COUNT = 11; // total trackable activities
+const HABITS_COUNT = 13; // total trackable activities
 const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const shortMonthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -559,6 +580,8 @@ const inputStairs = document.getElementById('inputStairs');
 const inputPhysio = document.getElementById('inputPhysio');
 const inputStretching = document.getElementById('inputStretching');
 const inputReading = document.getElementById('inputReading');
+const inputGlucoseFasting = document.getElementById('inputGlucoseFasting');
+const inputGlucoseMeal = document.getElementById('inputGlucoseMeal');
 
 // Data
 function loadData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
@@ -585,6 +608,8 @@ function getDayScore(entry) {
   if (entry.physio) s++;
   if (entry.stretching) s++;
   if (entry.reading) s++;
+  if (entry.glucoseFasting > 0) s++;
+  if (entry.glucoseMeal > 0) s++;
   return s;
 }
 
@@ -647,6 +672,8 @@ function buildIconsMonth(entry) {
   if (entry.physio) h += '<span>🩹</span>';
   if (entry.stretching) h += '<span>🧘</span>';
   if (entry.reading) h += '<span>📖</span>';
+  if (entry.glucoseFasting > 0) h += '<span>🩸</span>';
+  if (entry.glucoseMeal > 0) h += '<span>🍽️</span>';
   return h;
 }
 
@@ -664,6 +691,8 @@ function buildIconsWeek(entry) {
   if (entry.physio) h += '<span>🩹</span>';
   if (entry.stretching) h += '<span>🧘</span>';
   if (entry.reading) h += '<span>📖</span>';
+  if (entry.glucoseFasting > 0) h += `<span>🩸 <span class="detail-text">${entry.glucoseFasting} mg/dL</span></span>`;
+  if (entry.glucoseMeal > 0) h += `<span>🍽️ <span class="detail-text">${entry.glucoseMeal} mg/dL</span></span>`;
   return h;
 }
 
@@ -742,6 +771,8 @@ function openModalForDate(date) {
   inputPhysio.checked = !!entry.physio;
   inputStretching.checked = !!entry.stretching;
   inputReading.checked = !!entry.reading;
+  inputGlucoseFasting.value = entry.glucoseFasting || '';
+  inputGlucoseMeal.value = entry.glucoseMeal || '';
   modalOverlay.classList.add('active');
   setTimeout(() => inputWeight.focus(), 200);
 }
@@ -761,9 +792,11 @@ function saveEntry() {
   const stairs = parseInt(inputStairs.value) || 0;
   const physio = inputPhysio.checked, stretching = inputStretching.checked;
   const reading = inputReading.checked;
+  const glucoseFasting = parseInt(inputGlucoseFasting.value) || 0;
+  const glucoseMeal = parseInt(inputGlucoseMeal.value) || 0;
   const data = loadData();
-  if (weight || bodyFat || sleepRem || sleepDeep || sleepLight || steps || bike || gym || breathing || stairs || physio || stretching || reading)
-    data[selectedDate] = { weight, bodyFat, sleepRem, sleepDeep, sleepLight, steps, bike, bikeKm, gym, breathing, stairs, physio, stretching, reading };
+  if (weight || bodyFat || sleepRem || sleepDeep || sleepLight || steps || bike || gym || breathing || stairs || physio || stretching || reading || glucoseFasting || glucoseMeal)
+    data[selectedDate] = { weight, bodyFat, sleepRem, sleepDeep, sleepLight, steps, bike, bikeKm, gym, breathing, stairs, physio, stretching, reading, glucoseFasting, glucoseMeal };
   else delete data[selectedDate];
   saveData(data); closeModal(); render();
 }
@@ -1025,6 +1058,33 @@ function renderChart() {
       extraContent.innerHTML = '<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#d9534f;border-radius:2px;display:inline-block"></span> Gordura</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> Média 7 dias</span></div>';
     } else {
       statsGrid.innerHTML = '<div class="chart-empty">Registre sua % de gordura para ver estatísticas</div>';
+    }
+
+  } else if (currentChart === 'glucose') {
+    const range = getFullRange(e => (e.glucoseFasting > 0 || e.glucoseMeal > 0));
+    if (range.length > 0) {
+      const labels = range.map(r => formatDateLabel(r.date));
+      const fastingVals = range.map(r => r.entry && r.entry.glucoseFasting > 0 ? r.entry.glucoseFasting : null);
+      const mealVals = range.map(r => r.entry && r.entry.glucoseMeal > 0 ? r.entry.glucoseMeal : null);
+      const ma7 = calcMovingAvg(fastingVals, 7);
+      const filledF = fastingVals.filter(v => v !== null);
+      const filledM = mealVals.filter(v => v !== null);
+      const allFilled = [...filledF, ...filledM];
+      const minV = Math.min(...allFilled) - 5, maxV = Math.max(...allFilled, 130) + 10;
+      drawLineChart(chartCanvas, labels, fastingVals, '#e74c3c', ma7, { min: Math.min(minV, 70), max: maxV });
+      const lastF = filledF.length > 0 ? filledF[filledF.length-1] : null;
+      const avgF = filledF.length > 0 ? Math.round(filledF.reduce((a,b) => a+b, 0) / filledF.length) : null;
+      const avgM = filledM.length > 0 ? Math.round(filledM.reduce((a,b) => a+b, 0) / filledM.length) : null;
+      const lastFColor = lastF ? (lastF < 100 ? '#6aaa7a' : lastF < 126 ? '#f0883e' : '#d9534f') : '';
+      statsGrid.innerHTML = `
+        <div class="stat-card"><div class="stat-value" style="color:${lastFColor}">${lastF !== null ? lastF : '-'}</div><div class="stat-label">🩸 Jejum atual (mg/dL)</div></div>
+        <div class="stat-card"><div class="stat-value">${avgF !== null ? avgF : '-'}</div><div class="stat-label">🩸 Média em jejum</div></div>
+        <div class="stat-card"><div class="stat-value">${avgM !== null ? avgM : '-'}</div><div class="stat-label">🍽️ Média pré-refeição</div></div>
+        <div class="stat-card"><div class="stat-value">${filledF.length}</div><div class="stat-label">Medições registradas</div></div>
+      `;
+      extraContent.innerHTML = '<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#e74c3c;border-radius:2px;display:inline-block"></span> 🩸 Jejum</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> Média 7 dias</span><span style="font-size:11px;color:#b0aaa3">Ref: &lt;100 normal · 100-125 pré-diabetes · ≥126 diabetes</span></div>';
+    } else {
+      statsGrid.innerHTML = '<div class="chart-empty">Registre glicemia para ver estatísticas</div>';
     }
 
   } else if (currentChart === 'sleep') {

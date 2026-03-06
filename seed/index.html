@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seed Phrase Offline | letabuild.com</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --orange: #f7931a;
+      --orange-dim: rgba(247,147,26,0.12);
+      --green: #22c55e;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --purple: #a855f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 24px;
+    }
+    .topbar-back {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .topbar-back:hover { color: var(--text); text-decoration: none; }
+    .topbar-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+    .topbar-credit {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── NAV PILLS ── */
+    .nav-pills {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-pills::-webkit-scrollbar { display: none; }
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all 0.15s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .nav-pill:hover { color: var(--text); }
+    .nav-pill.active {
+      color: var(--orange);
+      border-bottom-color: var(--orange);
+    }
+    .nav-pill .pill-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .nav-pill.active .pill-num {
+      background: var(--orange);
+      color: #000;
+    }
+    .nav-pill.done .pill-num {
+      background: var(--green);
+      color: #000;
+    }
+    .nav-pill.done { color: var(--green); border-bottom-color: transparent; }
+
+    /* ── MAIN LAYOUT ── */
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    /* ── SECTION CARDS ── */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── HERO ── */
+    .hero { margin-bottom: 40px; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--orange-dim);
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 38px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      margin-top: 28px;
+    }
+    p { margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card-orange {
+      background: var(--orange-dim);
+      border-color: rgba(247,147,26,0.25);
+    }
+    .card-green {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.25);
+    }
+    .card-red {
+      background: rgba(239,68,68,0.08);
+      border-color: rgba(239,68,68,0.25);
+    }
+    .card-blue {
+      background: rgba(59,130,246,0.08);
+      border-color: rgba(59,130,246,0.25);
+    }
+
+    /* ── NOTICE BOXES ── */
+    .notice {
+      display: flex;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+    .notice-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .notice-warn { background: rgba(239,68,68,0.09); border: 1px solid rgba(239,68,68,0.3); }
+    .notice-info { background: rgba(59,130,246,0.09); border: 1px solid rgba(59,130,246,0.3); }
+    .notice-tip  { background: rgba(34,197,94,0.09);  border: 1px solid rgba(34,197,94,0.3); }
+    .notice-key  { background: var(--orange-dim); border: 1px solid rgba(247,147,26,0.3); }
+
+    /* ── STEPS ── */
+    .steps { margin: 20px 0; }
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #000;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-body h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .step-body p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .step-body ul {
+      margin: 8px 0 0 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .step-body li { margin-bottom: 4px; }
+
+    /* ── CODE / MONO ── */
+    code {
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--orange);
+    }
+    .code-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 13px;
+      color: #a5d6a7;
+      overflow-x: auto;
+      margin: 12px 0;
+      line-height: 1.6;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media (max-width: 600px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+    .compare-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .compare-card.highlight {
+      border-color: rgba(247,147,26,0.4);
+    }
+    .compare-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--orange);
+    }
+    .compare-card ul {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .compare-card li {
+      padding: 3px 0;
+      display: flex;
+      gap: 6px;
+    }
+
+    /* ── METHOD TABS ── */
+    .method-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .method-tab {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+    .method-tab:hover { color: var(--text); border-color: var(--text); }
+    .method-tab.active {
+      background: var(--orange);
+      color: #000;
+      border-color: var(--orange);
+    }
+    .method-content { display: none; }
+    .method-content.active { display: block; }
+
+    /* ── ENTROPY CALCULATOR DISPLAY ── */
+    .entropy-visual {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-family: monospace;
+    }
+    .entropy-visual .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .entropy-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .entropy-row:last-child { border-bottom: none; }
+    .entropy-row .key { color: var(--muted); }
+    .entropy-row .val { color: var(--orange); font-weight: 700; }
+    .entropy-row .val.green { color: var(--green); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── NAVIGATION BUTTONS ── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 48px;
+      gap: 12px;
+    }
+    .btn {
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+    .btn-prev {
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-prev:hover { color: var(--text); }
+    .btn-next {
+      background: var(--orange);
+      color: #000;
+      margin-left: auto;
+    }
+    .btn-next:hover { background: #ffaa33; }
+    .btn:disabled { opacity: 0.3; cursor: default; }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .badge-orange { background: var(--orange-dim); color: var(--orange); }
+    .badge-green  { background: rgba(34,197,94,0.12); color: var(--green); }
+    .badge-red    { background: rgba(239,68,68,0.12); color: var(--red); }
+
+    /* ── MATERIAL LIST ── */
+    .material-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .material-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .material-icon { font-size: 18px; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .section-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .section-header h2 { margin-bottom: 6px; }
+    .section-header p { color: var(--muted); font-size: 15px; margin: 0; }
+
+    /* ── ANALOGY BOX ── */
+    .analogy {
+      background: var(--surface);
+      border-left: 3px solid var(--orange);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ── TOOL CARD ── */
+    .tool-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .tool-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--surface);
+      cursor: pointer;
+      gap: 12px;
+      user-select: none;
+    }
+    .tool-card-header:hover { background: var(--surface2); }
+    .tool-card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .tool-card-arrow { color: var(--muted); transition: transform 0.2s; }
+    .tool-card-body {
+      display: none;
+      padding: 20px;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .tool-card.open .tool-card-arrow { transform: rotate(180deg); }
+    .tool-card.open .tool-card-body { display: block; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer a { color: var(--muted); font-size: 13px; }
+    .footer a:hover { color: var(--text); }
+    .footer .footer-text { font-size: 13px; color: var(--muted); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--orange);
+      transition: width 0.3s ease;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .topbar { padding: 10px 16px; }
+      .nav-pills { padding: 0 16px; }
+      .page { padding: 32px 16px 80px; }
+      .nav-pill { padding: 8px 10px; font-size: 12px; }
+      .topbar-credit { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <a href="https://letabuild.com" class="topbar-back">← letabuild.com</a>
+    <span class="topbar-title">Seed Phrase Offline</span>
+    <span class="topbar-credit">com bitcoinheiros</span>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width: 14%"></div>
+  </div>
+
+  <!-- NAV PILLS -->
+  <nav class="nav-pills" id="nav-pills">
+    <button class="nav-pill active" data-section="0">
+      <span class="pill-num">1</span> Fundamentos
+    </button>
+    <button class="nav-pill" data-section="1">
+      <span class="pill-num">2</span> O que é Entropia
+    </button>
+    <button class="nav-pill" data-section="2">
+      <span class="pill-num">3</span> Por que Offline
+    </button>
+    <button class="nav-pill" data-section="3">
+      <span class="pill-num">4</span> Moeda
+    </button>
+    <button class="nav-pill" data-section="4">
+      <span class="pill-num">5</span> Dado
+    </button>
+    <button class="nav-pill" data-section="5">
+      <span class="pill-num">6</span> Sorteio
+    </button>
+    <button class="nav-pill" data-section="6">
+      <span class="pill-num">7</span> Ian Coleman
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="page">
+
+    <!-- ════════════════════════════════════════
+         SECTION 0 — FUNDAMENTOS: O QUE É UMA SEED PHRASE
+    ════════════════════════════════════════ -->
+    <div class="section active" id="section-0">
+      <div class="hero">
+        <span class="hero-tag">Auto-Custódia Bitcoin</span>
+        <h1>Como gerar sua seed phrase do jeito certo</h1>
+        <p>Um guia prático para criar suas chaves offline, usando entropia física, sem depender de nenhum software ou site para gerar sua segurança.</p>
+      </div>
+
+      <div class="notice notice-warn">
+        <span class="notice-icon">⚠️</span>
+        <div>Quem tem sua seed phrase tem seus bitcoin. Nunca fotografe, salve em nuvem, digitalize ou compartilhe suas palavras com ninguém.</div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-icon">🔑</div>
+        <div>
+          <h2>O que é uma seed phrase?</h2>
+          <p>A chave-mestre que dá acesso a todos os seus bitcoin</p>
+        </div>
+      </div>
+
+      <p>
+        Uma seed phrase (ou frase-semente) é uma sequência de 12 ou 24 palavras comuns, escolhidas de uma lista padronizada de 2.048 termos definida pelo protocolo BIP-39. Essas palavras representam, de forma legível por humanos, a chave privada da sua carteira Bitcoin.
+      </p>
+
+      <div class="analogy">
+        Pense assim: se a sua carteira Bitcoin é um cofre, a seed phrase é a combinação. E diferente de um cofre físico, ela não tem limite de tentativas, não pode ser trocada pela administradora do prédio e não tem o número do suporte para ligar. Quem tiver as 24 palavras, tem o dinheiro. Ponto.
+      </div>
+
+      <p>
+        Uma seed phrase válida segue uma lógica matemática precisa: as primeiras 23 palavras (para uma seed de 24) são livres, mas a última é calculada como um "checksum" das anteriores. Isso serve para detectar erros de anotação.
+      </p>
+
+      <div class="card">
+        <h3 style="margin-top:0">Características essenciais da seed phrase</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Padrão BIP-39</h4>
+              <p>Toda carteira séria usa BIP-39. Isso significa que você pode recuperar seus fundos em qualquer carteira compatível com o padrão, independente do fabricante.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>A ordem importa</h4>
+              <p>As 24 palavras na ordem <code>café maçã rio...</code> são completamente diferentes de <code>maçã café rio...</code>. São carteiras distintas. A sequência é tão importante quanto as palavras.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Uma vez gerada, para sempre</h4>
+              <p>Diferente de uma senha de banco, você não pode "resetar" sua seed. Ela precisa ser gerada de forma segura uma única vez e guardada com máximo cuidado pelo resto da vida.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>12 ou 24 palavras?</h4>
+              <p>12 palavras oferecem 128 bits de entropia, o suficiente para ser inviolável. 24 palavras oferecem 256 bits — o dobro, e é o padrão recomendado para auto-custódia de longo prazo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="notice notice-info">
+        <span class="notice-icon">📌</span>
+        <div>
+          <strong>Como este guia funciona:</strong> Primeiro entendemos os conceitos (Seções 1, 2 e 3). Depois aprendemos a gerar entropia com métodos físicos (Seções 4, 5 e 6). Por último, convertemos essa entropia em seed phrase usando as ferramentas certas (Seção 7).
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" disabled>← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(1)">Próximo: Entropia →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SECTION 1 — O QUE É ENTROPIA
+    ════════════════════════════════════════ -->
+    <div class="section" id="section-1">
+      <div class="section-header">
+        <div class="section-icon">🎲</div>
+        <div>
+          <h2>O que é entropia?</h2>
+          <p>O ingrediente secreto de qualquer chave segura</p>
+        </div>
+      </div>
+
+      <p>
+        Antes de entender como gerar uma seed phrase segura, você precisa entender de onde vem a segurança dela. A resposta é uma palavra: <strong>entropia</strong>.
+      </p>
+      <p>
+        Entropia é, em termos simples, a medida da imprevisibilidade de um conjunto de dados. Em criptografia, usamos a palavra "bits de entropia" para quantificar o quanto algo é aleatório. Quanto mais bits, mais impossível de prever ou reproduzir.
+      </p>
+
+      <div class="analogy">
+        Imagine que você vai escolher um número de 1 a 10. É fácil de adivinhar? Muito fácil — 10 possibilidades. Agora imagine escolher um número de 1 a 340 undecilhões (340 seguido de 36 zeros). É isso que 128 bits de entropia representam. Não há computador capaz de tentar todas as possibilidades.
+      </div>
+
+      <div class="card card-orange">
+        <h3 style="margin-top:0">Como a entropia se conecta à sua seed phrase</h3>
+        <div class="entropy-visual">
+          <div class="label">Seed de 12 palavras</div>
+          <div class="entropy-row"><span class="key">Bits de entropia necessários</span><span class="val">128 bits</span></div>
+          <div class="entropy-row"><span class="key">Lançamentos de moeda equivalentes</span><span class="val">128 lançamentos</span></div>
+          <div class="entropy-row"><span class="key">Rolagens de D6 equivalentes</span><span class="val">50 rolagens</span></div>
+          <div class="entropy-row"><span class="key">Combinações possíveis</span><span class="val green">2¹²⁸ ≈ 10³⁸</span></div>
+        </div>
+        <div class="entropy-visual" style="margin-top:12px">
+          <div class="label">Seed de 24 palavras (recomendado)</div>
+          <div class="entropy-row"><span class="key">Bits de entropia necessários</span><span class="val">256 bits</span></div>
+          <div class="entropy-row"><span class="key">Lançamentos de moeda equivalentes</span><span class="val">256 lançamentos</span></div>
+          <div class="entropy-row"><span class="key">Rolagens de D6 equivalentes</span><span class="val">99 rolagens</span></div>
+          <div class="entropy-row"><span class="key">Combinações possíveis</span><span class="val green">2²⁵⁶ ≈ 10⁷⁷</span></div>
+        </div>
+      </div>
+
+      <h3>Como bits de entropia viram palavras?</h3>
+      <p>
+        O protocolo BIP-39 usa uma lógica elegante: a lista de 2.048 palavras foi criada porque 2.048 = 2¹¹, ou seja, cada palavra representa exatamente 11 bits de informação binária. O processo de conversão é assim:
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Entropia bruta</h4>
+            <p>Você gera uma sequência de bits aleatórios. Para 24 palavras, são 256 bits. Ex: <code>10110101 00110011...</code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Checksum</h4>
+            <p>O protocolo aplica SHA-256 sobre esses bits e pega os primeiros 8 bits do resultado. Esse checksum é anexado ao final, totalizando 264 bits (256 + 8).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Divisão em grupos de 11 bits</h4>
+            <p>Os 264 bits são divididos em 24 grupos de 11 bits cada. <code>264 ÷ 11 = 24 palavras</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Conversão para palavras</h4>
+            <p>Cada grupo de 11 bits é um número entre 0 e 2.047. Esse número aponta para uma palavra na lista BIP-39. O número 1333 em binário é <code>10100110101</code> → palavra nº 1333 da lista.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice notice-warn">
+        <span class="notice-icon">🚫</span>
+        <div>
+          <strong>Nunca use entropia previsível.</strong> Datas de aniversário, nomes de família, sequências de teclado, frases de música, ou qualquer coisa que você "inventou" na cabeça. O cérebro humano é péssimo em aleatoriedade. Sempre use um método físico verificável.
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" onclick="goTo(0)">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(2)">Próximo: Por que Offline →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SECTION 2 — POR QUE OFFLINE
+    ════════════════════════════════════════ -->
+    <div class="section" id="section-2">
+      <div class="section-header">
+        <div class="section-icon">🔒</div>
+        <div>
+          <h2>Por que gerar offline?</h2>
+          <p>O risco que você não vê pode ser o mais perigoso</p>
+        </div>
+      </div>
+
+      <p>
+        A maioria das carteiras Bitcoin gera a seed phrase automaticamente, no momento em que você cria a carteira. Isso é conveniente, mas esconde um problema sério: você está confiando que o software escolheu boas palavras, de forma realmente aleatória, sem que nada tenha "vazado" durante o processo.
+      </p>
+      <p>
+        Quando você gera uma seed phrase em um dispositivo conectado à internet, você está exposto a uma lista de ameaças silenciosas.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-card card-red">
+          <h4>Keylogger</h4>
+          <ul>
+            <li>Registra tudo que você digita</li>
+            <li>Pode capturar a seed se você digitá-la em algum campo</li>
+            <li>Muitas vezes indetectável</li>
+          </ul>
+        </div>
+        <div class="compare-card card-red">
+          <h4>Clipboard Hijack</h4>
+          <ul>
+            <li>Monitora a área de transferência</li>
+            <li>Se você copiar a seed, o malware vê</li>
+            <li>Comum em computadores infectados</li>
+          </ul>
+        </div>
+        <div class="compare-card card-red">
+          <h4>Sites Falsos</h4>
+          <ul>
+            <li>Copiam o visual de ferramentas legítimas</li>
+            <li>Registram toda entropia digitada</li>
+            <li>Você nunca saberá que foi atacado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="notice notice-warn">
+        <span class="notice-icon">⛔</span>
+        <div>
+          <strong>Nunca use um gerador de seed phrase online.</strong> Não importa o site, a reputação do serviço ou o quanto parece confiável. Se o site está acessível pela internet, há um vetor de ataque. Ponto final.
+        </div>
+      </div>
+
+      <h3>A lógica do offline</h3>
+      <p>
+        Um dispositivo sem conexão com a internet não pode transmitir informações. Simples assim. Se sua seed phrase nunca existiu em um dispositivo conectado, ela nunca teve como "sair" por nenhum canal digital.
+      </p>
+      <p>
+        Além disso, quando você gera a entropia fisicamente (com moeda ou dado) e converte ela em seed phrase usando uma ferramenta offline, você tem total transparência do processo. Você pode verificar cada passo.
+      </p>
+
+      <div class="card card-green">
+        <h3 style="margin-top:0">O modelo seguro de geração</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Gerar entropia fisicamente</h4>
+              <p>Moeda, dado ou sorteio de papel. Método físico, resultado anotado em papel.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Converter offline</h4>
+              <p>Usar o Ian Coleman (baixado e rodado sem internet), a ColdCard ou a Krux para converter os bits em palavras.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Anotar em papel</h4>
+              <p>Registrar as 24 palavras à mão, em papel físico, em local seguro. Nunca fotografar, nunca digitalizar.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>Fechar e apagar</h4>
+              <p>Depois de anotar, fechar a ferramenta e, se for software, apagar os arquivos temporários.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="notice notice-tip">
+        <span class="notice-icon">✅</span>
+        <div>
+          Hardware wallets como a <strong>ColdCard</strong> e a <strong>Krux</strong> nunca se conectam à internet. Elas são projetadas especificamente para operar em modo air-gap — ou seja, sem nenhuma interface de rede, sequer a possibilidade física de uma.</div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" onclick="goTo(1)">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(3)">Próximo: Método da Moeda →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SECTION 3 — MÉTODO: MOEDA
+    ════════════════════════════════════════ -->
+    <div class="section" id="section-3">
+      <div class="section-header">
+        <div class="section-icon">🪙</div>
+        <div>
+          <h2>Método 1: Lançamento de Moeda</h2>
+          <p>O método mais puro de entropia binária</p>
+        </div>
+      </div>
+
+      <p>
+        Uma moeda justa tem exatamente 50% de chance de dar cara e 50% de dar coroa. É o exemplo mais puro de um bit de entropia: dois resultados igualmente prováveis, completamente imprevisíveis. É por isso que esse método é matematicamente elegante.
+      </p>
+      <p>
+        Cada lançamento gera 1 bit. Para uma seed de 12 palavras, você precisa de 128 bits, ou seja, 128 lançamentos. Para 24 palavras, 256 lançamentos. Pode parecer muito, mas leva menos de 20 minutos.
+      </p>
+
+      <div class="notice notice-info">
+        <span class="notice-icon">📝</span>
+        <div>A saída deste método é uma <strong>string binária</strong> (sequência de 0s e 1s) que você vai inserir no campo de entropia do Ian Coleman.</div>
+      </div>
+
+      <h3>O que você precisa</h3>
+      <div class="material-list">
+        <div class="material-item">
+          <span class="material-icon">🪙</span>
+          <span>Uma moeda qualquer (qualquer moeda é suficiente)</span>
+        </div>
+        <div class="material-item">
+          <span class="material-icon">📄</span>
+          <span>Papel e caneta para anotar os resultados</span>
+        </div>
+        <div class="material-item">
+          <span class="material-icon">📵</span>
+          <span>Ian Coleman baixado e pronto para rodar offline</span>
+          <span class="badge badge-orange" style="margin-left:auto">Seção 7</span>
+        </div>
+      </div>
+
+      <h3>Passo a passo</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Defina o padrão</h4>
+            <p>Antes de começar, defina: <strong>cara = 1, coroa = 0</strong>. Mantenha esse padrão durante todos os lançamentos. Qualquer convenção serve, desde que você não mude no meio.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Lance e anote</h4>
+            <p>Lance a moeda e registre o resultado (0 ou 1) imediatamente. Organize em grupos de 8 para facilitar a leitura:</p>
+            <div class="code-block">
+10110100 11001010 01110011 10100101
+11010110 00111001 10110100 11001010
+01110011 10100101 11010110 00111001
+10110100 11001010 01110011 10100101
+            </div>
+            <p>Acima: 128 bits (16 grupos de 8) → seed de 12 palavras</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Verifique a quantidade</h4>
+            <p>Conte os dígitos anotados antes de continuar:
+              <ul>
+                <li>Seed de 12 palavras → 128 dígitos (0s e 1s)</li>
+                <li>Seed de 24 palavras → 256 dígitos (0s e 1s)</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Remova os espaços antes de inserir</h4>
+            <p>No Ian Coleman, insira apenas os dígitos, sem espaços ou quebras de linha. Selecione "Binary" como tipo de entropia. O resultado completo de 128 bits deve ser digitado em sequência contínua.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice notice-tip">
+        <span class="notice-icon">💡</span>
+        <div>Lance a moeda sobre uma superfície plana e deixe cair livremente. Não "direcione" o lançamento. O objetivo é que o resultado seja genuinamente imprevisível, inclusive para você.</div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Resumo do método</h3>
+        <div class="entropy-visual">
+          <div class="entropy-row"><span class="key">Ferramenta física</span><span class="val">1 moeda</span></div>
+          <div class="entropy-row"><span class="key">Seed de 12 palavras</span><span class="val">128 lançamentos</span></div>
+          <div class="entropy-row"><span class="key">Seed de 24 palavras</span><span class="val">256 lançamentos</span></div>
+          <div class="entropy-row"><span class="key">Tipo de entropia no Ian Coleman</span><span class="val">Binary</span></div>
+          <div class="entropy-row"><span class="key">Formato da entrada</span><span class="val">10110100...</span></div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" onclick="goTo(2)">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(4)">Próximo: Método do Dado →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SECTION 4 — MÉTODO: DADO
+    ════════════════════════════════════════ -->
+    <div class="section" id="section-4">
+      <div class="section-header">
+        <div class="section-icon">🎲</div>
+        <div>
+          <h2>Método 2: Rolagem de Dado</h2>
+          <p>Mais rápido que a moeda, igualmente seguro</p>
+        </div>
+      </div>
+
+      <p>
+        Um dado de seis faces (D6) gera log₂(6) ≈ 2,585 bits de entropia por rolagem. Na prática, isso significa que você chega aos 128 bits necessários para uma seed de 12 palavras com apenas 50 rolagens, e aos 256 bits para 24 palavras com 99 rolagens.
+      </p>
+      <p>
+        O dado é o método mais popular entre bitcoinheiros avançados por ser rápido e compatível nativamente com o Ian Coleman, a ColdCard e a Krux, que todos aceitam sequências de dados diretamente.
+      </p>
+
+      <div class="method-tabs" id="dice-tabs">
+        <button class="method-tab active" data-method="d6" onclick="switchMethod('dice', 'd6', this)">D6 (dado de 6 faces)</button>
+        <button class="method-tab" data-method="d20" onclick="switchMethod('dice', 'd20', this)">D20 (dado de 20 faces)</button>
+      </div>
+
+      <div id="dice-d6" class="method-content active">
+        <div class="card">
+          <div class="entropy-visual">
+            <div class="entropy-row"><span class="key">Entropia por rolagem</span><span class="val">≈ 2,585 bits</span></div>
+            <div class="entropy-row"><span class="key">Seed de 12 palavras (128 bits)</span><span class="val">mínimo 50 rolagens</span></div>
+            <div class="entropy-row"><span class="key">Seed de 24 palavras (256 bits)</span><span class="val">mínimo 99 rolagens</span></div>
+            <div class="entropy-row"><span class="key">Valores válidos</span><span class="val">1, 2, 3, 4, 5, 6</span></div>
+          </div>
+        </div>
+
+        <h3>O que você precisa</h3>
+        <div class="material-list">
+          <div class="material-item"><span class="material-icon">🎲</span><span>Um dado de 6 faces (qualquer dado de jogo de tabuleiro serve)</span></div>
+          <div class="material-item"><span class="material-icon">📄</span><span>Papel e caneta para anotar a sequência</span></div>
+          <div class="material-item"><span class="material-icon">📵</span><span>Ian Coleman offline, ColdCard ou Krux</span></div>
+        </div>
+
+        <h3>Passo a passo</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Role o dado e anote o resultado</h4>
+              <p>Jogue o dado em uma superfície plana e registre o número que aparecer. Anote como uma sequência contínua de números, sem separadores:</p>
+              <div class="code-block">4 1 6 2 5 3 4 1 2 6 5 3 4 1 6 2 5 3 4 1 2 6 5 3 4 1 ...</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Complete o número mínimo de rolagens</h4>
+              <p>Não pare antes de atingir o mínimo. Mais rolagens aumentam a entropia — você pode rolar mais sem problema.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Insira no Ian Coleman</h4>
+              <p>No Ian Coleman, selecione "Dice" como tipo de entropia e insira a sequência sem espaços: <code>416253412653416253412653...</code></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>Ou insira diretamente na ColdCard / Krux</h4>
+              <p>Na ColdCard e na Krux, você rola os dados e insere cada resultado no momento, diretamente na interface do dispositivo. Não é necessário anotar antes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dice-d20" class="method-content">
+        <div class="card">
+          <div class="entropy-visual">
+            <div class="entropy-row"><span class="key">Entropia por rolagem</span><span class="val">≈ 4,322 bits</span></div>
+            <div class="entropy-row"><span class="key">Seed de 12 palavras (128 bits)</span><span class="val">mínimo 30 rolagens</span></div>
+            <div class="entropy-row"><span class="key">Seed de 24 palavras (256 bits)</span><span class="val">mínimo 60 rolagens</span></div>
+            <div class="entropy-row"><span class="key">Valores válidos</span><span class="val">1 a 20</span></div>
+          </div>
+        </div>
+
+        <p>Um dado de 20 faces (comum em RPG) gera mais entropia por rolagem, então você precisa rolar menos vezes. O processo é idêntico ao D6, mas os valores vão de 1 a 20.</p>
+        <p>A Krux suporta D20 nativamente. No Ian Coleman, insira os valores como "Dice" também — mas verifique a documentação, pois a entrada aceita somente valores de 1 a 6 no modo Dice padrão; use Base 6 ou converta manualmente se necessário.</p>
+
+        <div class="notice notice-info">
+          <span class="notice-icon">ℹ️</span>
+          <div>O D20 é uma boa opção quando você usa a Krux, que tem suporte nativo para ele. Para usar com o Ian Coleman, o D6 é mais direto.</div>
+        </div>
+      </div>
+
+      <div class="notice notice-warn">
+        <span class="notice-icon">⚠️</span>
+        <div>Use um dado físico de qualidade, não um aplicativo de dado no celular. Aplicativos de dado são geradores de números pseudoaleatórios, não verdadeiramente aleatórios.</div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" onclick="goTo(3)">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(5)">Próximo: Sorteio de Papel →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SECTION 5 — MÉTODO: SORTEIO DE PAPEL
+    ════════════════════════════════════════ -->
+    <div class="section" id="section-5">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <div>
+          <h2>Método 3: Sorteio de Papel</h2>
+          <p>Entropia física, 100% verificável e auditável</p>
+        </div>
+      </div>
+
+      <p>
+        O método do sorteio de papel é diferente dos dois anteriores: em vez de gerar bits brutos para depois converter em palavras, você seleciona as palavras diretamente da lista BIP-39 por meio de um sorteio físico. O resultado final é uma seed de 24 palavras, onde as primeiras 23 foram sorteadas manualmente e a 24ª é calculada como checksum.
+      </p>
+
+      <div class="analogy">
+        É como um bingo: você imprime e recorta as 2.048 palavras da lista BIP-39, coloca tudo em um saco, mistura bem e sorteia 23 bilhetes. Cada palavra sorteada entra na sua seed na ordem em que foi retirada.
+      </div>
+
+      <div class="notice notice-info">
+        <span class="notice-icon">📌</span>
+        <div>A 24ª palavra NÃO pode ser sorteada: ela precisa ser calculada matematicamente a partir das outras 23 (é o checksum do BIP-39). Você vai usar o Ian Coleman, a ColdCard ou a Krux para calcular essa última palavra.</div>
+      </div>
+
+      <h3>O que você precisa</h3>
+      <div class="material-list">
+        <div class="material-item"><span class="material-icon">🖨️</span><span>Impressora e papel para imprimir a lista BIP-39 (2.048 palavras)</span></div>
+        <div class="material-item"><span class="material-icon">✂️</span><span>Tesoura para recortar cada palavra individualmente</span></div>
+        <div class="material-item"><span class="material-icon">🛍️</span><span>Saco opaco, chapéu ou tigela onde os papéis não sejam visíveis</span></div>
+        <div class="material-item"><span class="material-icon">📄</span><span>Papel para anotar as palavras sorteadas, em ordem</span></div>
+        <div class="material-item"><span class="material-icon">📵</span><span>Ian Coleman offline, ColdCard ou Krux para calcular a 24ª palavra</span></div>
+      </div>
+
+      <h3>Passo a passo</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Imprima e recorte a lista BIP-39</h4>
+            <p>A lista BIP-39 em inglês ou português pode ser baixada de fontes como o repositório do Ian Coleman no GitHub. Imprima e recorte cada uma das 2.048 palavras em papéis individuais.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Dobre e misture bem no saco</h4>
+            <p>Dobre cada papel para que a palavra não seja visível. Coloque todos no saco e misture com vigor por pelo menos 1 minuto. O objetivo é que você não consiga prever qual palavra vai sair.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Sorteie 23 palavras com reposição</h4>
+            <p>Retire um papel sem olhar, registre a palavra e o número que ela ocupa na lista BIP-39, <strong>devolva o papel ao saco</strong> e misture novamente antes de sortear a próxima. Repita 23 vezes.</p>
+            <ul>
+              <li>Sortear com reposição garante que todas as palavras tenham igual probabilidade em cada rodada</li>
+              <li>Palavras repetidas são válidas no BIP-39</li>
+              <li>Anote a ordem: palavra 1, palavra 2... palavra 23</li>
+            </ul>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Calcule a 24ª palavra offline</h4>
+            <p>A 24ª palavra é o checksum das 23 anteriores. Use um dos métodos abaixo para calculá-la:</p>
+            <ul>
+              <li><strong>Ian Coleman offline:</strong> insira as 23 palavras nos campos correspondentes; o programa calcula a 24ª automaticamente</li>
+              <li><strong>ColdCard:</strong> use o menu "Import Existing" → insira as 23 palavras → o device aponta as opções válidas para a 24ª</li>
+              <li><strong>Krux:</strong> selecione "New Mnemonic" → "Manual Entry" → insira 23 palavras → o dispositivo calcula a última</li>
+            </ul>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Registre as 24 palavras na ordem correta</h4>
+            <p>Anote as 24 palavras à mão, em papel, na ordem exata. Guarde em local seguro e offline.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-green">
+        <h3 style="margin-top:0">Por que esse método é especialmente transparente?</h3>
+        <p style="font-size:14px; color: var(--muted); margin:0">
+          Diferente dos métodos de moeda e dado, onde você precisa confiar na conversão feita pelo software, no sorteio de papel as palavras já saem diretamente da lista BIP-39. Você não depende de nenhum software para gerar as primeiras 23 palavras — só para calcular o checksum da última. Isso torna o processo auditável do início ao fim.
+        </p>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" onclick="goTo(4)">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(6)">Próximo: Ian Coleman →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SECTION 6 — FERRAMENTAS DE CONVERSÃO
+    ════════════════════════════════════════ -->
+    <div class="section" id="section-6">
+      <div class="section-header">
+        <div class="section-icon">🛠️</div>
+        <div>
+          <h2>Convertendo entropia em seed phrase</h2>
+          <p>Ian Coleman, ColdCard e Krux</p>
+        </div>
+      </div>
+
+      <p>
+        Você tem sua sequência de entropia anotada em papel. Agora precisa de uma ferramenta que converta esses dados na sua seed phrase de 12 ou 24 palavras. As três opções abaixo são as mais confiáveis e auditáveis disponíveis. Nenhuma delas requer conexão com a internet para funcionar.
+      </p>
+
+      <!-- ──── IAN COLEMAN ──── -->
+      <div class="tool-card open" id="card-ian">
+        <div class="tool-card-header" onclick="toggleCard('ian')">
+          <div class="tool-card-title">
+            <span style="font-size:22px">💻</span>
+            <div>
+              <div>Ian Coleman BIP-39</div>
+              <div style="font-size:12px; font-weight:400; color: var(--muted)">Ferramenta de software para rodar no navegador, sem internet</div>
+            </div>
+          </div>
+          <span class="tool-card-arrow">▼</span>
+        </div>
+        <div class="tool-card-body">
+          <div class="notice notice-warn" style="margin-top:0">
+            <span class="notice-icon">🚨</span>
+            <div><strong>Nunca use o Ian Coleman online.</strong> O site <code>iancoleman.io/bip39</code> existe, mas você nunca deve inserir sua entropia nele. Sempre baixe e rode localmente, sem internet.</div>
+          </div>
+
+          <h3 style="margin-top: 8px">Passo 1 — Baixar a ferramenta</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Acesse o repositório oficial</h4>
+                <p>Em um computador com internet (diferente do que você vai usar offline), acesse: <code>github.com/iancoleman/bip39</code></p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Baixe o arquivo ZIP</h4>
+                <p>Clique no botão verde "Code" e selecione "Download ZIP". Alternativamente, baixe diretamente da aba "Releases" para obter a versão estável assinada.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Extraia os arquivos</h4>
+                <p>Extraia o ZIP em um pendrive ou pasta local. O arquivo principal é o <code>index.html</code>.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>Passo 2 — Preparar o ambiente offline</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <h4>Desconecte da internet</h4>
+                <p>Antes de abrir o arquivo, desconecte o cabo de rede (ethernet), desligue o Wi-Fi e, se possível, ative o modo avião. Confirme que não há conexão ativa.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <h4>Abra o arquivo index.html</h4>
+                <p>Dê dois cliques no arquivo <code>index.html</code> para abrir no navegador. Ele carrega completamente localmente — não há requisição de rede.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>Passo 3 — Gerar a seed phrase</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <h4>Ative os detalhes de entropia</h4>
+                <p>Clique em <strong>"Show Entropy Details"</strong>. Isso revela o campo onde você vai inserir sua entropia manualmente.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">7</div>
+              <div class="step-body">
+                <h4>Selecione o tipo de entropia</h4>
+                <p>No campo "Entropy Type", selecione o tipo correspondente ao seu método:</p>
+                <ul>
+                  <li><strong>Binary</strong> → para lançamento de moeda (sequência de 0s e 1s)</li>
+                  <li><strong>Dice</strong> → para rolagem de dado D6 (sequência de 1 a 6)</li>
+                  <li><strong>Hexadecimal</strong> → para entropia gerada por outros meios</li>
+                </ul>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">8</div>
+              <div class="step-body">
+                <h4>Insira sua entropia</h4>
+                <p>Cole ou digite a sequência de bits ou rolagens no campo "Entropy". O painel à direita mostra em tempo real quantos bits você já inseriu e se é suficiente para a seed desejada.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">9</div>
+              <div class="step-body">
+                <h4>Configure o número de palavras e o idioma</h4>
+                <p>Em "Mnemonic Length", selecione 12 ou 24 palavras. Em "Mnemonic Language", você pode selecionar Portuguese se preferir palavras em português (mas atenção: a maioria das carteiras só aceita o wordlist em inglês).</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">10</div>
+              <div class="step-body">
+                <h4>Anote as palavras geradas</h4>
+                <p>As palavras aparecem no campo "BIP39 Mnemonic". Anote todas, na ordem, à mão, em papel. Confira duas vezes antes de fechar o navegador.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">11</div>
+              <div class="step-body">
+                <h4>Feche e limpe</h4>
+                <p>Feche o navegador sem salvar o estado. Se quiser mais segurança, reinicie o computador e limpe o cache do navegador antes de reconectá-lo à internet.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="notice notice-tip">
+            <span class="notice-icon">✅</span>
+            <div>Para o método de sorteio de papel: insira as 23 palavras nos campos de BIP39 Mnemonic diretamente. O Ian Coleman calcula automaticamente quais valores válidos a 24ª palavra pode ter.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ──── COLDCARD ──── -->
+      <div class="tool-card" id="card-coldcard">
+        <div class="tool-card-header" onclick="toggleCard('coldcard')">
+          <div class="tool-card-title">
+            <span style="font-size:22px">💳</span>
+            <div>
+              <div>ColdCard</div>
+              <div style="font-size:12px; font-weight:400; color: var(--muted)">Hardware wallet air-gap — geração via rolagem de dados no dispositivo</div>
+            </div>
+          </div>
+          <span class="tool-card-arrow">▼</span>
+        </div>
+        <div class="tool-card-body">
+          <p>A ColdCard é uma das hardware wallets mais respeitadas do ecossistema Bitcoin. Ela nunca se conecta à internet e oferece suporte nativo à geração de seed via dados, combinando a entropia física com o gerador de números aleatórios do próprio hardware.</p>
+
+          <div class="notice notice-info" style="margin-top: 0">
+            <span class="notice-icon">ℹ️</span>
+            <div>Este guia cobre apenas a geração de seed por dados. A ColdCard precisa estar sem nenhuma carteira configurada (estado de fábrica ou após ter sido limpa).</div>
+          </div>
+
+          <h3>Passo a passo — Seed via dados na ColdCard</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Acesse o menu de nova seed</h4>
+                <p>Na tela inicial da ColdCard, navegue até: <strong>New Wallet → New Seed Words → Dice Rolls</strong></p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Selecione o número de palavras</h4>
+                <p>Escolha entre 12 ou 24 palavras. Para auto-custódia séria, prefira 24.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Role o dado e insira cada resultado</h4>
+                <p>A interface da ColdCard mostra os números de 1 a 6. A cada rolagem, pressione a tecla correspondente ao resultado que apareceu no dado físico. A tela exibe o contador de rolagens e a entropia acumulada.</p>
+                <ul>
+                  <li>Mínimo de 50 rolagens para 12 palavras</li>
+                  <li>Mínimo de 99 rolagens para 24 palavras</li>
+                  <li>Você pode rolar mais — sempre aumenta a segurança</li>
+                </ul>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <h4>Confirme para gerar</h4>
+                <p>Após atingir o mínimo de rolagens, pressione ✓ para confirmar. A ColdCard usa sua sequência de dados combinada com seu próprio TRNG (True Random Number Generator) para calcular a seed final.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <h4>Anote as palavras exibidas</h4>
+                <p>A ColdCard exibe as palavras uma a uma ou em grupos. Anote todas à mão, na ordem exata, em papel. Nunca fotografe a tela. Confirme no dispositivo que você anotou corretamente antes de prosseguir.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-orange" style="margin-top:20px">
+            <p style="font-size: 14px; margin:0; color: var(--text)">
+              A ColdCard documenta abertamente o algoritmo de conversão de dados em seed. Você pode verificar a matemática por conta própria no documento oficial "Verifying Dice Roll Math" disponível em <code>coldcard.com/docs</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ──── KRUX ──── -->
+      <div class="tool-card" id="card-krux">
+        <div class="tool-card-header" onclick="toggleCard('krux')">
+          <div class="tool-card-title">
+            <span style="font-size:22px">🔓</span>
+            <div>
+              <div>Krux</div>
+              <div style="font-size:12px; font-weight:400; color: var(--muted)">Hardware wallet open-source — suporte a dados, câmera e seleção manual</div>
+            </div>
+          </div>
+          <span class="tool-card-arrow">▼</span>
+        </div>
+        <div class="tool-card-body">
+          <p>
+            O Krux é um firmware open-source que transforma dispositivos genéricos de mercado em hardware wallets Bitcoin. Além da geração por dado, ele oferece dois métodos únicos: geração por câmera (hash da imagem como entropia) e seleção manual de palavras BIP-39. Os três se aplicam a seeds de 12 ou 24 palavras.
+          </p>
+
+          <h3>Método A — Dados (D6 ou D20)</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Acesse New Mnemonic</h4>
+                <p>Na tela inicial do Krux: <strong>New Mnemonic → selecione 12 ou 24 palavras → Dice (D6 ou D20)</strong></p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Insira cada rolagem</h4>
+                <p>A tela mostra o teclado de entrada. Digite cada resultado após rolar o dado físico. O Krux exibe o contador de rolagens e o hash acumulado da entropia.</p>
+                <ul>
+                  <li>D6, 12 palavras: mínimo 50 rolagens</li>
+                  <li>D6, 24 palavras: mínimo 99 rolagens</li>
+                  <li>D20, 12 palavras: mínimo 30 rolagens</li>
+                  <li>D20, 24 palavras: mínimo 60 rolagens</li>
+                </ul>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Confirme e anote</h4>
+                <p>O Krux exibe o hash SHA-256 da sua sequência para verificação opcional. Confirme para gerar e visualizar as palavras da seed. Anote tudo à mão.</p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <h3>Método B — Câmera</h3>
+          <p>O Krux tira uma foto de uma cena aleatória e usa o hash dos dados da imagem como entropia. É um método rápido, mas menos auditável do que os físicos.</p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Selecione Camera</h4>
+                <p><strong>New Mnemonic → 12 ou 24 palavras → Camera</strong>. O Krux exibe métricas de qualidade de entropia enquanto você enquadra a cena.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Aponte para uma cena complexa e aleatória</h4>
+                <p>Idealmente: uma superfície texturizada, uma parede com detalhes, ou qualquer cena com muita variação visual. Evite fundos lisos ou imagens uniformes, que geram menos entropia.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Capture e anote</h4>
+                <p>Pressione para capturar. O Krux gera e exibe as palavras da seed. Anote todas à mão.</p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <h3>Método C — Seleção Manual de Palavras</h3>
+          <p>Este método é o equivalente eletrônico do sorteio de papel: você escolhe as primeiras 23 palavras manualmente (de qualquer forma que preferir) e o Krux calcula a 24ª.</p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Selecione Manual</h4>
+                <p><strong>New Mnemonic → 12 ou 24 palavras → Manual</strong>.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Insira as palavras uma a uma</h4>
+                <p>O Krux exibe um teclado inteligente que filtra automaticamente as palavras válidas conforme você digita. Para a última palavra, ele restringe as opções às que possuem checksum válido.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Confirme e salve o mnemônico</h4>
+                <p>Após inserir todas as palavras, o Krux exibe a seed completa para confirmação. Anote e guarde com segurança.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="notice notice-tip" style="margin-top: 20px">
+            <span class="notice-icon">✅</span>
+            <div>O Krux exibe o hash SHA-256 de toda a sequência de rolagens antes de gerar a seed. Você pode verificar esse hash de forma independente para confirmar que o dispositivo calculou corretamente.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- PRÓXIMOS PASSOS -->
+      <div class="section-header">
+        <div class="section-icon">🏁</div>
+        <div>
+          <h2>Próximos passos</h2>
+          <p>Você gerou sua seed. E agora?</p>
+        </div>
+      </div>
+
+      <div class="card card-orange">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Faça o backup em metal</h4>
+              <p>Papel queima e molha. Considere gravar sua seed em uma placa de aço inoxidável ou usar um produto específico para backup em metal. Isso protege contra incêndio e água.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Considere uma passphrase (25ª palavra)</h4>
+              <p>Uma passphrase adiciona uma camada extra de segurança. Mesmo que alguém encontre sua seed, sem a passphrase não consegue acessar os fundos. Mas atenção: se você perder a passphrase, perde os fundos.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Teste a recuperação antes de depositar</h4>
+              <p>Antes de enviar qualquer quantia significativa, teste recuperar a carteira a partir da seed em uma carteira diferente. Verifique se os endereços coincidem.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>Configure a auto-custódia completa</h4>
+              <p>Veja o guia completo de como configurar sua carteira de auto-custódia em <a href="https://letabuild.com/custodia/">letabuild.com/custodia</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-prev" onclick="goTo(5)">← Anterior</button>
+        <button class="btn btn-next" style="background: var(--green)" onclick="alert('Tutorial concluído! Guarde sua seed phrase com segurança.')">Concluir ✓</button>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-text">Conteúdo baseado nos tutoriais do canal <a href="https://www.youtube.com/@bitcoinheiros" target="_blank" rel="noopener">bitcoinheiros</a> e nas documentações oficiais do <a href="https://github.com/iancoleman/bip39" target="_blank" rel="noopener">Ian Coleman BIP-39</a>, <a href="https://coldcard.com/docs" target="_blank" rel="noopener">ColdCard</a> e <a href="https://selfcustody.github.io/krux/" target="_blank" rel="noopener">Krux</a>.</p>
+    <p class="footer-text">Feito por <a href="https://letabuild.com">letabuild.com</a> &middot; Sem cookies, sem rastreamento.</p>
+  </footer>
+
+  <script>
+    const TOTAL_SECTIONS = 7;
+    let current = 0;
+
+    function goTo(n) {
+      // Mark previous as done
+      document.querySelectorAll('.nav-pill')[current].classList.remove('active');
+      document.querySelectorAll('.nav-pill')[current].classList.add('done');
+      document.querySelector('#section-' + current).classList.remove('active');
+
+      current = n;
+
+      document.querySelector('#section-' + current).classList.add('active');
+      const pill = document.querySelectorAll('.nav-pill')[current];
+      pill.classList.remove('done');
+      pill.classList.add('active');
+
+      // Scroll pill into view
+      pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+      // Update progress bar
+      const pct = Math.round(((current + 1) / TOTAL_SECTIONS) * 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+
+      // Scroll to top of page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Allow clicking nav pills directly
+    document.querySelectorAll('.nav-pill').forEach((pill, idx) => {
+      pill.addEventListener('click', () => goTo(idx));
+    });
+
+    // Toggle tool cards (accordion)
+    function toggleCard(id) {
+      const card = document.getElementById('card-' + id);
+      card.classList.toggle('open');
+    }
+
+    // Switch method tabs (dice D6/D20)
+    function switchMethod(group, method, el) {
+      document.querySelectorAll('#' + group + '-tabs .method-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+
+      document.querySelectorAll('[id^="' + group + '-"]').forEach(c => {
+        if (c.classList.contains('method-content')) c.classList.remove('active');
+      });
+      const target = document.getElementById(group + '-' + method);
+      if (target) target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 // ============================================================
 
 (function () {
-  let lang = 'pt';
+  let lang = (window.letabuildLang && window.letabuildLang.get()) || 'pt';
   let pendingTutorialId = null;
 
   // ── DOM ─────────────────────────────────────────────────
@@ -33,7 +33,7 @@
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
     document.title = ui.landingTitle + ' — ' + ui.landingTitleHighlight;
 
-    $('langToggle').textContent = ui.langToggle;
+    // langToggle button is managed by shared lang-toggle.js (flags)
 
     // Landing
     $('landingTitle').innerHTML = lang === 'pt'
@@ -612,16 +612,18 @@
   function init() {
     setLanguage(lang);
 
-    $('langToggle').addEventListener('click', function () {
-      lang = lang === 'pt' ? 'en' : 'pt';
-      setLanguage(lang);
-
-      if (screens.browse.classList.contains('active')) renderBrowse();
-      if (screens.wizard.classList.contains('active')) renderWizard();
-      if (screens.practices.classList.contains('active') && pendingTutorialId) renderPractices(pendingTutorialId);
-      if (screens.tutorial.classList.contains('active')) {
-        Tutorial.load(Tutorial.getTutorialId(), lang);
-        renderStep();
+    // Language changes come from shared lang-toggle.js via langchange event
+    window.addEventListener('langchange', function (e) {
+      if (e.detail && e.detail.lang && e.detail.lang !== lang) {
+        lang = e.detail.lang;
+        setLanguage(lang);
+        if (screens.browse.classList.contains('active')) renderBrowse();
+        if (screens.wizard.classList.contains('active')) renderWizard();
+        if (screens.practices.classList.contains('active') && pendingTutorialId) renderPractices(pendingTutorialId);
+        if (screens.tutorial.classList.contains('active')) {
+          Tutorial.load(Tutorial.getTutorialId(), lang);
+          renderStep();
+        }
       }
     });
 

@@ -243,6 +243,7 @@
     }
   </style>
 <script src="/theme-toggle.js"></script>
+<script src="/lang-toggle.js"></script>
 </head>
 <body>
 
@@ -251,36 +252,37 @@
     <a href="/" class="nav-back">←</a>
     <a href="/" class="nav-logo">leta<span>build</span></a>
     <span class="nav-sep">/</span>
-    <span class="nav-current">Simulador DCA</span>
+    <span class="nav-current" data-pt="Simulador DCA" data-en="DCA Simulator">Simulador DCA</span>
     <button id="themeToggle" style="margin-left:auto;background:none;border:1px solid rgba(224,138,58,0.15);color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;" title="Alternar tema"></button>
+    <button id="langToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:var(--muted);min-width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 8px;"></button>
   </nav>
 </header>
 
 <main>
 
   <div class="hero">
-    <h1>Simulador <span>DCA</span></h1>
-    <p>Se eu tivesse investido um valor fixo por mês desde [data], quanto teria hoje?</p>
+    <h1 data-pt="Simulador <span>DCA</span>" data-en="<span>DCA</span> Simulator">Simulador <span>DCA</span></h1>
+    <p data-pt="Se eu tivesse investido um valor fixo por mês desde [data], quanto teria hoje?" data-en="What if I had invested a fixed amount monthly since [date]? How much would I have today?">Se eu tivesse investido um valor fixo por mês desde [data], quanto teria hoje?</p>
   </div>
 
   <div class="explainer">
     <button class="explainer-btn" id="explainer-btn">
-      <span>💡 O que é DCA e por que funciona?</span>
+      <span data-pt="💡 O que é DCA e por que funciona?" data-en="💡 What is DCA and why does it work?">💡 O que é DCA e por que funciona?</span>
       <span class="explainer-arrow" id="explainer-arrow">▼</span>
     </button>
     <div class="explainer-body" id="explainer-body">
-      <p><strong>Dollar Cost Averaging (DCA)</strong> é uma estratégia onde você investe um valor fixo em intervalos regulares — todo mês, independente do preço do ativo.</p>
-      <p>Quando o preço cai, seu dinheiro compra mais unidades. Quando sobe, compra menos. Com o tempo, seu preço médio de entrada se estabiliza em um valor razoável, diluindo o risco de ter entrado no topo do mercado.</p>
-      <p>É especialmente poderosa em ativos voláteis como o Bitcoin: em vez de tentar prever o momento certo, você investe com disciplina e deixa o tempo trabalhar.</p>
+      <p data-pt="<strong>Dollar Cost Averaging (DCA)</strong> é uma estratégia onde você investe um valor fixo em intervalos regulares — todo mês, independente do preço do ativo." data-en="<strong>Dollar Cost Averaging (DCA)</strong> is a strategy where you invest a fixed amount at regular intervals — every month, regardless of the asset price."><strong>Dollar Cost Averaging (DCA)</strong> é uma estratégia onde você investe um valor fixo em intervalos regulares — todo mês, independente do preço do ativo.</p>
+      <p data-pt="Quando o preço cai, seu dinheiro compra mais unidades. Quando sobe, compra menos. Com o tempo, seu preço médio de entrada se estabiliza em um valor razoável, diluindo o risco de ter entrado no topo do mercado." data-en="When the price drops, your money buys more units. When it rises, it buys fewer. Over time, your average entry price stabilizes at a reasonable level, diluting the risk of having bought at the market top.">Quando o preço cai, seu dinheiro compra mais unidades. Quando sobe, compra menos. Com o tempo, seu preço médio de entrada se estabiliza em um valor razoável, diluindo o risco de ter entrado no topo do mercado.</p>
+      <p data-pt="É especialmente poderosa em ativos voláteis como o Bitcoin: em vez de tentar prever o momento certo, você investe com disciplina e deixa o tempo trabalhar." data-en="It is especially powerful for volatile assets like Bitcoin: instead of trying to time the market, you invest with discipline and let time do the work.">É especialmente poderosa em ativos voláteis como o Bitcoin: em vez de tentar prever o momento certo, você investe com disciplina e deixa o tempo trabalhar.</p>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Configure sua simulação</div>
+    <div class="card-title" data-pt="Configure sua simulação" data-en="Set up your simulation">Configure sua simulação</div>
     <div class="form-grid">
 
       <div class="form-group">
-        <label>Ativo principal</label>
+        <label data-pt="Ativo principal" data-en="Primary asset">Ativo principal</label>
         <select id="main-asset">
           <option value="btc">₿ Bitcoin (BTC)</option>
           <option value="sp500">📈 S&P 500</option>
@@ -292,7 +294,7 @@
       </div>
 
       <div class="form-group">
-        <label>Exibir valores em</label>
+        <label data-pt="Exibir valores em" data-en="Display values in">Exibir valores em</label>
         <div class="toggle" id="currency-toggle">
           <div class="toggle-opt active" data-currency="BRL">BRL (R$)</div>
           <div class="toggle-opt" data-currency="USD">USD ($)</div>
@@ -300,7 +302,7 @@
       </div>
 
       <div class="form-group">
-        <label>Investimento mensal</label>
+        <label data-pt="Investimento mensal" data-en="Monthly investment">Investimento mensal</label>
         <div class="amount-wrap">
           <span class="amount-prefix" id="currency-sym">R$</span>
           <input type="number" id="monthly-amount" placeholder="1000" min="1" value="1000">
@@ -308,7 +310,7 @@
       </div>
 
       <div class="form-group">
-        <label>A partir de</label>
+        <label data-pt="A partir de" data-en="Starting from">A partir de</label>
         <div class="date-selects">
           <select id="start-month">
             <option value="01">Janeiro</option>
@@ -329,13 +331,13 @@
       </div>
 
       <div class="form-group full">
-        <label>Comparar com</label>
+        <label data-pt="Comparar com" data-en="Compare with">Comparar com</label>
         <div class="pills" id="benchmark-pills">
           <div class="pill active" data-asset="sp500">
             <span class="pill-dot" style="background:#4ade80"></span>S&P 500
           </div>
           <div class="pill" data-asset="gold">
-            <span class="pill-dot" style="background:#fbbf24"></span>Ouro
+            <span class="pill-dot" style="background:#fbbf24"></span><span data-pt="Ouro" data-en="Gold">Ouro</span>
           </div>
           <div class="pill" data-asset="qqq">
             <span class="pill-dot" style="background:#38bdf8"></span>QQQ
@@ -347,7 +349,7 @@
             <span class="pill-dot" style="background:#f7931a"></span>Bitcoin
           </div>
           <div class="pill" data-asset="poupanca">
-            <span class="pill-dot" style="background:#22c55e"></span>Poupança
+            <span class="pill-dot" style="background:#22c55e"></span><span data-pt="Poupança" data-en="Savings">Poupança</span>
           </div>
         </div>
       </div>
@@ -355,32 +357,32 @@
     </div>
 
     <div id="error-msg"></div>
-    <button class="btn" id="simulate-btn">Simular →</button>
+    <button class="btn" id="simulate-btn" data-pt="Simular →" data-en="Simulate →">Simular →</button>
   </div>
 
   <div id="loading">
     <div class="spinner"></div>
-    <div class="loading-msg">Buscando cotações do Bitcoin...</div>
+    <div class="loading-msg" data-pt="Buscando cotações do Bitcoin..." data-en="Fetching Bitcoin prices...">Buscando cotações do Bitcoin...</div>
   </div>
 
   <div id="results">
     <div class="card">
-      <div class="card-title" id="results-title">Resultado</div>
+      <div class="card-title" id="results-title" data-pt="Resultado" data-en="Result">Resultado</div>
       <div class="summary-grid">
         <div class="sum-card">
-          <div class="sum-label">Total Investido</div>
+          <div class="sum-label" data-pt="Total Investido" data-en="Total Invested">Total Investido</div>
           <div class="sum-value" id="s-invested">—</div>
         </div>
         <div class="sum-card">
-          <div class="sum-label">Valor Hoje</div>
+          <div class="sum-label" data-pt="Valor Hoje" data-en="Current Value">Valor Hoje</div>
           <div class="sum-value" id="s-value">—</div>
         </div>
         <div class="sum-card">
-          <div class="sum-label">Retorno Total</div>
+          <div class="sum-label" data-pt="Retorno Total" data-en="Total Return">Retorno Total</div>
           <div class="sum-value" id="s-return">—</div>
         </div>
         <div class="sum-card">
-          <div class="sum-label">Retorno Anual (CAGR)</div>
+          <div class="sum-label" data-pt="Retorno Anual (CAGR)" data-en="Annual Return (CAGR)">Retorno Anual (CAGR)</div>
           <div class="sum-value" id="s-cagr">—</div>
           <div class="sum-sub" id="s-period">—</div>
         </div>
@@ -389,7 +391,7 @@
 
     <div class="card">
       <div class="card-header-row">
-        <div class="card-title">Crescimento do Portfólio</div>
+        <div class="card-title" data-pt="Crescimento do Portfólio" data-en="Portfolio Growth">Crescimento do Portfólio</div>
         <div class="toggle scale-toggle" id="scale-toggle">
           <div class="toggle-opt active" data-scale="linear">Linear</div>
           <div class="toggle-opt" data-scale="log">Log</div>
@@ -401,15 +403,15 @@
     </div>
 
     <div class="card">
-      <div class="card-title">Comparativo de Estratégias</div>
+      <div class="card-title" data-pt="Comparativo de Estratégias" data-en="Strategy Comparison">Comparativo de Estratégias</div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Ativo</th>
-              <th>Total Investido</th>
-              <th>Valor Final</th>
-              <th>Retorno</th>
+              <th data-pt="Ativo" data-en="Asset">Ativo</th>
+              <th data-pt="Total Investido" data-en="Total Invested">Total Investido</th>
+              <th data-pt="Valor Final" data-en="Final Value">Valor Final</th>
+              <th data-pt="Retorno" data-en="Return">Retorno</th>
               <th>CAGR</th>
             </tr>
           </thead>
@@ -421,7 +423,7 @@
 
 </main>
 
-<footer>
+<footer data-pt='feito por <a href="https://caioleta.com">leta</a> &nbsp;·&nbsp; dados: CryptoCompare, Yahoo Finance, Banco Central do Brasil' data-en='made by <a href="https://caioleta.com">leta</a> &nbsp;·&nbsp; data: CryptoCompare, Yahoo Finance, Central Bank of Brazil'>
   feito por <a href="https://caioleta.com">leta</a>
   &nbsp;·&nbsp;
   dados: CryptoCompare, Yahoo Finance, Banco Central do Brasil
@@ -445,13 +447,18 @@ const IBOV_DATA = {"1999-01":8172.0,"1999-02":8911.0,"1999-03":10696.0,"1999-04"
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 
 const ASSETS = {
-  btc:     { label: 'Bitcoin',   currency: 'USD', color: '#f7931a' },
-  gold:    { label: 'Ouro',      currency: 'USD', color: '#fbbf24' },
-  sp500:   { label: 'S&P 500',   currency: 'USD', color: '#4ade80' },
-  qqq:     { label: 'QQQ',       currency: 'USD', color: '#38bdf8' },
-  ibov:    { label: 'Ibovespa',  currency: 'BRL', color: '#a78bfa' },
-  poupanca:{ label: 'Poupança',  currency: 'BRL', color: '#22c55e' },
+  btc:     { label: 'Bitcoin',   labelEn: 'Bitcoin',   currency: 'USD', color: '#f7931a' },
+  gold:    { label: 'Ouro',      labelEn: 'Gold',      currency: 'USD', color: '#fbbf24' },
+  sp500:   { label: 'S&P 500',   labelEn: 'S&P 500',   currency: 'USD', color: '#4ade80' },
+  qqq:     { label: 'QQQ',       labelEn: 'QQQ',       currency: 'USD', color: '#38bdf8' },
+  ibov:    { label: 'Ibovespa',  labelEn: 'Ibovespa',  currency: 'BRL', color: '#a78bfa' },
+  poupanca:{ label: 'Poupança',  labelEn: 'Savings',   currency: 'BRL', color: '#22c55e' },
 };
+
+function assetLabel(id) {
+  var lang = window.letabuildLang ? window.letabuildLang.get() : 'pt';
+  return lang === 'en' ? ASSETS[id].labelEn : ASSETS[id].label;
+}
 
 // Map asset id → static data object (for non-BTC)
 const STATIC = { sp500: SP500_DATA, qqq: QQQ_DATA, gold: GLD_DATA, ibov: IBOV_DATA };
@@ -511,7 +518,10 @@ function getNearest(map, targetKey) {
 }
 
 function labelMonth(key) {
-  const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  var lang = window.letabuildLang ? window.letabuildLang.get() : 'pt';
+  const monthsPt = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const monthsEn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months = lang === 'en' ? monthsEn : monthsPt;
   const [y, m] = key.split('-').map(Number);
   return `${months[m-1]}/${y}`;
 }
@@ -522,10 +532,10 @@ async function fetchBTC() {
   // CryptoCompare: CORS nativo, dados desde 2010, gratuito, sem autenticação
   const url = 'https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&allData=true';
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`Bitcoin: erro ${res.status} ao buscar dados.`);
+  if (!res.ok) throw new Error((window.letabuildLang && window.letabuildLang.get() === 'en') ? `Bitcoin: error ${res.status} fetching data.` : `Bitcoin: erro ${res.status} ao buscar dados.`);
   const json = await res.json();
   const data = json?.Data?.Data;
-  if (!data || !data.length) throw new Error('Bitcoin: nenhum dado encontrado.');
+  if (!data || !data.length) throw new Error((window.letabuildLang && window.letabuildLang.get() === 'en') ? 'Bitcoin: no data found.' : 'Bitcoin: nenhum dado encontrado.');
   // Convert daily to monthly (last close of each month)
   const map = {};
   for (const { time, close } of data) {
@@ -534,7 +544,7 @@ async function fetchBTC() {
       map[key] = close; // later dates overwrite → last day of month wins
     }
   }
-  if (Object.keys(map).length === 0) throw new Error('Bitcoin: nenhum dado válido encontrado.');
+  if (Object.keys(map).length === 0) throw new Error((window.letabuildLang && window.letabuildLang.get() === 'en') ? 'Bitcoin: no valid data found.' : 'Bitcoin: nenhum dado válido encontrado.');
   return map;
 }
 
@@ -598,10 +608,11 @@ let currentScale = 'linear';
 
 function renderResults(results, mainAsset, displayCcy) {
   const fmt = n => fmtCurr(n, displayCcy);
+  var lang = window.letabuildLang ? window.letabuildLang.get() : 'pt';
 
   const main = results[mainAsset];
   if (!main || main.length === 0) {
-    showError('Sem dados suficientes para o período selecionado. Tente uma data mais recente.');
+    showError(lang === 'en' ? 'Not enough data for the selected period. Try a more recent date.' : 'Sem dados suficientes para o período selecionado. Tente uma data mais recente.');
     return;
   }
 
@@ -615,16 +626,15 @@ function renderResults(results, mainAsset, displayCcy) {
   $('s-return').textContent   = fmtPct(ret);
   $('s-return').className     = 'sum-value ' + (ret >= 0 ? 'pos' : 'neg');
   $('s-cagr').textContent     = fmtPct(cagr) + ' a.a.';
-  $('s-cagr').className       = 'sum-value ' + (cagr >= 0 ? 'pos' : 'neg');
-  $('s-period').textContent   = `${main.length} meses`;
-  $('results-title').textContent = `Resultado — DCA em ${ASSETS[mainAsset].label}`;
+  $('s-period').textContent   = lang === 'en' ? `${main.length} months` : `${main.length} meses`;
+  $('results-title').textContent = lang === 'en' ? `Result — DCA in ${ASSETS[mainAsset].labelEn || ASSETS[mainAsset].label}` : `Resultado — DCA em ${ASSETS[mainAsset].label}`;
 
   // ── Chart
   const labels   = main.map(p => labelMonth(p.key));
   const datasets = [];
 
   datasets.push({
-    label: 'Total Investido',
+    label: lang === 'en' ? 'Total Invested' : 'Total Investido',
     data: main.map(p => p.invested),
     borderColor: '#484f58', borderWidth: 1.5, borderDash: [5, 4],
     pointRadius: 0, fill: false, tension: 0,
@@ -636,7 +646,7 @@ function renderResults(results, mainAsset, displayCcy) {
       return match ? match.value : null;
     });
     datasets.push({
-      label: ASSETS[id].label,
+      label: assetLabel(id),
       data: aligned,
       borderColor: ASSETS[id].color,
       borderWidth: id === mainAsset ? 2.5 : 1.5,
@@ -690,8 +700,8 @@ function renderResults(results, mainAsset, displayCcy) {
       <td>
         <div class="asset-name">
           <span class="asset-dot" style="background:${ASSETS[id].color}"></span>
-          ${ASSETS[id].label}
-          ${id === mainAsset ? '<span class="badge">principal</span>' : ''}
+          ${assetLabel(id)}
+          ${id === mainAsset ? '<span class="badge">' + (lang === 'en' ? 'primary' : 'principal') + '</span>' : ''}
         </div>
       </td>
       <td>${fmt(l.invested)}</td>
@@ -709,9 +719,10 @@ function renderResults(results, mainAsset, displayCcy) {
 // ─── LOADING / ERROR ─────────────────────────────────────────────────────────
 
 function setLoading(on) {
+  var lang = window.letabuildLang ? window.letabuildLang.get() : 'pt';
   $('loading').style.display    = on ? 'block' : 'none';
   $('simulate-btn').disabled    = on;
-  $('simulate-btn').textContent = on ? 'Calculando...' : 'Simular →';
+  $('simulate-btn').textContent = on ? (lang === 'en' ? 'Calculating...' : 'Calculando...') : (lang === 'en' ? 'Simulate →' : 'Simular →');
 }
 
 function showError(msg) {
@@ -737,19 +748,20 @@ async function simulate() {
   const startInput = `${$('start-year').value}-${$('start-month').value}`;
   const displayCcy = (document.querySelector('#currency-toggle .toggle-opt.active') || document.querySelector('#currency-toggle .toggle-opt')).dataset.currency;
 
-  if (!monthly || monthly <= 0) { showError('Informe um valor mensal válido.'); return; }
-  if (!startInput)               { showError('Selecione a data de início.'); return; }
+  var lang = window.letabuildLang ? window.letabuildLang.get() : 'pt';
+  if (!monthly || monthly <= 0) { showError(lang === 'en' ? 'Enter a valid monthly amount.' : 'Informe um valor mensal válido.'); return; }
+  if (!startInput)               { showError(lang === 'en' ? 'Select a start date.' : 'Selecione a data de início.'); return; }
 
   const [sy, sm]  = startInput.split('-').map(Number);
   const startDate = new Date(sy, sm - 1, 1);
   const endDate   = new Date();
 
-  if (startDate >= endDate) { showError('A data de início deve ser anterior ao mês atual.'); return; }
+  if (startDate >= endDate) { showError(lang === 'en' ? 'Start date must be before the current month.' : 'A data de início deve ser anterior ao mês atual.'); return; }
 
   // Validate minimums
-  if (allAssets.includes('btc')  && startDate < new Date(2010, 6, 1))  { showError('Bitcoin tem dados disponíveis a partir de julho de 2010.'); return; }
-  if (allAssets.includes('gold') && startDate < new Date(2004, 10, 1)) { showError('Ouro (GLD) tem dados disponíveis a partir de novembro de 2004.'); return; }
-  if (allAssets.includes('qqq')  && startDate < new Date(1999, 2, 1))  { showError('QQQ tem dados disponíveis a partir de março de 1999.'); return; }
+  if (allAssets.includes('btc')  && startDate < new Date(2010, 6, 1))  { showError(lang === 'en' ? 'Bitcoin data is available from July 2010.' : 'Bitcoin tem dados disponíveis a partir de julho de 2010.'); return; }
+  if (allAssets.includes('gold') && startDate < new Date(2004, 10, 1)) { showError(lang === 'en' ? 'Gold (GLD) data is available from November 2004.' : 'Ouro (GLD) tem dados disponíveis a partir de novembro de 2004.'); return; }
+  if (allAssets.includes('qqq')  && startDate < new Date(1999, 2, 1))  { showError(lang === 'en' ? 'QQQ data is available from March 1999.' : 'QQQ tem dados disponíveis a partir de março de 1999.'); return; }
 
   setLoading(true);
 
@@ -780,7 +792,7 @@ async function simulate() {
     renderResults(results, mainAsset, displayCcy);
 
   } catch (err) {
-    showError(err.message || 'Erro ao buscar dados. Verifique sua conexão e tente novamente.');
+    showError(err.message || (lang === 'en' ? 'Error fetching data. Check your connection and try again.' : 'Erro ao buscar dados. Verifique sua conexão e tente novamente.'));
     console.error(err);
   } finally {
     setLoading(false);
@@ -844,6 +856,36 @@ document.querySelectorAll('#scale-toggle .toggle-opt').forEach(opt => {
     }
   });
 });
+</script>
+
+<script>
+(function() {
+  var monthsPt = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  var monthsEn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function updateDynamic(lang) {
+    var sel = document.getElementById('start-month');
+    var months = lang === 'en' ? monthsEn : monthsPt;
+    for (var i = 0; i < sel.options.length; i++) {
+      sel.options[i].textContent = months[i];
+    }
+    // Update asset select options
+    var asset = document.getElementById('main-asset');
+    var assetLabels = {
+      pt: ['₿ Bitcoin (BTC)','📈 S&P 500','💻 QQQ (Nasdaq-100)','🥇 Ouro (via GLD)','🇧🇷 Ibovespa','🏦 Poupança (BR)'],
+      en: ['₿ Bitcoin (BTC)','📈 S&P 500','💻 QQQ (Nasdaq-100)','🥇 Gold (via GLD)','🇧🇷 Ibovespa','🏦 Savings (BR)']
+    };
+    for (var i = 0; i < asset.options.length; i++) {
+      asset.options[i].textContent = assetLabels[lang][i];
+    }
+  }
+
+  window.addEventListener('langchange', function(e) { updateDynamic(e.detail.lang); });
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = window.letabuildLang ? window.letabuildLang.get() : 'pt';
+    if (lang !== 'pt') updateDynamic(lang);
+  });
+})();
 </script>
 
 </body>

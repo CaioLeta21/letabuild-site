@@ -26,61 +26,63 @@
   html[data-theme="dark"] .back-link:hover { color: #e08a3a; }
 </style>
 <script src="/theme-toggle.js"></script>
+<script src="/lang-toggle.js"></script>
 </head>
 <body>
 <a class="back-link" href="/">&#8249; letabuild.com</a>
 
-<div style="display:flex;justify-content:flex-end;padding:0 24px;">
+<div style="display:flex;justify-content:flex-end;padding:0 24px;gap:8px;">
+<button id="langToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:#b0a090;min-width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 8px;"></button>
 <button id="themeToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:#b0a090;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;" title="Alternar tema"></button>
 </div>
 
 <div class="btc-dashboard" data-locale="pt">
   <div class="bd-header">
-    <h1>Termômetro do Bitcoin</h1>
-    <p class="bd-subtitle">Sinais de compra e venda baseados em indicadores on-chain e de mercado</p>
+    <h1 data-pt="Termometro do Bitcoin" data-en="Bitcoin Thermometer">Termômetro do Bitcoin</h1>
+    <p class="bd-subtitle" data-pt="Sinais de compra e venda baseados em indicadores on-chain e de mercado" data-en="Buy and sell signals based on on-chain and market indicators">Sinais de compra e venda baseados em indicadores on-chain e de mercado</p>
   </div>
 
   <div class="bd-price-banner" id="bd-price-banner">
-    <span class="bd-price-value">Carregando dados...</span>
+    <span class="bd-price-value" data-pt="Carregando dados..." data-en="Loading data...">Carregando dados...</span>
   </div>
 
   <div class="bd-signal-row">
-    <div class="bd-consolidated" id="bd-consolidated">Calculando...</div>
+    <div class="bd-consolidated" id="bd-consolidated" data-pt="Calculando..." data-en="Calculating...">Calculando...</div>
     <button class="bd-help-btn" id="bd-help-btn" aria-label="Explicacao do sinal">?</button>
   </div>
 
   <div class="bd-explanation" id="bd-explanation">
-    <h3>Como o sinal consolidado e calculado</h3>
-    <p>Cada indicador gera um score individual de -2 (venda forte) a +2 (compra forte). O score consolidado e a media dos scores dos indicadores selecionados.</p>
+    <h3 data-pt="Como o sinal consolidado e calculado" data-en="How the consolidated signal is calculated">Como o sinal consolidado e calculado</h3>
+    <p data-pt="Cada indicador gera um score individual de -2 (venda forte) a +2 (compra forte). O score consolidado e a media dos scores dos indicadores selecionados." data-en="Each indicator generates an individual score from -2 (strong sell) to +2 (strong buy). The consolidated score is the average of the selected indicators' scores.">Cada indicador gera um score individual de -2 (venda forte) a +2 (compra forte). O score consolidado e a media dos scores dos indicadores selecionados.</p>
     <table class="bd-score-table">
-      <thead><tr><th>Score</th><th>Sinal</th></tr></thead>
+      <thead><tr><th>Score</th><th data-pt="Sinal" data-en="Signal">Sinal</th></tr></thead>
       <tbody>
-        <tr><td>+2</td><td style="color:#00C853">COMPRA FORTE</td></tr>
-        <tr><td>+1</td><td style="color:#69F0AE">COMPRA</td></tr>
-        <tr><td>0</td><td style="color:#FFD600">NEUTRO</td></tr>
-        <tr><td>-1</td><td style="color:#FF6D00">VENDA</td></tr>
-        <tr><td>-2</td><td style="color:#FF1744">VENDA FORTE</td></tr>
+        <tr><td>+2</td><td style="color:#00C853" data-pt="COMPRA FORTE" data-en="STRONG BUY">COMPRA FORTE</td></tr>
+        <tr><td>+1</td><td style="color:#69F0AE" data-pt="COMPRA" data-en="BUY">COMPRA</td></tr>
+        <tr><td>0</td><td style="color:#FFD600" data-pt="NEUTRO" data-en="NEUTRAL">NEUTRO</td></tr>
+        <tr><td>-1</td><td style="color:#FF6D00" data-pt="VENDA" data-en="SELL">VENDA</td></tr>
+        <tr><td>-2</td><td style="color:#FF1744" data-pt="VENDA FORTE" data-en="STRONG SELL">VENDA FORTE</td></tr>
       </tbody>
     </table>
     <hr>
-    <h4>Detalhamento atual</h4>
+    <h4 data-pt="Detalhamento atual" data-en="Current breakdown">Detalhamento atual</h4>
     <div id="bd-breakdown"></div>
     <hr>
-    <h4>Escolha quais indicadores usar no calculo</h4>
+    <h4 data-pt="Escolha quais indicadores usar no calculo" data-en="Choose which indicators to use">Escolha quais indicadores usar no calculo</h4>
     <div class="bd-checklist" id="bd-checklist">
       <label><input type="checkbox" value="mayer_multiple" checked> Mayer Multiple</label>
       <label><input type="checkbox" value="200w_ma_ratio" checked> 200W MA Ratio</label>
       <label><input type="checkbox" value="mvrv" checked> MVRV Ratio</label>
       <label><input type="checkbox" value="fear_greed" checked> Fear & Greed</label>
-      <label><input type="checkbox" value="rsi_weekly" checked> RSI Semanal BTC/USD</label>
-      <label><input type="checkbox" value="rsi_monthly" checked> RSI Mensal BTC/USD</label>
-      <label><input type="checkbox" value="rsi_xau_weekly" checked> RSI Semanal BTC/XAU</label>
-      <label><input type="checkbox" value="rsi_xau_monthly" checked> RSI Mensal BTC/XAU</label>
+      <label><input type="checkbox" value="rsi_weekly" checked> <span data-pt="RSI Semanal BTC/USD" data-en="RSI Weekly BTC/USD">RSI Semanal BTC/USD</span></label>
+      <label><input type="checkbox" value="rsi_monthly" checked> <span data-pt="RSI Mensal BTC/USD" data-en="RSI Monthly BTC/USD">RSI Mensal BTC/USD</span></label>
+      <label><input type="checkbox" value="rsi_xau_weekly" checked> <span data-pt="RSI Semanal BTC/XAU" data-en="RSI Weekly BTC/XAU">RSI Semanal BTC/XAU</span></label>
+      <label><input type="checkbox" value="rsi_xau_monthly" checked> <span data-pt="RSI Mensal BTC/XAU" data-en="RSI Monthly BTC/XAU">RSI Mensal BTC/XAU</span></label>
     </div>
   </div>
 
   <div class="bd-loading" id="bd-loading">
-    <span class="bd-spinner"></span> Carregando dados...
+    <span class="bd-spinner"></span> <span data-pt="Carregando dados..." data-en="Loading data...">Carregando dados...</span>
   </div>
 
   <div class="bd-main">
@@ -107,22 +109,22 @@
           <span class="bd-card-signal" id="bd-card-signal-fear_greed"></span>
         </div>
         <div class="bd-card" id="bd-card-rsi_weekly">
-          <div class="bd-card-title">RSI Semanal BTC/USD</div>
+          <div class="bd-card-title" data-pt="RSI Semanal BTC/USD" data-en="RSI Weekly BTC/USD">RSI Semanal BTC/USD</div>
           <div class="bd-card-value" id="bd-card-value-rsi_weekly">...</div>
           <span class="bd-card-signal" id="bd-card-signal-rsi_weekly"></span>
         </div>
         <div class="bd-card" id="bd-card-rsi_monthly">
-          <div class="bd-card-title">RSI Mensal BTC/USD</div>
+          <div class="bd-card-title" data-pt="RSI Mensal BTC/USD" data-en="RSI Monthly BTC/USD">RSI Mensal BTC/USD</div>
           <div class="bd-card-value" id="bd-card-value-rsi_monthly">...</div>
           <span class="bd-card-signal" id="bd-card-signal-rsi_monthly"></span>
         </div>
         <div class="bd-card" id="bd-card-rsi_xau_weekly">
-          <div class="bd-card-title">RSI Semanal BTC/XAU</div>
+          <div class="bd-card-title" data-pt="RSI Semanal BTC/XAU" data-en="RSI Weekly BTC/XAU">RSI Semanal BTC/XAU</div>
           <div class="bd-card-value" id="bd-card-value-rsi_xau_weekly">...</div>
           <span class="bd-card-signal" id="bd-card-signal-rsi_xau_weekly"></span>
         </div>
         <div class="bd-card" id="bd-card-rsi_xau_monthly">
-          <div class="bd-card-title">RSI Mensal BTC/XAU</div>
+          <div class="bd-card-title" data-pt="RSI Mensal BTC/XAU" data-en="RSI Monthly BTC/XAU">RSI Mensal BTC/XAU</div>
           <div class="bd-card-value" id="bd-card-value-rsi_xau_monthly">...</div>
           <span class="bd-card-signal" id="bd-card-signal-rsi_xau_monthly"></span>
         </div>
@@ -133,7 +135,7 @@
       <div class="bd-detail" id="bd-detail">
         <div id="bd-detail-content">
           <div class="bd-detail-placeholder">
-            <p>Carregando grafico...</p>
+            <p data-pt="Carregando grafico..." data-en="Loading chart...">Carregando grafico...</p>
           </div>
         </div>
       </div>
@@ -141,8 +143,8 @@
   </div>
 
   <div class="bd-footer">
-    <span>Termômetro do Bitcoin | Dados atualizados a cada 5 minutos | </span>
-    <span id="bd-last-update">Aguardando...</span>
+    <span data-pt="Termometro do Bitcoin | Dados atualizados a cada 5 minutos | " data-en="Bitcoin Thermometer | Data updated every 5 minutes | ">Termômetro do Bitcoin | Dados atualizados a cada 5 minutos | </span>
+    <span id="bd-last-update" data-pt="Aguardando..." data-en="Waiting...">Aguardando...</span>
   </div>
 </div>
 

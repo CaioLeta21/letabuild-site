@@ -508,6 +508,7 @@
   }
 </style>
 <script src="/theme-toggle.js"></script>
+<script src="/lang-toggle.js"></script>
 </head>
 <body>
 
@@ -515,6 +516,7 @@
   <a href="/" class="nav-logo">leta<span>build</span></a>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="https://caioleta.com" target="_blank" rel="noopener noreferrer" class="nav-link">caioleta.com</a>
+    <button id="langToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:var(--text-muted,#ffffff);min-width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,color 0.2s;padding:0 8px;" title="Switch to English"></button>
     <button id="themeToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:var(--text-muted,#ffffff);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,color 0.2s;" title="Alternar tema"></button>
   </div>
 </nav>
@@ -523,20 +525,20 @@
   <div class="hero">
     <div class="hero-badge">Open Source Tools</div>
     <h1>leta<span>build</span></h1>
-    <p>Programas para uso pessoal construídos por <a href="https://caioleta.com" target="_blank" rel="noopener noreferrer">Caio Leta</a>.<br>Todos gratuitos, sem cadastro obrigatório.</p>
+    <p data-pt='Programas para uso pessoal construidos por <a href="https://caioleta.com" target="_blank" rel="noopener noreferrer">Caio Leta</a>.<br>Todos gratuitos, sem cadastro obrigatorio.' data-en='Personal tools built by <a href="https://caioleta.com" target="_blank" rel="noopener noreferrer">Caio Leta</a>.<br>All free, no sign-up required.'>Programas para uso pessoal construídos por <a href="https://caioleta.com" target="_blank" rel="noopener noreferrer">Caio Leta</a>.<br>Todos gratuitos, sem cadastro obrigatório.</p>
   </div>
 
   <div class="projects">
     <a class="card" href="/btc/">
       <div class="card-header">
         <div class="card-icon">₿</div>
-        <h2>Termômetro Bitcoin</h2>
+        <h2 data-pt="Termometro Bitcoin" data-en="Bitcoin Thermometer">Termômetro Bitcoin</h2>
       </div>
       <div class="card-body">
-        <p>Dashboard com 8 indicadores on-chain e técnicos para avaliar se e hora de comprar ou vender Bitcoin.</p>
+        <p data-pt="Dashboard com 8 indicadores on-chain e tecnicos para avaliar se e hora de comprar ou vender Bitcoin." data-en="Dashboard with 8 on-chain and technical indicators to assess whether it's time to buy or sell Bitcoin.">Dashboard com 8 indicadores on-chain e técnicos para avaliar se e hora de comprar ou vender Bitcoin.</p>
       </div>
       <div class="card-footer">
-        <span class="card-tag">Usar agora</span>
+        <span class="card-tag" data-pt="Usar agora" data-en="Use now">Usar agora</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
@@ -544,13 +546,13 @@
     <a class="card" href="/custodia/">
       <div class="card-header">
         <div class="card-icon">🔐</div>
-        <h2>Auto-Custódia</h2>
+        <h2 data-pt="Auto-Custodia" data-en="Self-Custody">Auto-Custódia</h2>
       </div>
       <div class="card-body">
-        <p>Aprenda auto-custódia Bitcoin passo a passo. Do básico ao multisig, com 7 wallets e progresso salvo.</p>
+        <p data-pt="Aprenda auto-custodia Bitcoin passo a passo. Do basico ao multisig, com 7 wallets e progresso salvo." data-en="Learn Bitcoin self-custody step by step. From basics to multisig, with 7 wallets and saved progress.">Aprenda auto-custódia Bitcoin passo a passo. Do básico ao multisig, com 7 wallets e progresso salvo.</p>
       </div>
       <div class="card-footer">
-        <span class="card-tag">Começar</span>
+        <span class="card-tag" data-pt="Comecar" data-en="Get started">Começar</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
@@ -558,13 +560,13 @@
     <a class="card" href="/dca/">
       <div class="card-header">
         <div class="card-icon">📈</div>
-        <h2>Simulador DCA</h2>
+        <h2 data-pt="Simulador DCA" data-en="DCA Simulator">Simulador DCA</h2>
       </div>
       <div class="card-body">
-        <p>Se eu tivesse investido R$X por mês desde [data], quanto teria hoje? Compare Bitcoin, S&P 500, QQQ, Ouro, Ibovespa e CDI.</p>
+        <p data-pt="Se eu tivesse investido R$X por mes desde [data], quanto teria hoje? Compare Bitcoin, S&amp;P 500, QQQ, Ouro, Ibovespa e CDI." data-en="What if I had invested $X per month since [date]? Compare Bitcoin, S&amp;P 500, QQQ, Gold, Ibovespa, and CDI.">Se eu tivesse investido R$X por mês desde [data], quanto teria hoje? Compare Bitcoin, S&P 500, QQQ, Ouro, Ibovespa e CDI.</p>
       </div>
       <div class="card-footer">
-        <span class="card-tag">Simular</span>
+        <span class="card-tag" data-pt="Simular" data-en="Simulate">Simular</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
@@ -575,10 +577,10 @@
         <h2>SAT Converter</h2>
       </div>
       <div class="card-body">
-        <p>Converta Satoshis para Reais e Dólares em tempo real. Cotação ao vivo do Bitcoin e poder de compra em sats.</p>
+        <p data-pt="Converta Satoshis para Reais e Dolares em tempo real. Cotacao ao vivo do Bitcoin e poder de compra em sats." data-en="Convert Satoshis to BRL and USD in real time. Live Bitcoin price and purchasing power in sats.">Converta Satoshis para Reais e Dólares em tempo real. Cotação ao vivo do Bitcoin e poder de compra em sats.</p>
       </div>
       <div class="card-footer">
-        <span class="card-tag">Usar agora</span>
+        <span class="card-tag" data-pt="Usar agora" data-en="Use now">Usar agora</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
@@ -589,66 +591,10 @@
         <h2>Seed Phrase Offline</h2>
       </div>
       <div class="card-body">
-        <p>Gere sua seed phrase do jeito mais seguro: com dados, moeda ou sorteio de papel. Sem internet, sem risco.</p>
+        <p data-pt="Gere sua seed phrase do jeito mais seguro: com dados, moeda ou sorteio de papel. Sem internet, sem risco." data-en="Generate your seed phrase the safest way: with dice, coin, or paper draw. No internet, no risk.">Gere sua seed phrase do jeito mais seguro: com dados, moeda ou sorteio de papel. Sem internet, sem risco.</p>
       </div>
       <div class="card-footer">
-        <span class="card-tag">Começar</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
-
-    <a class="card" href="https://ativos.letabuild.com">
-      <div class="card-header">
-        <div class="card-icon">📊</div>
-        <h2>Análise de Ativos</h2>
-      </div>
-      <div class="card-body">
-        <p>Explore e compare ações, commodities, cripto e indices. Métricas de performance, risco e fundamentos.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-tag">Usar agora</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
-
-    <a class="card" href="https://video.letabuild.com">
-      <div class="card-header">
-        <div class="card-icon">🎬</div>
-        <h2>Video Digest</h2>
-      </div>
-      <div class="card-body">
-        <p>Cole o link de um video do YouTube e receba um resumo inteligente com os pontos mais relevantes, feito por IA.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-tag">Usar agora</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
-
-    <a class="card" href="https://paper.letabuild.com">
-      <div class="card-header">
-        <div class="card-icon">📄</div>
-        <h2>Paper Digest</h2>
-      </div>
-      <div class="card-body">
-        <p>Cole um link, suba um PDF ou cole texto. Receba análise crítica ou resumo completo de qualquer artigo, feito por IA.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-tag">Usar agora</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
-
-    <a class="card" href="/habitos/">
-      <div class="card-header">
-        <div class="card-icon">📅</div>
-        <h2>Hábitos</h2>
-      </div>
-      <div class="card-body">
-        <p>Calendário de habitos e fitness. Acompanhe peso, sono, passos, treinos e mais. Visualize com graficos e heatmap anual.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-tag">Usar agora</span>
+        <span class="card-tag" data-pt="Comecar" data-en="Get started">Começar</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
@@ -659,10 +605,66 @@
         <h2>Quiz Bitcoin</h2>
       </div>
       <div class="card-body">
-        <p>Teste seus conhecimentos sobre Bitcoin com 20 perguntas. De conceitos básicos a análise on-chain. Descubra seu nível.</p>
+        <p data-pt="Teste seus conhecimentos sobre Bitcoin com 20 perguntas. De conceitos basicos a analise on-chain. Descubra seu nivel." data-en="Test your Bitcoin knowledge with 20 questions. From basic concepts to on-chain analysis. Find out your level.">Teste seus conhecimentos sobre Bitcoin com 20 perguntas. De conceitos básicos a análise on-chain. Descubra seu nível.</p>
       </div>
       <div class="card-footer">
-        <span class="card-tag">Fazer quiz</span>
+        <span class="card-tag" data-pt="Fazer quiz" data-en="Take quiz">Fazer quiz</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://ativos.letabuild.com">
+      <div class="card-header">
+        <div class="card-icon">📊</div>
+        <h2 data-pt="Analise de Ativos" data-en="Asset Analysis">Análise de Ativos</h2>
+      </div>
+      <div class="card-body">
+        <p data-pt="Explore e compare acoes, commodities, cripto e indices. Metricas de performance, risco e fundamentos." data-en="Explore and compare stocks, commodities, crypto, and indices. Performance, risk, and fundamental metrics.">Explore e compare ações, commodities, cripto e indices. Métricas de performance, risco e fundamentos.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag" data-pt="Usar agora" data-en="Use now">Usar agora</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://video.letabuild.com">
+      <div class="card-header">
+        <div class="card-icon">🎬</div>
+        <h2>Video Digest</h2>
+      </div>
+      <div class="card-body">
+        <p data-pt="Cole o link de um video do YouTube e receba um resumo inteligente com os pontos mais relevantes, feito por IA." data-en="Paste a YouTube video link and get a smart summary with the most relevant points, powered by AI.">Cole o link de um video do YouTube e receba um resumo inteligente com os pontos mais relevantes, feito por IA.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag" data-pt="Usar agora" data-en="Use now">Usar agora</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+
+    <a class="card" href="https://paper.letabuild.com">
+      <div class="card-header">
+        <div class="card-icon">📄</div>
+        <h2>Paper Digest</h2>
+      </div>
+      <div class="card-body">
+        <p data-pt="Cole um link, suba um PDF ou cole texto. Receba analise critica ou resumo completo de qualquer artigo, feito por IA." data-en="Paste a link, upload a PDF, or paste text. Get a critical analysis or full summary of any article, powered by AI.">Cole um link, suba um PDF ou cole texto. Receba análise crítica ou resumo completo de qualquer artigo, feito por IA.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag" data-pt="Usar agora" data-en="Use now">Usar agora</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+
+    <a class="card" href="/habitos/">
+      <div class="card-header">
+        <div class="card-icon">📅</div>
+        <h2 data-pt="Habitos" data-en="Habits">Hábitos</h2>
+      </div>
+      <div class="card-body">
+        <p data-pt="Calendario de habitos e fitness. Acompanhe peso, sono, passos, treinos e mais. Visualize com graficos e heatmap anual." data-en="Habits and fitness calendar. Track weight, sleep, steps, workouts, and more. Visualize with charts and annual heatmap.">Calendário de habitos e fitness. Acompanhe peso, sono, passos, treinos e mais. Visualize com graficos e heatmap anual.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag" data-pt="Usar agora" data-en="Use now">Usar agora</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
@@ -670,7 +672,7 @@
 </div>
 
 <footer>
-  feito por <a href="https://caioleta.com">leta</a>
+  <span data-pt='feito por <a href="https://caioleta.com">leta</a>' data-en='made by <a href="https://caioleta.com">leta</a>'>feito por <a href="https://caioleta.com">leta</a></span>
 </footer>
 
 </body>

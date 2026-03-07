@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hábitos - Leta Build</title>
+<script>
+  (function(){
+    var lang = localStorage.getItem('letabuild-lang') || 'pt';
+    document.title = lang === 'pt' ? 'Hábitos - Leta Build' : 'Habits - Leta Build';
+  })();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -412,22 +418,24 @@
   }
 </style>
 <script src="/theme-toggle.js"></script>
+<script src="/lang-toggle.js"></script>
 </head>
 <body>
 
 <div class="container">
   <a class="back-link" href="/">&#8249; letabuild.com</a>
-<div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+<div style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:8px;">
+<button id="langToggle" style="background:none;border:1px solid var(--border);color:var(--text-muted);min-width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 8px;"></button>
 <button id="themeToggle" style="background:none;border:1px solid var(--border);color:var(--text-muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;" title="Alternar tema"></button>
 </div>
 
   <div class="auth-bar" id="authBar">
     <div class="user-info" id="userInfo">
-      <span style="color:var(--text-dim)">Dados salvos no navegador</span>
+      <span style="color:var(--text-dim)" data-pt="Dados salvos no navegador" data-en="Data saved in browser">Dados salvos no navegador</span>
     </div>
     <button class="auth-btn google" id="loginBtn" onclick="loginWithGoogle()">
       <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      Entrar com Google
+      <span data-pt="Entrar com Google" data-en="Sign in with Google">Entrar com Google</span>
     </button>
   </div>
 
@@ -438,15 +446,15 @@
   </div>
 
   <div class="view-toggle">
-    <button class="view-btn active" id="viewMonth">Mês</button>
-    <button class="view-btn" id="viewWeek">Semana</button>
+    <button class="view-btn active" id="viewMonth" data-pt="Mês" data-en="Month">Mês</button>
+    <button class="view-btn" id="viewWeek" data-pt="Semana" data-en="Week">Semana</button>
   </div>
 
   <div class="weekdays">
-    <div class="weekday-label">Dom</div><div class="weekday-label">Seg</div>
-    <div class="weekday-label">Ter</div><div class="weekday-label">Qua</div>
-    <div class="weekday-label">Qui</div><div class="weekday-label">Sex</div>
-    <div class="weekday-label">Sáb</div>
+    <div class="weekday-label" data-pt="Dom" data-en="Sun">Dom</div><div class="weekday-label" data-pt="Seg" data-en="Mon">Seg</div>
+    <div class="weekday-label" data-pt="Ter" data-en="Tue">Ter</div><div class="weekday-label" data-pt="Qua" data-en="Wed">Qua</div>
+    <div class="weekday-label" data-pt="Qui" data-en="Thu">Qui</div><div class="weekday-label" data-pt="Sex" data-en="Fri">Sex</div>
+    <div class="weekday-label" data-pt="Sáb" data-en="Sat">Sáb</div>
   </div>
 
   <div class="calendar-grid" id="calendarGrid"></div>
@@ -454,21 +462,21 @@
   <!-- Charts -->
   <div class="charts-section">
     <div class="charts-toggle">
-      <button class="charts-toggle-btn" id="chartsToggle">Estatísticas</button>
+      <button class="charts-toggle-btn" id="chartsToggle" data-pt="Estatísticas" data-en="Statistics">Estatísticas</button>
     </div>
 
     <div class="charts-panel" id="chartsPanel">
       <div class="chart-tabs" id="chartTabs">
-        <button class="chart-tab active" data-chart="weight">Peso</button>
-        <button class="chart-tab" data-chart="bodyfat">Gordura</button>
-        <button class="chart-tab" data-chart="glucose">Glicemia</button>
-        <button class="chart-tab" data-chart="sleep">Sono</button>
-        <button class="chart-tab" data-chart="steps">Passos</button>
-        <button class="chart-tab" data-chart="bike">Bike</button>
-        <button class="chart-tab" data-chart="stairs">Escada</button>
-        <button class="chart-tab" data-chart="habits">Hábitos</button>
-        <button class="chart-tab" data-chart="weekly">Semana</button>
-        <button class="chart-tab" data-chart="heatmap">Ano</button>
+        <button class="chart-tab active" data-chart="weight" data-pt="Peso" data-en="Weight">Peso</button>
+        <button class="chart-tab" data-chart="bodyfat" data-pt="Gordura" data-en="Body Fat">Gordura</button>
+        <button class="chart-tab" data-chart="glucose" data-pt="Glicemia" data-en="Glucose">Glicemia</button>
+        <button class="chart-tab" data-chart="sleep" data-pt="Sono" data-en="Sleep">Sono</button>
+        <button class="chart-tab" data-chart="steps" data-pt="Passos" data-en="Steps">Passos</button>
+        <button class="chart-tab" data-chart="bike" data-pt="Bike" data-en="Bike">Bike</button>
+        <button class="chart-tab" data-chart="stairs" data-pt="Escada" data-en="Stairs">Escada</button>
+        <button class="chart-tab" data-chart="habits" data-pt="Hábitos" data-en="Habits">Hábitos</button>
+        <button class="chart-tab" data-chart="weekly" data-pt="Semana" data-en="Weekly">Semana</button>
+        <button class="chart-tab" data-chart="heatmap" data-pt="Ano" data-en="Year">Ano</button>
       </div>
 
       <div class="chart-container">
@@ -481,8 +489,8 @@
   </div>
 
   <div class="footer-actions">
-    <button class="export-btn" id="exportBtn">Exportar (JSON)</button>
-    <button class="export-btn" id="importBtn">Importar</button>
+    <button class="export-btn" id="exportBtn" data-pt="Exportar (JSON)" data-en="Export (JSON)">Exportar (JSON)</button>
+    <button class="export-btn" id="importBtn" data-pt="Importar" data-en="Import">Importar</button>
     <input type="file" id="importFile" accept=".json" style="display:none">
   </div>
 </div>
@@ -497,7 +505,7 @@
     <div class="habit-item">
       <div class="habit-emoji">⚖️</div>
       <div class="habit-info">
-        <div class="habit-label">Peso</div>
+        <div class="habit-label" data-pt="Peso" data-en="Weight">Peso</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputWeight" placeholder="0" min="0" step="0.1" inputmode="decimal">
           <span class="input-suffix">kg</span>
@@ -507,7 +515,7 @@
     <div class="habit-item">
       <div class="habit-emoji">📉</div>
       <div class="habit-info">
-        <div class="habit-label">Gordura corporal</div>
+        <div class="habit-label" data-pt="Gordura corporal" data-en="Body fat">Gordura corporal</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputBodyFat" placeholder="0" min="0" max="60" step="0.1" inputmode="decimal">
           <span class="input-suffix">%</span>
@@ -517,11 +525,11 @@
     <div class="habit-item">
       <div class="habit-emoji">😴</div>
       <div class="habit-info">
-        <div class="habit-label">Sono</div>
+        <div class="habit-label" data-pt="Sono" data-en="Sleep">Sono</div>
         <div class="habit-input-row" style="flex-wrap:wrap;gap:6px">
           <input type="number" class="num-input" id="inputSleepRem" placeholder="REM" min="0" step="1" inputmode="numeric" style="width:70px">
-          <input type="number" class="num-input" id="inputSleepDeep" placeholder="Prof." min="0" step="1" inputmode="numeric" style="width:70px">
-          <input type="number" class="num-input" id="inputSleepLight" placeholder="Leve" min="0" step="1" inputmode="numeric" style="width:70px">
+          <input type="number" class="num-input" id="inputSleepDeep" data-pt="Prof." data-en="Deep" placeholder="Prof." min="0" step="1" inputmode="numeric" style="width:70px">
+          <input type="number" class="num-input" id="inputSleepLight" data-pt="Leve" data-en="Light" placeholder="Leve" min="0" step="1" inputmode="numeric" style="width:70px">
           <span class="input-suffix">min</span>
         </div>
       </div>
@@ -529,10 +537,10 @@
     <div class="habit-item">
       <div class="habit-emoji">👟</div>
       <div class="habit-info">
-        <div class="habit-label">Passos</div>
+        <div class="habit-label" data-pt="Passos" data-en="Steps">Passos</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputSteps" placeholder="0" min="0" inputmode="numeric">
-          <span class="input-suffix">passos</span>
+          <span class="input-suffix" data-pt="passos" data-en="steps">passos</span>
         </div>
       </div>
     </div>
@@ -549,43 +557,43 @@
     </div>
     <div class="habit-item">
       <div class="habit-emoji">🏋️</div>
-      <div class="habit-info"><div class="habit-label">Musculação</div></div>
+      <div class="habit-info"><div class="habit-label" data-pt="Musculação" data-en="Weight Training">Musculação</div></div>
       <label class="toggle"><input type="checkbox" id="inputGym"><span class="toggle-slider"></span></label>
     </div>
     <div class="habit-item">
       <div class="habit-emoji">🌬️</div>
-      <div class="habit-info"><div class="habit-label">Respiração</div></div>
+      <div class="habit-info"><div class="habit-label" data-pt="Respiração" data-en="Breathing">Respiração</div></div>
       <label class="toggle"><input type="checkbox" id="inputBreathing"><span class="toggle-slider"></span></label>
     </div>
     <div class="habit-item">
       <div class="habit-emoji">🪜</div>
       <div class="habit-info">
-        <div class="habit-label">Escada</div>
+        <div class="habit-label" data-pt="Escada" data-en="Stairs">Escada</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputStairs" placeholder="0" min="0" inputmode="numeric">
-          <span class="input-suffix">andares</span>
+          <span class="input-suffix" data-pt="andares" data-en="floors">andares</span>
         </div>
       </div>
     </div>
     <div class="habit-item">
       <div class="habit-emoji">🩹</div>
-      <div class="habit-info"><div class="habit-label">Fisioterapia</div></div>
+      <div class="habit-info"><div class="habit-label" data-pt="Fisioterapia" data-en="Physiotherapy">Fisioterapia</div></div>
       <label class="toggle"><input type="checkbox" id="inputPhysio"><span class="toggle-slider"></span></label>
     </div>
     <div class="habit-item">
       <div class="habit-emoji">🧘</div>
-      <div class="habit-info"><div class="habit-label">Alongamentos</div></div>
+      <div class="habit-info"><div class="habit-label" data-pt="Alongamentos" data-en="Stretching">Alongamentos</div></div>
       <label class="toggle"><input type="checkbox" id="inputStretching"><span class="toggle-slider"></span></label>
     </div>
     <div class="habit-item">
       <div class="habit-emoji">📖</div>
-      <div class="habit-info"><div class="habit-label">Leitura 30 min</div></div>
+      <div class="habit-info"><div class="habit-label" data-pt="Leitura 30 min" data-en="Reading 30 min">Leitura 30 min</div></div>
       <label class="toggle"><input type="checkbox" id="inputReading"><span class="toggle-slider"></span></label>
     </div>
     <div class="habit-item">
       <div class="habit-emoji">🩸</div>
       <div class="habit-info">
-        <div class="habit-label">Glicemia em jejum</div>
+        <div class="habit-label" data-pt="Glicemia em jejum" data-en="Fasting glucose">Glicemia em jejum</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputGlucoseFasting" placeholder="0" min="0" step="1" inputmode="numeric">
           <span class="input-suffix">mg/dL</span>
@@ -595,7 +603,7 @@
     <div class="habit-item">
       <div class="habit-emoji">🍽️</div>
       <div class="habit-info">
-        <div class="habit-label">Glicemia pré-almoço</div>
+        <div class="habit-label" data-pt="Glicemia pré-almoço" data-en="Pre-lunch glucose">Glicemia pré-almoço</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputGlucoseLunch" placeholder="0" min="0" step="1" inputmode="numeric">
           <span class="input-suffix">mg/dL</span>
@@ -605,23 +613,199 @@
     <div class="habit-item">
       <div class="habit-emoji">🌙</div>
       <div class="habit-info">
-        <div class="habit-label">Glicemia pré-jantar</div>
+        <div class="habit-label" data-pt="Glicemia pré-jantar" data-en="Pre-dinner glucose">Glicemia pré-jantar</div>
         <div class="habit-input-row">
           <input type="number" class="num-input" id="inputGlucoseDinner" placeholder="0" min="0" step="1" inputmode="numeric">
           <span class="input-suffix">mg/dL</span>
         </div>
       </div>
     </div>
-    <button class="save-btn" id="saveBtn">Salvar</button>
-    <button class="clear-btn" id="clearBtn">Limpar dia</button>
+    <button class="save-btn" id="saveBtn" data-pt="Salvar" data-en="Save">Salvar</button>
+    <button class="clear-btn" id="clearBtn" data-pt="Limpar dia" data-en="Clear day">Limpar dia</button>
   </div>
 </div>
 
 <script>
 const STORAGE_KEY = 'habit-calendar-data';
 const HABITS_COUNT = 14; // total trackable activities
-const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const shortMonthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+const T = {
+  pt: {
+    months: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthsShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    dateOf: 'de',
+    noData: 'Sem dados neste mês',
+    // Weight chart
+    currentWeight: 'Peso atual (kg)',
+    totalChange: 'Variação total',
+    minimum: 'Mínimo',
+    maximum: 'Máximo',
+    weight: 'Peso',
+    avg7days: 'Média 7 dias',
+    registerWeight: 'Registre seu peso para ver estatísticas',
+    // Body fat
+    currentFat: 'Gordura atual',
+    registerFat: 'Registre sua % de gordura para ver estatísticas',
+    fat: 'Gordura',
+    // Glucose
+    fastingCurrent: 'Jejum atual (mg/dL)',
+    avgFasting: 'Média em jejum',
+    avgPreLunch: 'Média pré-almoço',
+    avgPreDinner: 'Média pré-jantar',
+    fasting: 'Jejum',
+    refGlucose: 'Ref: <100 normal · 100-125 pré-diabetes · ≥126 diabetes',
+    registerGlucose: 'Registre glicemia para ver estatísticas',
+    // Sleep
+    avgTotalNight: 'Média total/noite',
+    avgDeep: 'Média profundo',
+    avgREM: 'Média REM',
+    avgLight: 'Média leve',
+    deep: 'Profundo',
+    rem: 'REM',
+    light: 'Leve',
+    // Steps
+    grandTotal: 'Total geral',
+    dailyAvg: 'Média diária',
+    record: 'Recorde',
+    daysRecorded: 'Dias registrados',
+    // Bike
+    totalKm: 'Total km',
+    avgPerRide: 'Média por pedal',
+    bikeDays: 'Dias de bike',
+    // Stairs
+    totalFloors: 'Total andares',
+    // Habits
+    days: 'dias',
+    weightTraining: 'Musculação',
+    breathing: 'Respiração',
+    physio: 'Fisioterapia',
+    stretching: 'Alongamentos',
+    reading: 'Leitura',
+    currentStreak: 'Sequência atual',
+    // Weekly
+    thisWeek: 'Esta semana',
+    vs: 'vs.',
+    previous: 'anterior',
+    avgWeight: 'Peso médio',
+    avgFat: 'Gordura média',
+    avgSleep: 'Sono médio',
+    steps: 'Passos',
+    bike: 'Bike',
+    stairs: 'Escada',
+    totalScore: 'Score total',
+    floorAbbr: 'and.',
+    // Heatmap
+    annualConsistency: 'Consistência anual',
+    less: 'Menos',
+    more: 'Mais',
+    daysRecordedIn: 'Dias registrados em',
+    avgCompletion: 'Completude média',
+    perfectDays: 'Dias perfeitos',
+    longestStreak: 'Maior sequência (dias)',
+    // Score
+    avgScore: 'Score médio',
+    completion: 'Completude',
+    // Auth
+    synced: 'sincronizado',
+    syncing: 'sincronizando...',
+    syncError: 'erro no sync',
+    dataSavedBrowser: 'Dados salvos no navegador',
+    signInGoogle: 'Entrar com Google',
+    signOut: 'Sair',
+    // Import/Export
+    invalidFile: 'Arquivo inválido.',
+    importSuccess: 'Dados importados com sucesso!',
+    importError: 'Erro ao ler o arquivo.',
+    syncNotConfigured: 'Sync com Google ainda nao esta configurado.',
+    // Heatmap weekdays
+    heatmapWeekdays: ['', 'S', '', 'Q', '', 'S', ''],
+  },
+  en: {
+    months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    monthsShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    dateOf: '',
+    noData: 'No data this month',
+    currentWeight: 'Current weight (kg)',
+    totalChange: 'Total change',
+    minimum: 'Minimum',
+    maximum: 'Maximum',
+    weight: 'Weight',
+    avg7days: '7-day average',
+    registerWeight: 'Record your weight to see statistics',
+    currentFat: 'Current body fat',
+    registerFat: 'Record your body fat % to see statistics',
+    fat: 'Body Fat',
+    fastingCurrent: 'Current fasting (mg/dL)',
+    avgFasting: 'Fasting average',
+    avgPreLunch: 'Pre-lunch average',
+    avgPreDinner: 'Pre-dinner average',
+    fasting: 'Fasting',
+    refGlucose: 'Ref: <100 normal · 100-125 pre-diabetes · ≥126 diabetes',
+    registerGlucose: 'Record glucose to see statistics',
+    avgTotalNight: 'Avg total/night',
+    avgDeep: 'Avg deep',
+    avgREM: 'Avg REM',
+    avgLight: 'Avg light',
+    deep: 'Deep',
+    rem: 'REM',
+    light: 'Light',
+    grandTotal: 'Grand total',
+    dailyAvg: 'Daily average',
+    record: 'Record',
+    daysRecorded: 'Days recorded',
+    totalKm: 'Total km',
+    avgPerRide: 'Avg per ride',
+    bikeDays: 'Bike days',
+    totalFloors: 'Total floors',
+    days: 'days',
+    weightTraining: 'Weight Training',
+    breathing: 'Breathing',
+    physio: 'Physiotherapy',
+    stretching: 'Stretching',
+    reading: 'Reading',
+    currentStreak: 'Current streak',
+    thisWeek: 'This week',
+    vs: 'vs.',
+    previous: 'previous',
+    avgWeight: 'Avg weight',
+    avgFat: 'Avg body fat',
+    avgSleep: 'Avg sleep',
+    steps: 'Steps',
+    bike: 'Bike',
+    stairs: 'Stairs',
+    totalScore: 'Total score',
+    floorAbbr: 'fl.',
+    annualConsistency: 'Annual consistency',
+    less: 'Less',
+    more: 'More',
+    daysRecordedIn: 'Days recorded in',
+    avgCompletion: 'Avg completion',
+    perfectDays: 'Perfect days',
+    longestStreak: 'Longest streak (days)',
+    avgScore: 'Avg score',
+    completion: 'Completion',
+    synced: 'synced',
+    syncing: 'syncing...',
+    syncError: 'sync error',
+    dataSavedBrowser: 'Data saved in browser',
+    signInGoogle: 'Sign in with Google',
+    signOut: 'Sign out',
+    invalidFile: 'Invalid file.',
+    importSuccess: 'Data imported successfully!',
+    importError: 'Error reading file.',
+    syncNotConfigured: 'Google sync is not configured yet.',
+    heatmapWeekdays: ['', 'M', '', 'W', '', 'F', ''],
+  }
+};
+
+function t(key) {
+  const lang = (window.letabuildLang && window.letabuildLang.get()) || 'pt';
+  return T[lang][key] || T.pt[key] || key;
+}
+function getLang() { return (window.letabuildLang && window.letabuildLang.get()) || 'pt'; }
+
+const monthNames = T.pt.months;
+const shortMonthNames = T.pt.monthsShort;
 
 let currentYear, currentMonth, currentWeekStart = null, viewMode = 'month', selectedDate = null, currentChart = 'weight', heatmapYear;
 
@@ -777,7 +961,7 @@ function buildIconsWeek(entry) {
   if (entry.bodyFat > 0) h += `<span>📉 <span class="detail-text">${entry.bodyFat}%</span></span>`;
   const sleep = getTotalSleep(entry);
   if (sleep > 0) { const sh = Math.floor(sleep/60), sm = sleep%60; h += `<span>😴 <span class="detail-text">${sh}h${sm>0?sm+'m':''}</span></span>`; }
-  if (entry.steps > 0) h += `<span>👟 <span class="detail-text">${entry.steps.toLocaleString('pt-BR')}</span></span>`;
+  if (entry.steps > 0) h += `<span>👟 <span class="detail-text">${entry.steps.toLocaleString(getLang() === 'pt' ? 'pt-BR' : 'en-US')}</span></span>`;
   if (entry.bike) { const km = entry.bikeKm ? ` <span class="detail-text">${entry.bikeKm} km</span>` : ''; h += `<span>🚴${km}</span>`; }
   if (entry.gym) h += '<span>🏋️</span>';
   if (entry.breathing) h += '<span>🌬️</span>';
@@ -818,7 +1002,7 @@ function createDayCell(date, data, isWeekView) {
 
 // Render
 function renderMonth() {
-  headerTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+  headerTitle.textContent = `${T[getLang()].months[currentMonth]} ${currentYear}`;
   calendarGrid.classList.remove('week-view');
   const data = loadData();
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -831,10 +1015,11 @@ function renderMonth() {
 function renderWeek() {
   const we = new Date(currentWeekStart); we.setDate(we.getDate()+6);
   const sm = currentWeekStart.getMonth(), em = we.getMonth(), sy = currentWeekStart.getFullYear(), ey = we.getFullYear();
+  const mn = T[getLang()].months, smn = T[getLang()].monthsShort;
   let title;
-  if (sm === em) title = `${currentWeekStart.getDate()} - ${we.getDate()} ${monthNames[sm]} ${sy}`;
-  else if (sy === ey) title = `${currentWeekStart.getDate()} ${shortMonthNames[sm]} - ${we.getDate()} ${shortMonthNames[em]} ${sy}`;
-  else title = `${currentWeekStart.getDate()} ${shortMonthNames[sm]} ${sy} - ${we.getDate()} ${shortMonthNames[em]} ${ey}`;
+  if (sm === em) title = `${currentWeekStart.getDate()} - ${we.getDate()} ${mn[sm]} ${sy}`;
+  else if (sy === ey) title = `${currentWeekStart.getDate()} ${smn[sm]} - ${we.getDate()} ${smn[em]} ${sy}`;
+  else title = `${currentWeekStart.getDate()} ${smn[sm]} ${sy} - ${we.getDate()} ${smn[em]} ${ey}`;
   headerTitle.textContent = title;
   calendarGrid.classList.add('week-view');
   calendarGrid.innerHTML = '';
@@ -850,7 +1035,8 @@ function render() {
 // Modal
 function openModalForDate(date) {
   selectedDate = dateKeyFromObj(date);
-  modalTitle.textContent = `${date.getDate()} de ${monthNames[date.getMonth()]}`;
+  const dateOfStr = t('dateOf');
+  modalTitle.textContent = dateOfStr ? `${date.getDate()} ${dateOfStr} ${T[getLang()].months[date.getMonth()]}` : `${T[getLang()].months[date.getMonth()]} ${date.getDate()}`;
   const data = loadData(), entry = data[selectedDate] || {};
   inputWeight.value = entry.weight || '';
   inputBodyFat.value = entry.bodyFat || '';
@@ -936,7 +1122,7 @@ function setupCanvas(canvas) {
 
 function drawEmptyMsg(ctx, W, H, msg) {
   ctx.fillStyle = '#b0aaa3'; ctx.font = '14px -apple-system, sans-serif';
-  ctx.textAlign = 'center'; ctx.fillText(msg || 'Sem dados neste mês', W/2, H/2);
+  ctx.textAlign = 'center'; ctx.fillText(msg || t('noData'), W/2, H/2);
 }
 
 function drawLineChart(canvas, labels, values, color, extraLine, fixedRange) {
@@ -1055,7 +1241,7 @@ function drawBarChart(canvas, labels, datasets, goalLine) {
     ctx.fillStyle = '#e74c3c';
     ctx.font = 'bold 11px -apple-system, sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText(goalLine.label || goalLine.value.toLocaleString('pt-BR'), W - pR + 4, gy + 4);
+    ctx.fillText(goalLine.label || goalLine.value.toLocaleString(getLang() === 'pt' ? 'pt-BR' : 'en-US'), W - pR + 4, gy + 4);
   }
 }
 
@@ -1124,14 +1310,14 @@ function renderChart() {
 
       const first = filled[0], last = filled[filled.length-1], diff = last - first;
       statsGrid.innerHTML = `
-        <div class="stat-card"><div class="stat-value">${last.toFixed(1)}</div><div class="stat-label">Peso atual (kg)</div></div>
-        <div class="stat-card"><div class="stat-value" style="color:${diff<=0?'#6aaa7a':'#d9534f'}">${diff>0?'+':''}${diff.toFixed(1)}</div><div class="stat-label">Variação total</div></div>
-        <div class="stat-card"><div class="stat-value">${minW.toFixed(1)}</div><div class="stat-label">Mínimo</div></div>
-        <div class="stat-card"><div class="stat-value">${maxW.toFixed(1)}</div><div class="stat-label">Máximo</div></div>
+        <div class="stat-card"><div class="stat-value">${last.toFixed(1)}</div><div class="stat-label">${t('currentWeight')}</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:${diff<=0?'#6aaa7a':'#d9534f'}">${diff>0?'+':''}${diff.toFixed(1)}</div><div class="stat-label">${t('totalChange')}</div></div>
+        <div class="stat-card"><div class="stat-value">${minW.toFixed(1)}</div><div class="stat-label">${t('minimum')}</div></div>
+        <div class="stat-card"><div class="stat-value">${maxW.toFixed(1)}</div><div class="stat-label">${t('maximum')}</div></div>
       `;
-      extraContent.innerHTML = '<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#c4956a;border-radius:2px;display:inline-block"></span> Peso</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> Média 7 dias</span></div>';
+      extraContent.innerHTML = `<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#c4956a;border-radius:2px;display:inline-block"></span> ${t('weight')}</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> ${t('avg7days')}</span></div>`;
     } else {
-      statsGrid.innerHTML = '<div class="chart-empty">Registre seu peso para ver estatísticas</div>';
+      statsGrid.innerHTML = `<div class="chart-empty">${t('registerWeight')}</div>`;
     }
 
   } else if (currentChart === 'bodyfat') {
@@ -1147,14 +1333,14 @@ function renderChart() {
 
       const first = filled[0], last = filled[filled.length-1], diff = last - first;
       statsGrid.innerHTML = `
-        <div class="stat-card"><div class="stat-value">${last.toFixed(1)}%</div><div class="stat-label">Gordura atual</div></div>
-        <div class="stat-card"><div class="stat-value" style="color:${diff<=0?'#6aaa7a':'#d9534f'}">${diff>0?'+':''}${diff.toFixed(1)}%</div><div class="stat-label">Variação total</div></div>
-        <div class="stat-card"><div class="stat-value">${minF.toFixed(1)}%</div><div class="stat-label">Mínimo</div></div>
-        <div class="stat-card"><div class="stat-value">${maxF.toFixed(1)}%</div><div class="stat-label">Máximo</div></div>
+        <div class="stat-card"><div class="stat-value">${last.toFixed(1)}%</div><div class="stat-label">${t('currentFat')}</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:${diff<=0?'#6aaa7a':'#d9534f'}">${diff>0?'+':''}${diff.toFixed(1)}%</div><div class="stat-label">${t('totalChange')}</div></div>
+        <div class="stat-card"><div class="stat-value">${minF.toFixed(1)}%</div><div class="stat-label">${t('minimum')}</div></div>
+        <div class="stat-card"><div class="stat-value">${maxF.toFixed(1)}%</div><div class="stat-label">${t('maximum')}</div></div>
       `;
-      extraContent.innerHTML = '<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#d9534f;border-radius:2px;display:inline-block"></span> Gordura</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> Média 7 dias</span></div>';
+      extraContent.innerHTML = `<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#d9534f;border-radius:2px;display:inline-block"></span> ${t('fat')}</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> ${t('avg7days')}</span></div>`;
     } else {
-      statsGrid.innerHTML = '<div class="chart-empty">Registre sua % de gordura para ver estatísticas</div>';
+      statsGrid.innerHTML = `<div class="chart-empty">${t('registerFat')}</div>`;
     }
 
   } else if (currentChart === 'glucose') {
@@ -1177,14 +1363,14 @@ function renderChart() {
       const avgD = filledD.length > 0 ? Math.round(filledD.reduce((a,b) => a+b, 0) / filledD.length) : null;
       const lastFColor = lastF ? (lastF < 100 ? '#6aaa7a' : lastF < 126 ? '#f0883e' : '#d9534f') : '';
       statsGrid.innerHTML = `
-        <div class="stat-card"><div class="stat-value" style="color:${lastFColor}">${lastF !== null ? lastF : '-'}</div><div class="stat-label">🩸 Jejum atual (mg/dL)</div></div>
-        <div class="stat-card"><div class="stat-value">${avgF !== null ? avgF : '-'}</div><div class="stat-label">🩸 Média em jejum</div></div>
-        <div class="stat-card"><div class="stat-value">${avgL !== null ? avgL : '-'}</div><div class="stat-label">🍽️ Média pré-almoço</div></div>
-        <div class="stat-card"><div class="stat-value">${avgD !== null ? avgD : '-'}</div><div class="stat-label">🌙 Média pré-jantar</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:${lastFColor}">${lastF !== null ? lastF : '-'}</div><div class="stat-label">🩸 ${t('fastingCurrent')}</div></div>
+        <div class="stat-card"><div class="stat-value">${avgF !== null ? avgF : '-'}</div><div class="stat-label">🩸 ${t('avgFasting')}</div></div>
+        <div class="stat-card"><div class="stat-value">${avgL !== null ? avgL : '-'}</div><div class="stat-label">🍽️ ${t('avgPreLunch')}</div></div>
+        <div class="stat-card"><div class="stat-value">${avgD !== null ? avgD : '-'}</div><div class="stat-label">🌙 ${t('avgPreDinner')}</div></div>
       `;
-      extraContent.innerHTML = '<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#e74c3c;border-radius:2px;display:inline-block"></span> 🩸 Jejum</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> Média 7 dias</span><span style="font-size:11px;color:var(--text-dim)">Ref: &lt;100 normal · 100-125 pré-diabetes · ≥126 diabetes</span></div>';
+      extraContent.innerHTML = `<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:3px;background:#e74c3c;border-radius:2px;display:inline-block"></span> 🩸 ${t('fasting')}</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:20px;height:2px;background:#7a9ec4;border-radius:2px;display:inline-block;border-top:2px dashed #7a9ec4"></span> ${t('avg7days')}</span><span style="font-size:11px;color:var(--text-dim)">${t('refGlucose')}</span></div>`;
     } else {
-      statsGrid.innerHTML = '<div class="chart-empty">Registre glicemia para ver estatísticas</div>';
+      statsGrid.innerHTML = `<div class="chart-empty">${t('registerGlucose')}</div>`;
     }
 
   } else if (currentChart === 'sleep') {
@@ -1208,12 +1394,12 @@ function renderChart() {
     function fmtMin(m) { const h = Math.floor(m/60), r = Math.round(m%60); return h > 0 ? `${h}h${r>0?r+'m':''}` : `${r}m`; }
 
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${fmtMin(avgSleep)}</div><div class="stat-label">Média total/noite</div></div>
-      <div class="stat-card"><div class="stat-value">${fmtMin(avgDeep)}</div><div class="stat-label">Média profundo</div></div>
-      <div class="stat-card"><div class="stat-value">${fmtMin(avgRem)}</div><div class="stat-label">Média REM</div></div>
-      <div class="stat-card"><div class="stat-value">${fmtMin(avgLight)}</div><div class="stat-label">Média leve</div></div>
+      <div class="stat-card"><div class="stat-value">${fmtMin(avgSleep)}</div><div class="stat-label">${t('avgTotalNight')}</div></div>
+      <div class="stat-card"><div class="stat-value">${fmtMin(avgDeep)}</div><div class="stat-label">${t('avgDeep')}</div></div>
+      <div class="stat-card"><div class="stat-value">${fmtMin(avgRem)}</div><div class="stat-label">${t('avgREM')}</div></div>
+      <div class="stat-card"><div class="stat-value">${fmtMin(avgLight)}</div><div class="stat-label">${t('avgLight')}</div></div>
     `;
-    extraContent.innerHTML = '<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#3d5a80;border-radius:2px;display:inline-block"></span> Profundo</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#7a9ec4;border-radius:2px;display:inline-block"></span> REM</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#b8d4e8;border-radius:2px;display:inline-block"></span> Leve</span></div>';
+    extraContent.innerHTML = `<div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:8px;font-size:12px;color:#9a9590"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#3d5a80;border-radius:2px;display:inline-block"></span> ${t('deep')}</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#7a9ec4;border-radius:2px;display:inline-block"></span> ${t('rem')}</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#b8d4e8;border-radius:2px;display:inline-block"></span> ${t('light')}</span></div>`;
 
   } else if (currentChart === 'steps') {
     const range = getFullRange(e => e.steps > 0);
@@ -1224,11 +1410,12 @@ function renderChart() {
     drawBarChart(chartCanvas, labels, [{ values, colors }], { value: STEP_GOAL, label: '10k' });
     const filled = values.filter(v => v > 0);
     const total = filled.reduce((a,v) => a+v, 0);
+    const loc = getLang() === 'pt' ? 'pt-BR' : 'en-US';
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${total.toLocaleString('pt-BR')}</div><div class="stat-label">Total geral</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length>0?Math.round(total/filled.length).toLocaleString('pt-BR'):'0'}</div><div class="stat-label">Média diária</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length>0?Math.max(...filled).toLocaleString('pt-BR'):'0'}</div><div class="stat-label">Recorde</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length}</div><div class="stat-label">Dias registrados</div></div>
+      <div class="stat-card"><div class="stat-value">${total.toLocaleString(loc)}</div><div class="stat-label">${t('grandTotal')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length>0?Math.round(total/filled.length).toLocaleString(loc):'0'}</div><div class="stat-label">${t('dailyAvg')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length>0?Math.max(...filled).toLocaleString(loc):'0'}</div><div class="stat-label">${t('record')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length}</div><div class="stat-label">${t('daysRecorded')}</div></div>
     `;
 
   } else if (currentChart === 'bike') {
@@ -1239,9 +1426,9 @@ function renderChart() {
     const filled = values.filter(v => v > 0);
     const totalKm = filled.reduce((a,v) => a+v, 0);
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${totalKm.toFixed(1)}</div><div class="stat-label">Total km</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length>0?(totalKm/filled.length).toFixed(1):'0'}</div><div class="stat-label">Média por pedal</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length}</div><div class="stat-label">Dias de bike</div></div>
+      <div class="stat-card"><div class="stat-value">${totalKm.toFixed(1)}</div><div class="stat-label">${t('totalKm')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length>0?(totalKm/filled.length).toFixed(1):'0'}</div><div class="stat-label">${t('avgPerRide')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length}</div><div class="stat-label">${t('bikeDays')}</div></div>
     `;
 
   } else if (currentChart === 'stairs') {
@@ -1254,9 +1441,9 @@ function renderChart() {
     const filled = values.filter(v => v > 0);
     const total = filled.reduce((a,v) => a+v, 0);
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total andares</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length>0?(total/filled.length).toFixed(1):'0'}</div><div class="stat-label">Média diária</div></div>
-      <div class="stat-card"><div class="stat-value">${filled.length}</div><div class="stat-label">Dias registrados</div></div>
+      <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">${t('totalFloors')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length>0?(total/filled.length).toFixed(1):'0'}</div><div class="stat-label">${t('dailyAvg')}</div></div>
+      <div class="stat-card"><div class="stat-value">${filled.length}</div><div class="stat-label">${t('daysRecorded')}</div></div>
     `;
 
   } else if (currentChart === 'habits') {
@@ -1274,12 +1461,12 @@ function renderChart() {
     function calcStreak(field) { let s = 0; const d = new Date(today); const data = loadData();
       while(true) { const k = dateKeyFromObj(d); if (data[k] && data[k][field]) { s++; d.setDate(d.getDate()-1); } else break; } return s; }
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${gc} <span style="font-size:13px">dias</span></div><div class="stat-label">🏋️ Musculação</div></div>
-      <div class="stat-card"><div class="stat-value">${bc} <span style="font-size:13px">dias</span></div><div class="stat-label">🌬️ Respiração</div></div>
-      <div class="stat-card"><div class="stat-value">${pc} <span style="font-size:13px">dias</span></div><div class="stat-label">🩹 Fisioterapia</div></div>
-      <div class="stat-card"><div class="stat-value">${sc} <span style="font-size:13px">dias</span></div><div class="stat-label">🧘 Alongamentos</div></div>
-      <div class="stat-card"><div class="stat-value">${rc} <span style="font-size:13px">dias</span></div><div class="stat-label">📖 Leitura</div></div>
-      <div class="stat-card"><div class="stat-value">${calcStreak('gym')}/${calcStreak('breathing')}/${calcStreak('physio')}/${calcStreak('stretching')}/${calcStreak('reading')}</div><div class="stat-label">Sequência atual</div></div>
+      <div class="stat-card"><div class="stat-value">${gc} <span style="font-size:13px">${t('days')}</span></div><div class="stat-label">🏋️ ${t('weightTraining')}</div></div>
+      <div class="stat-card"><div class="stat-value">${bc} <span style="font-size:13px">${t('days')}</span></div><div class="stat-label">🌬️ ${t('breathing')}</div></div>
+      <div class="stat-card"><div class="stat-value">${pc} <span style="font-size:13px">${t('days')}</span></div><div class="stat-label">🩹 ${t('physio')}</div></div>
+      <div class="stat-card"><div class="stat-value">${sc} <span style="font-size:13px">${t('days')}</span></div><div class="stat-label">🧘 ${t('stretching')}</div></div>
+      <div class="stat-card"><div class="stat-value">${rc} <span style="font-size:13px">${t('days')}</span></div><div class="stat-label">📖 ${t('reading')}</div></div>
+      <div class="stat-card"><div class="stat-value">${calcStreak('gym')}/${calcStreak('breathing')}/${calcStreak('physio')}/${calcStreak('stretching')}/${calcStreak('reading')}</div><div class="stat-label">${t('currentStreak')}</div></div>
     `;
 
   } else if (currentChart === 'weekly') {
@@ -1302,9 +1489,9 @@ function renderChart() {
     }
 
     function fmtWeekRange(days) {
-      const s = days[0], e = days[6];
-      if (s.getMonth() === e.getMonth()) return `${s.getDate()}-${e.getDate()} ${shortMonthNames[s.getMonth()]}`;
-      return `${s.getDate()} ${shortMonthNames[s.getMonth()]}-${e.getDate()} ${shortMonthNames[e.getMonth()]}`;
+      const s = days[0], e = days[6], smn = T[getLang()].monthsShort;
+      if (s.getMonth() === e.getMonth()) return `${s.getDate()}-${e.getDate()} ${smn[s.getMonth()]}`;
+      return `${s.getDate()} ${smn[s.getMonth()]}-${e.getDate()} ${smn[e.getMonth()]}`;
     }
 
     const twAvgWeight = tw.weights.length > 0 ? (tw.weights.reduce((a,b)=>a+b,0)/tw.weights.length) : 0;
@@ -1314,21 +1501,22 @@ function renderChart() {
     const twAvgSleep = tw.sleepDays > 0 ? tw.totalSleep / tw.sleepDays : 0;
     const lwAvgSleep = lw.sleepDays > 0 ? lw.totalSleep / lw.sleepDays : 0;
 
+    const wloc = getLang() === 'pt' ? 'pt-BR' : 'en-US';
     extraContent.innerHTML = `
       <div class="week-compare">
-        <div class="week-compare-title">Esta semana (${fmtWeekRange(thisWeekDays)}) vs. anterior (${fmtWeekRange(lastWeekDays)})</div>
-        <div class="compare-row"><span class="compare-emoji">⚖️</span><span class="compare-label">Peso médio</span><span class="compare-val">${twAvgWeight>0?twAvgWeight.toFixed(1)+' kg':'-'}</span>${twAvgWeight>0&&lwAvgWeight>0?diffStr(twAvgWeight,lwAvgWeight,'',false):'<span class="compare-diff neutral">-</span>'}</div>
-        <div class="compare-row"><span class="compare-emoji">📉</span><span class="compare-label">Gordura média</span><span class="compare-val">${twAvgFat>0?twAvgFat.toFixed(1)+'%':'-'}</span>${twAvgFat>0&&lwAvgFat>0?diffStr(twAvgFat,lwAvgFat,'',false):'<span class="compare-diff neutral">-</span>'}</div>
-        <div class="compare-row"><span class="compare-emoji">😴</span><span class="compare-label">Sono médio</span><span class="compare-val">${twAvgSleep>0?(Math.floor(twAvgSleep/60)+'h'+(Math.round(twAvgSleep%60)>0?Math.round(twAvgSleep%60)+'m':'')):'-'}</span>${twAvgSleep>0&&lwAvgSleep>0?diffStr(twAvgSleep,lwAvgSleep,'',true):'<span class="compare-diff neutral">-</span>'}</div>
-        <div class="compare-row"><span class="compare-emoji">👟</span><span class="compare-label">Passos</span><span class="compare-val">${tw.steps.toLocaleString('pt-BR')}</span>${diffStr(tw.steps,lw.steps,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">🚴</span><span class="compare-label">Bike</span><span class="compare-val">${tw.bikeKm.toFixed(1)} km</span>${diffStr(tw.bikeKm,lw.bikeKm,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">🏋️</span><span class="compare-label">Musculação</span><span class="compare-val">${tw.gymDays} dias</span>${diffStr(tw.gymDays,lw.gymDays,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">🌬️</span><span class="compare-label">Respiração</span><span class="compare-val">${tw.breathDays} dias</span>${diffStr(tw.breathDays,lw.breathDays,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">🪜</span><span class="compare-label">Escada</span><span class="compare-val">${tw.stairsTotal} and.</span>${diffStr(tw.stairsTotal,lw.stairsTotal,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">🩹</span><span class="compare-label">Fisioterapia</span><span class="compare-val">${tw.physioDays} dias</span>${diffStr(tw.physioDays,lw.physioDays,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">🧘</span><span class="compare-label">Alongamentos</span><span class="compare-val">${tw.stretchDays} dias</span>${diffStr(tw.stretchDays,lw.stretchDays,'',true)}</div>
-        <div class="compare-row"><span class="compare-emoji">📖</span><span class="compare-label">Leitura</span><span class="compare-val">${tw.readDays} dias</span>${diffStr(tw.readDays,lw.readDays,'',true)}</div>
-        <div class="compare-row" style="border-top:2px solid #f0ebe5;padding-top:12px"><span class="compare-emoji">🎯</span><span class="compare-label" style="font-weight:700">Score total</span><span class="compare-val">${tw.totalScore}/${tw.daysWithData*HABITS_COUNT || HABITS_COUNT*7}</span>${diffStr(tw.totalScore,lw.totalScore,'',true)}</div>
+        <div class="week-compare-title">${t('thisWeek')} (${fmtWeekRange(thisWeekDays)}) ${t('vs')} ${t('previous')} (${fmtWeekRange(lastWeekDays)})</div>
+        <div class="compare-row"><span class="compare-emoji">⚖️</span><span class="compare-label">${t('avgWeight')}</span><span class="compare-val">${twAvgWeight>0?twAvgWeight.toFixed(1)+' kg':'-'}</span>${twAvgWeight>0&&lwAvgWeight>0?diffStr(twAvgWeight,lwAvgWeight,'',false):'<span class="compare-diff neutral">-</span>'}</div>
+        <div class="compare-row"><span class="compare-emoji">📉</span><span class="compare-label">${t('avgFat')}</span><span class="compare-val">${twAvgFat>0?twAvgFat.toFixed(1)+'%':'-'}</span>${twAvgFat>0&&lwAvgFat>0?diffStr(twAvgFat,lwAvgFat,'',false):'<span class="compare-diff neutral">-</span>'}</div>
+        <div class="compare-row"><span class="compare-emoji">😴</span><span class="compare-label">${t('avgSleep')}</span><span class="compare-val">${twAvgSleep>0?(Math.floor(twAvgSleep/60)+'h'+(Math.round(twAvgSleep%60)>0?Math.round(twAvgSleep%60)+'m':'')):'-'}</span>${twAvgSleep>0&&lwAvgSleep>0?diffStr(twAvgSleep,lwAvgSleep,'',true):'<span class="compare-diff neutral">-</span>'}</div>
+        <div class="compare-row"><span class="compare-emoji">👟</span><span class="compare-label">${t('steps')}</span><span class="compare-val">${tw.steps.toLocaleString(wloc)}</span>${diffStr(tw.steps,lw.steps,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">🚴</span><span class="compare-label">${t('bike')}</span><span class="compare-val">${tw.bikeKm.toFixed(1)} km</span>${diffStr(tw.bikeKm,lw.bikeKm,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">🏋️</span><span class="compare-label">${t('weightTraining')}</span><span class="compare-val">${tw.gymDays} ${t('days')}</span>${diffStr(tw.gymDays,lw.gymDays,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">🌬️</span><span class="compare-label">${t('breathing')}</span><span class="compare-val">${tw.breathDays} ${t('days')}</span>${diffStr(tw.breathDays,lw.breathDays,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">🪜</span><span class="compare-label">${t('stairs')}</span><span class="compare-val">${tw.stairsTotal} ${t('floorAbbr')}</span>${diffStr(tw.stairsTotal,lw.stairsTotal,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">🩹</span><span class="compare-label">${t('physio')}</span><span class="compare-val">${tw.physioDays} ${t('days')}</span>${diffStr(tw.physioDays,lw.physioDays,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">🧘</span><span class="compare-label">${t('stretching')}</span><span class="compare-val">${tw.stretchDays} ${t('days')}</span>${diffStr(tw.stretchDays,lw.stretchDays,'',true)}</div>
+        <div class="compare-row"><span class="compare-emoji">📖</span><span class="compare-label">${t('reading')}</span><span class="compare-val">${tw.readDays} ${t('days')}</span>${diffStr(tw.readDays,lw.readDays,'',true)}</div>
+        <div class="compare-row" style="border-top:2px solid #f0ebe5;padding-top:12px"><span class="compare-emoji">🎯</span><span class="compare-label" style="font-weight:700">${t('totalScore')}</span><span class="compare-val">${tw.totalScore}/${tw.daysWithData*HABITS_COUNT || HABITS_COUNT*7}</span>${diffStr(tw.totalScore,lw.totalScore,'',true)}</div>
       </div>
     `;
     statsGrid.innerHTML = '';
@@ -1346,10 +1534,10 @@ function renderChart() {
     const completionPct = daysWithData > 0 ? Math.round((totalScore / (daysWithData * HABITS_COUNT)) * 100) : 0;
 
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${avgScore.toFixed(1)}/${HABITS_COUNT}</div><div class="stat-label">Score médio</div></div>
-      <div class="stat-card"><div class="stat-value">${completionPct}%</div><div class="stat-label">Completude</div></div>
-      <div class="stat-card"><div class="stat-value">${perfectDays}</div><div class="stat-label">Dias perfeitos (${HABITS_COUNT}/${HABITS_COUNT})</div></div>
-      <div class="stat-card"><div class="stat-value">${daysWithData}</div><div class="stat-label">Dias registrados</div></div>
+      <div class="stat-card"><div class="stat-value">${avgScore.toFixed(1)}/${HABITS_COUNT}</div><div class="stat-label">${t('avgScore')}</div></div>
+      <div class="stat-card"><div class="stat-value">${completionPct}%</div><div class="stat-label">${t('completion')}</div></div>
+      <div class="stat-card"><div class="stat-value">${perfectDays}</div><div class="stat-label">${t('perfectDays')} (${HABITS_COUNT}/${HABITS_COUNT})</div></div>
+      <div class="stat-card"><div class="stat-value">${daysWithData}</div><div class="stat-label">${t('daysRecorded')}</div></div>
     `;
 
   } else if (currentChart === 'heatmap') {
@@ -1369,10 +1557,10 @@ function renderChart() {
       const dayOfYear = Math.floor((firstOfMonth - jan1) / 86400000);
       const weekIndex = Math.floor((dayOfYear + startOffset) / 7);
       const pct = (weekIndex / totalWeeks) * 100;
-      monthLabelsHTML += `<div class="heatmap-month-label" style="position:absolute;left:${pct}%">${shortMonthNames[m]}</div>`;
+      monthLabelsHTML += `<div class="heatmap-month-label" style="position:absolute;left:${pct}%">${T[getLang()].monthsShort[m]}</div>`;
     }
 
-    const weekdayLabels = ['', 'S', '', 'Q', '', 'S', ''];
+    const weekdayLabels = T[getLang()].heatmapWeekdays;
 
     let gridHTML = '';
     for (let row = 0; row < 7; row++) {
@@ -1402,7 +1590,7 @@ function renderChart() {
     extraContent.innerHTML = `
       <div class="heatmap-container">
         <div class="heatmap-title">
-          <span>Consistência anual</span>
+          <span>${t('annualConsistency')}</span>
           <div class="heatmap-year-nav">
             <button class="heatmap-year-btn" id="hmPrev">&#8249;</button>
             <span>${heatmapYear}</span>
@@ -1412,13 +1600,13 @@ function renderChart() {
         <div style="position:relative;padding-left:22px;margin-bottom:6px;height:14px">${monthLabelsHTML}</div>
         <div class="heatmap-grid">${gridHTML}</div>
         <div class="heatmap-legend">
-          <span>Menos</span>
+          <span>${t('less')}</span>
           <div class="heatmap-legend-cell" style="background:#eee9e3"></div>
           <div class="heatmap-legend-cell" style="background:#e8d9c8"></div>
           <div class="heatmap-legend-cell" style="background:#d4b896"></div>
           <div class="heatmap-legend-cell" style="background:#c4956a"></div>
           <div class="heatmap-legend-cell" style="background:#a07548"></div>
-          <span>Mais</span>
+          <span>${t('more')}</span>
         </div>
       </div>
     `;
@@ -1448,10 +1636,10 @@ function renderChart() {
     }
 
     statsGrid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${totalDays}</div><div class="stat-label">Dias registrados em ${heatmapYear}</div></div>
-      <div class="stat-card"><div class="stat-value">${totalDays>0?Math.round((totalScore/(totalDays*HABITS_COUNT))*100):0}%</div><div class="stat-label">Completude média</div></div>
-      <div class="stat-card"><div class="stat-value">${perfectDays}</div><div class="stat-label">Dias perfeitos</div></div>
-      <div class="stat-card"><div class="stat-value">${longestStreak}</div><div class="stat-label">Maior sequência (dias)</div></div>
+      <div class="stat-card"><div class="stat-value">${totalDays}</div><div class="stat-label">${t('daysRecordedIn')} ${heatmapYear}</div></div>
+      <div class="stat-card"><div class="stat-value">${totalDays>0?Math.round((totalScore/(totalDays*HABITS_COUNT))*100):0}%</div><div class="stat-label">${t('avgCompletion')}</div></div>
+      <div class="stat-card"><div class="stat-value">${perfectDays}</div><div class="stat-label">${t('perfectDays')}</div></div>
+      <div class="stat-card"><div class="stat-value">${longestStreak}</div><div class="stat-label">${t('longestStreak')}</div></div>
     `;
   }
 }
@@ -1494,10 +1682,10 @@ importFile.addEventListener('change', e => {
     reader.onload = ev => {
       try {
         const imp = JSON.parse(ev.target.result);
-        if (typeof imp !== 'object' || imp === null) { alert('Arquivo inválido.'); return; }
+        if (typeof imp !== 'object' || imp === null) { alert(t('invalidFile')); return; }
         const data = loadData(); Object.assign(data, imp); saveData(data); render();
-        alert('Dados importados com sucesso!');
-      } catch { alert('Erro ao ler o arquivo.'); }
+        alert(t('importSuccess'));
+      } catch { alert(t('importError')); }
     };
     reader.readAsText(e.target.files[0]); e.target.value = '';
   }
@@ -1537,18 +1725,18 @@ function updateAuthUI() {
     const name = currentUser.user_metadata?.full_name || currentUser.email;
     const avatar = currentUser.user_metadata?.avatar_url;
     userInfo.innerHTML = (avatar ? `<img src="${avatar}" alt="">` : '') +
-      `<span>${name}</span><span class="sync-status synced" id="syncStatus">sincronizado</span>`;
-    loginBtn.textContent = 'Sair';
+      `<span>${name}</span><span class="sync-status synced" id="syncStatus">${t('synced')}</span>`;
+    loginBtn.textContent = t('signOut');
     loginBtn.onclick = logoutUser;
   } else {
-    userInfo.innerHTML = '<span style="color:var(--text-dim)">Dados salvos no navegador</span>';
-    loginBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Entrar com Google';
+    userInfo.innerHTML = `<span style="color:var(--text-dim)">${t('dataSavedBrowser')}</span>`;
+    loginBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> ' + t('signInGoogle');
     loginBtn.onclick = loginWithGoogle;
   }
 }
 
 async function loginWithGoogle() {
-  if (!supabase) { alert('Sync com Google ainda nao esta configurado.'); return; }
+  if (!supabase) { alert(t('syncNotConfigured')); return; }
   await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/habitos/' } });
 }
 
@@ -1580,17 +1768,17 @@ async function loadFromCloud() {
 async function saveToCloud(habitData) {
   if (!supabase || !currentUser) return;
   const syncEl = document.getElementById('syncStatus');
-  if (syncEl) { syncEl.textContent = 'sincronizando...'; syncEl.className = 'sync-status syncing'; }
+  if (syncEl) { syncEl.textContent = t('syncing'); syncEl.className = 'sync-status syncing'; }
   try {
     await supabase.from('habit_data').upsert({
       user_id: currentUser.id,
       data: habitData,
       updated_at: new Date().toISOString()
     }, { onConflict: 'user_id' });
-    if (syncEl) { syncEl.textContent = 'sincronizado'; syncEl.className = 'sync-status synced'; }
+    if (syncEl) { syncEl.textContent = t('synced'); syncEl.className = 'sync-status synced'; }
   } catch (e) {
     console.error('Cloud save error:', e);
-    if (syncEl) { syncEl.textContent = 'erro no sync'; syncEl.className = 'sync-status'; }
+    if (syncEl) { syncEl.textContent = t('syncError'); syncEl.className = 'sync-status'; }
   }
 }
 
@@ -1603,6 +1791,13 @@ saveData = function(data) {
     syncTimeout = setTimeout(() => saveToCloud(data), 1500);
   }
 };
+
+// Re-render everything when language changes
+window.addEventListener('langchange', (e) => {
+  document.title = e.detail.lang === 'pt' ? 'Hábitos - Leta Build' : 'Habits - Leta Build';
+  render();
+  updateAuthUI();
+});
 
 render();
 </script>

@@ -4,7 +4,7 @@
 // ============================================================
 
 (function () {
-  let lang = 'pt';
+  let lang = (window.letabuildLang && window.letabuildLang.get()) || 'pt';
   let result = null;
 
   // ── DOM Elements ──────────────────────────────────────────
@@ -73,7 +73,7 @@
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
     document.title = ui.title + ' — Quiz';
 
-    els.langToggle.textContent = ui.lang;
+    // langToggle button is managed by shared lang-toggle.js (flags)
     els.landingTitle.innerHTML = lang === 'pt'
       ? 'Você Entende <span class="highlight">Bitcoin</span>?'
       : 'Do You Understand <span class="highlight">Bitcoin</span>?';
@@ -395,10 +395,14 @@
 
     setLanguage(lang);
 
-    els.langToggle.addEventListener('click', () => {
-      toggleLanguage();
-      if (screens.quiz.classList.contains('active')) {
-        startQuiz();
+    // Language changes come from shared lang-toggle.js via langchange event
+    window.addEventListener('langchange', function (e) {
+      if (e.detail && e.detail.lang && e.detail.lang !== lang) {
+        lang = e.detail.lang;
+        setLanguage(lang);
+        if (screens.quiz.classList.contains('active')) {
+          startQuiz();
+        }
       }
     });
 

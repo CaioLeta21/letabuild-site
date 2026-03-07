@@ -58,10 +58,10 @@
       color: var(--text);
       flex: 1;
     }
-    .topbar-credit {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
+    .topbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* ── NAV PILLS ── */
@@ -598,9 +598,9 @@
       .nav-pills { padding: 0 16px; }
       .page { padding: 32px 16px 80px; }
       .nav-pill { padding: 8px 10px; font-size: 12px; }
-      .topbar-credit { display: none; }
     }
   </style>
+  <script src="/lang-toggle.js"></script>
 </head>
 <body>
 
@@ -608,17 +608,17 @@
   <div id="disclaimer-overlay">
     <div class="disclaimer-box">
       <div class="disclaimer-icon">⚠️</div>
-      <h2>Antes de começar, leia com atenção</h2>
-      <p>Gerar uma seed phrase é um ato de altíssima responsabilidade. Erros nesse processo podem resultar em perda permanente e irreversível dos seus bitcoin.</p>
+      <h2 data-pt="Antes de começar, leia com atenção" data-en="Before you begin, read carefully">Antes de começar, leia com atenção</h2>
+      <p data-pt="Gerar uma seed phrase é um ato de altíssima responsabilidade. Erros nesse processo podem resultar em perda permanente e irreversível dos seus bitcoin." data-en="Generating a seed phrase is an act of extreme responsibility. Mistakes in this process can result in permanent and irreversible loss of your bitcoin.">Gerar uma seed phrase é um ato de altíssima responsabilidade. Erros nesse processo podem resultar em perda permanente e irreversível dos seus bitcoin.</p>
       <ul>
-        <li>Nunca fotografe, grave em vídeo ou digitalize sua seed phrase</li>
-        <li>Nunca insira suas palavras em sites ou aplicativos online</li>
-        <li>Nunca compartilhe sua seed com ninguém, por nenhum motivo</li>
-        <li>Quem tiver suas 24 palavras terá acesso total aos seus fundos</li>
-        <li>Não existe suporte, recuperação ou estorno no Bitcoin</li>
+        <li data-pt="Nunca fotografe, grave em vídeo ou digitalize sua seed phrase" data-en="Never photograph, video record, or digitize your seed phrase">Nunca fotografe, grave em vídeo ou digitalize sua seed phrase</li>
+        <li data-pt="Nunca insira suas palavras em sites ou aplicativos online" data-en="Never enter your words on websites or online apps">Nunca insira suas palavras em sites ou aplicativos online</li>
+        <li data-pt="Nunca compartilhe sua seed com ninguém, por nenhum motivo" data-en="Never share your seed with anyone, for any reason">Nunca compartilhe sua seed com ninguém, por nenhum motivo</li>
+        <li data-pt="Quem tiver suas 24 palavras terá acesso total aos seus fundos" data-en="Anyone who has your 24 words will have full access to your funds">Quem tiver suas 24 palavras terá acesso total aos seus fundos</li>
+        <li data-pt="Não existe suporte, recuperação ou estorno no Bitcoin" data-en="There is no support, recovery, or chargeback in Bitcoin">Não existe suporte, recuperação ou estorno no Bitcoin</li>
       </ul>
-      <p>Se você não se sentir preparado para assumir essa responsabilidade, <a href="/custodia/">volte ao guia de custódia</a> e estude mais antes de continuar.</p>
-      <button class="disclaimer-confirm" onclick="confirmarAviso()">
+      <p data-pt='Se você não se sentir preparado para assumir essa responsabilidade, <a href="/custodia/">volte ao guia de custódia</a> e estude mais antes de continuar.' data-en='If you don&apos;t feel ready to take on this responsibility, <a href="/custodia/">go back to the custody guide</a> and study more before continuing.'>Se você não se sentir preparado para assumir essa responsabilidade, <a href="/custodia/">volte ao guia de custódia</a> e estude mais antes de continuar.</p>
+      <button class="disclaimer-confirm" onclick="confirmarAviso()" data-pt="Eu li tudo e entendo os riscos de gerar uma seed de forma irresponsável" data-en="I have read everything and understand the risks of generating a seed irresponsibly">
         Eu li tudo e entendo os riscos de gerar uma seed de forma irresponsável
       </button>
     </div>
@@ -628,7 +628,9 @@
   <div class="topbar">
     <a href="https://letabuild.com" class="topbar-back">← letabuild.com</a>
     <span class="topbar-title">Seed Phrase Offline</span>
-    <span class="topbar-credit">com bitcoinheiros</span>
+    <div class="topbar-controls">
+      <button id="langToggle" style="background:none;border:1px solid rgba(247,147,26,0.15);color:var(--muted);min-width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 8px;"></button>
+    </div>
   </div>
 
   <!-- PROGRESS BAR -->
@@ -638,25 +640,25 @@
 
   <!-- NAV PILLS -->
   <nav class="nav-pills" id="nav-pills">
-    <button class="nav-pill active" data-section="0">
+    <button class="nav-pill active" data-section="0" data-pt='<span class="pill-num">1</span> Fundamentos' data-en='<span class="pill-num">1</span> Basics'>
       <span class="pill-num">1</span> Fundamentos
     </button>
-    <button class="nav-pill" data-section="1">
+    <button class="nav-pill" data-section="1" data-pt='<span class="pill-num">2</span> O que é Entropia' data-en='<span class="pill-num">2</span> What is Entropy'>
       <span class="pill-num">2</span> O que é Entropia
     </button>
-    <button class="nav-pill" data-section="2">
+    <button class="nav-pill" data-section="2" data-pt='<span class="pill-num">3</span> Por que Offline' data-en='<span class="pill-num">3</span> Why Offline'>
       <span class="pill-num">3</span> Por que Offline
     </button>
-    <button class="nav-pill" data-section="3">
+    <button class="nav-pill" data-section="3" data-pt='<span class="pill-num">4</span> Moeda' data-en='<span class="pill-num">4</span> Coin'>
       <span class="pill-num">4</span> Moeda
     </button>
-    <button class="nav-pill" data-section="4">
+    <button class="nav-pill" data-section="4" data-pt='<span class="pill-num">5</span> Dado' data-en='<span class="pill-num">5</span> Dice'>
       <span class="pill-num">5</span> Dado
     </button>
-    <button class="nav-pill" data-section="5">
+    <button class="nav-pill" data-section="5" data-pt='<span class="pill-num">6</span> Sorteio' data-en='<span class="pill-num">6</span> Draw'>
       <span class="pill-num">6</span> Sorteio
     </button>
-    <button class="nav-pill" data-section="6">
+    <button class="nav-pill" data-section="6" data-pt='<span class="pill-num">7</span> Ian Coleman' data-en='<span class="pill-num">7</span> Ian Coleman'>
       <span class="pill-num">7</span> Ian Coleman
     </button>
   </nav>
@@ -669,65 +671,65 @@
     ════════════════════════════════════════ -->
     <div class="section active" id="section-0">
       <div class="hero">
-        <span class="hero-tag">Auto-Custódia Bitcoin</span>
-        <h1>Como gerar sua seed phrase do jeito certo</h1>
-        <p>Um guia prático para criar suas chaves offline, usando entropia física, sem depender de nenhum software ou site para gerar sua segurança.</p>
+        <span class="hero-tag" data-pt="Auto-Custódia Bitcoin" data-en="Bitcoin Self-Custody">Auto-Custódia Bitcoin</span>
+        <h1 data-pt="Como gerar sua seed phrase do jeito certo" data-en="How to generate your seed phrase the right way">Como gerar sua seed phrase do jeito certo</h1>
+        <p data-pt="Um guia prático para criar suas chaves offline, usando entropia física, sem depender de nenhum software ou site para gerar sua segurança." data-en="A practical guide to creating your keys offline, using physical entropy, without relying on any software or website to generate your security.">Um guia prático para criar suas chaves offline, usando entropia física, sem depender de nenhum software ou site para gerar sua segurança.</p>
       </div>
 
       <div class="notice notice-warn">
         <span class="notice-icon">⚠️</span>
-        <div>Quem tem sua seed phrase tem seus bitcoin. Nunca fotografe, salve em nuvem, digitalize ou compartilhe suas palavras com ninguém.</div>
+        <div data-pt="Quem tem sua seed phrase tem seus bitcoin. Nunca fotografe, salve em nuvem, digitalize ou compartilhe suas palavras com ninguém." data-en="Whoever has your seed phrase has your bitcoin. Never photograph, save to the cloud, digitize, or share your words with anyone.">Quem tem sua seed phrase tem seus bitcoin. Nunca fotografe, salve em nuvem, digitalize ou compartilhe suas palavras com ninguém.</div>
       </div>
 
       <div class="section-header">
         <div class="section-icon">🔑</div>
         <div>
-          <h2>O que é uma seed phrase?</h2>
-          <p>A chave-mestre que dá acesso a todos os seus bitcoin</p>
+          <h2 data-pt="O que é uma seed phrase?" data-en="What is a seed phrase?">O que é uma seed phrase?</h2>
+          <p data-pt="A chave-mestre que dá acesso a todos os seus bitcoin" data-en="The master key that gives access to all your bitcoin">A chave-mestre que dá acesso a todos os seus bitcoin</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt="Uma seed phrase (ou frase-semente) é uma sequência de 12 ou 24 palavras comuns, escolhidas de uma lista padronizada de 2.048 termos definida pelo protocolo BIP-39. Essas palavras representam, de forma legível por humanos, a chave privada da sua carteira Bitcoin." data-en="A seed phrase is a sequence of 12 or 24 common words, chosen from a standardized list of 2,048 terms defined by the BIP-39 protocol. These words represent, in human-readable form, the private key of your Bitcoin wallet.">
         Uma seed phrase (ou frase-semente) é uma sequência de 12 ou 24 palavras comuns, escolhidas de uma lista padronizada de 2.048 termos definida pelo protocolo BIP-39. Essas palavras representam, de forma legível por humanos, a chave privada da sua carteira Bitcoin.
       </p>
 
-      <div class="analogy">
+      <div class="analogy" data-pt="Pense assim: se a sua carteira Bitcoin é um cofre, a seed phrase é a combinação. E diferente de um cofre físico, ela não tem limite de tentativas, não pode ser trocada pela administradora do prédio e não tem o número do suporte para ligar. Quem tiver as 24 palavras, tem o dinheiro. Ponto." data-en="Think of it this way: if your Bitcoin wallet is a safe, the seed phrase is the combination. And unlike a physical safe, it has no limit on attempts, can't be changed by the building manager, and there's no support number to call. Whoever has the 24 words has the money. Period.">
         Pense assim: se a sua carteira Bitcoin é um cofre, a seed phrase é a combinação. E diferente de um cofre físico, ela não tem limite de tentativas, não pode ser trocada pela administradora do prédio e não tem o número do suporte para ligar. Quem tiver as 24 palavras, tem o dinheiro. Ponto.
       </div>
 
-      <p>
+      <p data-pt='Uma seed phrase válida segue uma lógica matemática precisa: as primeiras 23 palavras (para uma seed de 24) são livres, mas a última é calculada como um "checksum" das anteriores. Isso serve para detectar erros de anotação.' data-en='A valid seed phrase follows a precise mathematical logic: the first 23 words (for a 24-word seed) are free, but the last one is calculated as a "checksum" of the previous ones. This is used to detect transcription errors.'>
         Uma seed phrase válida segue uma lógica matemática precisa: as primeiras 23 palavras (para uma seed de 24) são livres, mas a última é calculada como um "checksum" das anteriores. Isso serve para detectar erros de anotação.
       </p>
 
       <div class="card">
-        <h3 style="margin-top:0">Características essenciais da seed phrase</h3>
+        <h3 style="margin-top:0" data-pt="Características essenciais da seed phrase" data-en="Essential characteristics of the seed phrase">Características essenciais da seed phrase</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <h4>Padrão BIP-39</h4>
-              <p>Toda carteira séria usa BIP-39. Isso significa que você pode recuperar seus fundos em qualquer carteira compatível com o padrão, independente do fabricante.</p>
+              <h4 data-pt="Padrão BIP-39" data-en="BIP-39 Standard">Padrão BIP-39</h4>
+              <p data-pt="Toda carteira séria usa BIP-39. Isso significa que você pode recuperar seus fundos em qualquer carteira compatível com o padrão, independente do fabricante." data-en="Every serious wallet uses BIP-39. This means you can recover your funds on any wallet compatible with the standard, regardless of the manufacturer.">Toda carteira séria usa BIP-39. Isso significa que você pode recuperar seus fundos em qualquer carteira compatível com o padrão, independente do fabricante.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-body">
-              <h4>A ordem importa</h4>
-              <p>As 24 palavras na ordem <code>café maçã rio...</code> são completamente diferentes de <code>maçã café rio...</code>. São carteiras distintas. A sequência é tão importante quanto as palavras.</p>
+              <h4 data-pt="A ordem importa" data-en="Order matters">A ordem importa</h4>
+              <p data-pt='As 24 palavras na ordem <code>café maçã rio...</code> são completamente diferentes de <code>maçã café rio...</code>. São carteiras distintas. A sequência é tão importante quanto as palavras.' data-en='The 24 words in the order <code>coffee apple river...</code> are completely different from <code>apple coffee river...</code>. They are distinct wallets. The sequence is just as important as the words.'>As 24 palavras na ordem <code>café maçã rio...</code> são completamente diferentes de <code>maçã café rio...</code>. São carteiras distintas. A sequência é tão importante quanto as palavras.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-body">
-              <h4>Uma vez gerada, para sempre</h4>
-              <p>Diferente de uma senha de banco, você não pode "resetar" sua seed. Ela precisa ser gerada de forma segura uma única vez e guardada com máximo cuidado pelo resto da vida.</p>
+              <h4 data-pt="Uma vez gerada, para sempre" data-en="Once generated, forever">Uma vez gerada, para sempre</h4>
+              <p data-pt='Diferente de uma senha de banco, você não pode "resetar" sua seed. Ela precisa ser gerada de forma segura uma única vez e guardada com máximo cuidado pelo resto da vida.' data-en='Unlike a bank password, you cannot "reset" your seed. It needs to be generated securely once and kept with maximum care for the rest of your life.'>Diferente de uma senha de banco, você não pode "resetar" sua seed. Ela precisa ser gerada de forma segura uma única vez e guardada com máximo cuidado pelo resto da vida.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-body">
-              <h4>12 ou 24 palavras?</h4>
-              <p>12 palavras oferecem 128 bits de entropia, o suficiente para ser inviolável. 24 palavras oferecem 256 bits — o dobro, e é o padrão recomendado para auto-custódia de longo prazo.</p>
+              <h4 data-pt="12 ou 24 palavras?" data-en="12 or 24 words?">12 ou 24 palavras?</h4>
+              <p data-pt="12 palavras oferecem 128 bits de entropia, o suficiente para ser inviolável. 24 palavras oferecem 256 bits — o dobro, e é o padrão recomendado para auto-custódia de longo prazo." data-en="12 words offer 128 bits of entropy, enough to be unbreakable. 24 words offer 256 bits — double, and it is the recommended standard for long-term self-custody.">12 palavras oferecem 128 bits de entropia, o suficiente para ser inviolável. 24 palavras oferecem 256 bits — o dobro, e é o padrão recomendado para auto-custódia de longo prazo.</p>
             </div>
           </div>
         </div>
@@ -737,14 +739,14 @@
 
       <div class="notice notice-info">
         <span class="notice-icon">📌</span>
-        <div>
+        <div data-pt="<strong>Como este guia funciona:</strong> Primeiro entendemos os conceitos (Seções 1, 2 e 3). Depois aprendemos a gerar entropia com métodos físicos (Seções 4, 5 e 6). Por último, convertemos essa entropia em seed phrase usando as ferramentas certas (Seção 7)." data-en="<strong>How this guide works:</strong> First we understand the concepts (Sections 1, 2 and 3). Then we learn to generate entropy with physical methods (Sections 4, 5 and 6). Finally, we convert that entropy into a seed phrase using the right tools (Section 7).">
           <strong>Como este guia funciona:</strong> Primeiro entendemos os conceitos (Seções 1, 2 e 3). Depois aprendemos a gerar entropia com métodos físicos (Seções 4, 5 e 6). Por último, convertemos essa entropia em seed phrase usando as ferramentas certas (Seção 7).
         </div>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" disabled>← Anterior</button>
-        <button class="btn btn-next" id="btn-next-0" onclick="goTo(1)" disabled>Próximo: Entropia →</button>
+        <button class="btn btn-prev" disabled data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" id="btn-next-0" onclick="goTo(1)" disabled data-pt="Próximo: Entropia →" data-en="Next: Entropy →">Próximo: Entropia →</button>
       </div>
     </div>
 
@@ -755,42 +757,42 @@
       <div class="section-header">
         <div class="section-icon">🎲</div>
         <div>
-          <h2>O que é entropia?</h2>
-          <p>O ingrediente secreto de qualquer chave segura</p>
+          <h2 data-pt="O que é entropia?" data-en="What is entropy?">O que é entropia?</h2>
+          <p data-pt="O ingrediente secreto de qualquer chave segura" data-en="The secret ingredient of any secure key">O ingrediente secreto de qualquer chave segura</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt="Antes de entender como gerar uma seed phrase segura, você precisa entender de onde vem a segurança dela. A resposta é uma palavra: <strong>entropia</strong>." data-en="Before understanding how to generate a secure seed phrase, you need to understand where its security comes from. The answer is one word: <strong>entropy</strong>.">
         Antes de entender como gerar uma seed phrase segura, você precisa entender de onde vem a segurança dela. A resposta é uma palavra: <strong>entropia</strong>.
       </p>
-      <p>
+      <p data-pt='Entropia é, em termos simples, a medida da imprevisibilidade de um conjunto de dados. Em criptografia, usamos a palavra "bits de entropia" para quantificar o quanto algo é aleatório. Quanto mais bits, mais impossível de prever ou reproduzir.' data-en='Entropy is, in simple terms, the measure of unpredictability of a set of data. In cryptography, we use the term "bits of entropy" to quantify how random something is. The more bits, the more impossible it is to predict or reproduce.'>
         Entropia é, em termos simples, a medida da imprevisibilidade de um conjunto de dados. Em criptografia, usamos a palavra "bits de entropia" para quantificar o quanto algo é aleatório. Quanto mais bits, mais impossível de prever ou reproduzir.
       </p>
 
-      <div class="analogy">
+      <div class="analogy" data-pt="Imagine que você vai escolher um número de 1 a 10. É fácil de adivinhar? Muito fácil — 10 possibilidades. Agora imagine escolher um número de 1 a 340 undecilhões (340 seguido de 36 zeros). É isso que 128 bits de entropia representam. Não há computador capaz de tentar todas as possibilidades." data-en="Imagine you are going to pick a number from 1 to 10. Easy to guess? Very easy — 10 possibilities. Now imagine picking a number from 1 to 340 undecillion (340 followed by 36 zeros). That is what 128 bits of entropy represent. There is no computer capable of trying all the possibilities.">
         Imagine que você vai escolher um número de 1 a 10. É fácil de adivinhar? Muito fácil — 10 possibilidades. Agora imagine escolher um número de 1 a 340 undecilhões (340 seguido de 36 zeros). É isso que 128 bits de entropia representam. Não há computador capaz de tentar todas as possibilidades.
       </div>
 
       <div class="card card-orange">
-        <h3 style="margin-top:0">Como a entropia se conecta à sua seed phrase</h3>
+        <h3 style="margin-top:0" data-pt="Como a entropia se conecta à sua seed phrase" data-en="How entropy connects to your seed phrase">Como a entropia se conecta à sua seed phrase</h3>
         <div class="entropy-visual">
-          <div class="label">Seed de 12 palavras</div>
-          <div class="entropy-row"><span class="key">Bits de entropia necessários</span><span class="val">128 bits</span></div>
-          <div class="entropy-row"><span class="key">Lançamentos de moeda equivalentes</span><span class="val">128 lançamentos</span></div>
-          <div class="entropy-row"><span class="key">Rolagens de D6 equivalentes</span><span class="val">50 rolagens</span></div>
-          <div class="entropy-row"><span class="key">Combinações possíveis</span><span class="val green">2¹²⁸ ≈ 10³⁸</span></div>
+          <div class="label" data-pt="Seed de 12 palavras" data-en="12-word seed">Seed de 12 palavras</div>
+          <div class="entropy-row"><span class="key" data-pt="Bits de entropia necessários" data-en="Required entropy bits">Bits de entropia necessários</span><span class="val">128 bits</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Lançamentos de moeda equivalentes" data-en="Equivalent coin flips">Lançamentos de moeda equivalentes</span><span class="val" data-pt="128 lançamentos" data-en="128 flips">128 lançamentos</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Rolagens de D6 equivalentes" data-en="Equivalent D6 rolls">Rolagens de D6 equivalentes</span><span class="val" data-pt="50 rolagens" data-en="50 rolls">50 rolagens</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Combinações possíveis" data-en="Possible combinations">Combinações possíveis</span><span class="val green">2¹²⁸ ≈ 10³⁸</span></div>
         </div>
         <div class="entropy-visual" style="margin-top:12px">
-          <div class="label">Seed de 24 palavras (recomendado)</div>
-          <div class="entropy-row"><span class="key">Bits de entropia necessários</span><span class="val">256 bits</span></div>
-          <div class="entropy-row"><span class="key">Lançamentos de moeda equivalentes</span><span class="val">256 lançamentos</span></div>
-          <div class="entropy-row"><span class="key">Rolagens de D6 equivalentes</span><span class="val">99 rolagens</span></div>
-          <div class="entropy-row"><span class="key">Combinações possíveis</span><span class="val green">2²⁵⁶ ≈ 10⁷⁷</span></div>
+          <div class="label" data-pt="Seed de 24 palavras (recomendado)" data-en="24-word seed (recommended)">Seed de 24 palavras (recomendado)</div>
+          <div class="entropy-row"><span class="key" data-pt="Bits de entropia necessários" data-en="Required entropy bits">Bits de entropia necessários</span><span class="val">256 bits</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Lançamentos de moeda equivalentes" data-en="Equivalent coin flips">Lançamentos de moeda equivalentes</span><span class="val" data-pt="256 lançamentos" data-en="256 flips">256 lançamentos</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Rolagens de D6 equivalentes" data-en="Equivalent D6 rolls">Rolagens de D6 equivalentes</span><span class="val" data-pt="99 rolagens" data-en="99 rolls">99 rolagens</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Combinações possíveis" data-en="Possible combinations">Combinações possíveis</span><span class="val green">2²⁵⁶ ≈ 10⁷⁷</span></div>
         </div>
       </div>
 
-      <h3>Como bits de entropia viram palavras?</h3>
-      <p>
+      <h3 data-pt="Como bits de entropia viram palavras?" data-en="How do entropy bits become words?">Como bits de entropia viram palavras?</h3>
+      <p data-pt="O protocolo BIP-39 usa uma lógica elegante: a lista de 2.048 palavras foi criada porque 2.048 = 2¹¹, ou seja, cada palavra representa exatamente 11 bits de informação binária. O processo de conversão é assim:" data-en="The BIP-39 protocol uses an elegant logic: the 2,048-word list was created because 2,048 = 2¹¹, meaning each word represents exactly 11 bits of binary information. The conversion process works like this:">
         O protocolo BIP-39 usa uma lógica elegante: a lista de 2.048 palavras foi criada porque 2.048 = 2¹¹, ou seja, cada palavra representa exatamente 11 bits de informação binária. O processo de conversão é assim:
       </p>
 
@@ -798,43 +800,43 @@
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <h4>Entropia bruta</h4>
-            <p>Você gera uma sequência de bits aleatórios. Para 24 palavras, são 256 bits. Ex: <code>10110101 00110011...</code></p>
+            <h4 data-pt="Entropia bruta" data-en="Raw entropy">Entropia bruta</h4>
+            <p data-pt='Você gera uma sequência de bits aleatórios. Para 24 palavras, são 256 bits. Ex: <code>10110101 00110011...</code>' data-en='You generate a sequence of random bits. For 24 words, that is 256 bits. E.g.: <code>10110101 00110011...</code>'>Você gera uma sequência de bits aleatórios. Para 24 palavras, são 256 bits. Ex: <code>10110101 00110011...</code></p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
             <h4>Checksum</h4>
-            <p>O protocolo aplica SHA-256 sobre esses bits e pega os primeiros 8 bits do resultado. Esse checksum é anexado ao final, totalizando 264 bits (256 + 8).</p>
+            <p data-pt="O protocolo aplica SHA-256 sobre esses bits e pega os primeiros 8 bits do resultado. Esse checksum é anexado ao final, totalizando 264 bits (256 + 8)." data-en="The protocol applies SHA-256 to these bits and takes the first 8 bits of the result. This checksum is appended to the end, totaling 264 bits (256 + 8).">O protocolo aplica SHA-256 sobre esses bits e pega os primeiros 8 bits do resultado. Esse checksum é anexado ao final, totalizando 264 bits (256 + 8).</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h4>Divisão em grupos de 11 bits</h4>
-            <p>Os 264 bits são divididos em 24 grupos de 11 bits cada. <code>264 ÷ 11 = 24 palavras</code>.</p>
+            <h4 data-pt="Divisão em grupos de 11 bits" data-en="Division into groups of 11 bits">Divisão em grupos de 11 bits</h4>
+            <p data-pt='Os 264 bits são divididos em 24 grupos de 11 bits cada. <code>264 ÷ 11 = 24 palavras</code>.' data-en='The 264 bits are divided into 24 groups of 11 bits each. <code>264 ÷ 11 = 24 words</code>.'>Os 264 bits são divididos em 24 grupos de 11 bits cada. <code>264 ÷ 11 = 24 palavras</code>.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-body">
-            <h4>Conversão para palavras</h4>
-            <p>Cada grupo de 11 bits é um número entre 0 e 2.047. Esse número aponta para uma palavra na lista BIP-39. O número 1333 em binário é <code>10100110101</code> → palavra nº 1333 da lista.</p>
+            <h4 data-pt="Conversão para palavras" data-en="Conversion to words">Conversão para palavras</h4>
+            <p data-pt='Cada grupo de 11 bits é um número entre 0 e 2.047. Esse número aponta para uma palavra na lista BIP-39. O número 1333 em binário é <code>10100110101</code> → palavra nº 1333 da lista.' data-en='Each group of 11 bits is a number between 0 and 2,047. This number points to a word in the BIP-39 list. The number 1333 in binary is <code>10100110101</code> → word #1333 in the list.'>Cada grupo de 11 bits é um número entre 0 e 2.047. Esse número aponta para uma palavra na lista BIP-39. O número 1333 em binário é <code>10100110101</code> → palavra nº 1333 da lista.</p>
           </div>
         </div>
       </div>
 
       <div class="notice notice-warn">
         <span class="notice-icon">🚫</span>
-        <div>
+        <div data-pt='<strong>Nunca use entropia previsível.</strong> Datas de aniversário, nomes de família, sequências de teclado, frases de música, ou qualquer coisa que você "inventou" na cabeça. O cérebro humano é péssimo em aleatoriedade. Sempre use um método físico verificável.' data-en='<strong>Never use predictable entropy.</strong> Birthdays, family names, keyboard sequences, song lyrics, or anything you "made up" in your head. The human brain is terrible at randomness. Always use a verifiable physical method.'>
           <strong>Nunca use entropia previsível.</strong> Datas de aniversário, nomes de família, sequências de teclado, frases de música, ou qualquer coisa que você "inventou" na cabeça. O cérebro humano é péssimo em aleatoriedade. Sempre use um método físico verificável.
         </div>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" onclick="goTo(0)">← Anterior</button>
-        <button class="btn btn-next" onclick="goTo(2)">Próximo: Por que Offline →</button>
+        <button class="btn btn-prev" onclick="goTo(0)" data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(2)" data-pt="Próximo: Por que Offline →" data-en="Next: Why Offline →">Próximo: Por que Offline →</button>
       </div>
     </div>
 
@@ -845,15 +847,15 @@
       <div class="section-header">
         <div class="section-icon">🔒</div>
         <div>
-          <h2>Por que gerar offline?</h2>
-          <p>O risco que você não vê pode ser o mais perigoso</p>
+          <h2 data-pt="Por que gerar offline?" data-en="Why generate offline?">Por que gerar offline?</h2>
+          <p data-pt="O risco que você não vê pode ser o mais perigoso" data-en="The risk you don't see may be the most dangerous">O risco que você não vê pode ser o mais perigoso</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt='A maioria das carteiras Bitcoin gera a seed phrase automaticamente, no momento em que você cria a carteira. Isso é conveniente, mas esconde um problema sério: você está confiando que o software escolheu boas palavras, de forma realmente aleatória, sem que nada tenha "vazado" durante o processo.' data-en='Most Bitcoin wallets generate the seed phrase automatically when you create the wallet. This is convenient, but hides a serious problem: you are trusting that the software chose good words, in a truly random way, without anything having "leaked" during the process.'>
         A maioria das carteiras Bitcoin gera a seed phrase automaticamente, no momento em que você cria a carteira. Isso é conveniente, mas esconde um problema sério: você está confiando que o software escolheu boas palavras, de forma realmente aleatória, sem que nada tenha "vazado" durante o processo.
       </p>
-      <p>
+      <p data-pt="Quando você gera uma seed phrase em um dispositivo conectado à internet, você está exposto a uma lista de ameaças silenciosas." data-en="When you generate a seed phrase on an internet-connected device, you are exposed to a list of silent threats.">
         Quando você gera uma seed phrase em um dispositivo conectado à internet, você está exposto a uma lista de ameaças silenciosas.
       </p>
 
@@ -861,73 +863,73 @@
         <div class="compare-card card-red">
           <h4>Keylogger</h4>
           <ul>
-            <li>Registra tudo que você digita</li>
-            <li>Pode capturar a seed se você digitá-la em algum campo</li>
-            <li>Muitas vezes indetectável</li>
+            <li data-pt="Registra tudo que você digita" data-en="Records everything you type">Registra tudo que você digita</li>
+            <li data-pt="Pode capturar a seed se você digitá-la em algum campo" data-en="Can capture the seed if you type it in any field">Pode capturar a seed se você digitá-la em algum campo</li>
+            <li data-pt="Muitas vezes indetectável" data-en="Often undetectable">Muitas vezes indetectável</li>
           </ul>
         </div>
         <div class="compare-card card-red">
           <h4>Clipboard Hijack</h4>
           <ul>
-            <li>Monitora a área de transferência</li>
-            <li>Se você copiar a seed, o malware vê</li>
-            <li>Comum em computadores infectados</li>
+            <li data-pt="Monitora a área de transferência" data-en="Monitors the clipboard">Monitora a área de transferência</li>
+            <li data-pt="Se você copiar a seed, o malware vê" data-en="If you copy the seed, the malware sees it">Se você copiar a seed, o malware vê</li>
+            <li data-pt="Comum em computadores infectados" data-en="Common in infected computers">Comum em computadores infectados</li>
           </ul>
         </div>
         <div class="compare-card card-red">
-          <h4>Sites Falsos</h4>
+          <h4 data-pt="Sites Falsos" data-en="Fake Websites">Sites Falsos</h4>
           <ul>
-            <li>Copiam o visual de ferramentas legítimas</li>
-            <li>Registram toda entropia digitada</li>
-            <li>Você nunca saberá que foi atacado</li>
+            <li data-pt="Copiam o visual de ferramentas legítimas" data-en="Copy the look of legitimate tools">Copiam o visual de ferramentas legítimas</li>
+            <li data-pt="Registram toda entropia digitada" data-en="Record all typed entropy">Registram toda entropia digitada</li>
+            <li data-pt="Você nunca saberá que foi atacado" data-en="You will never know you were attacked">Você nunca saberá que foi atacado</li>
           </ul>
         </div>
       </div>
 
       <div class="notice notice-warn">
         <span class="notice-icon">⛔</span>
-        <div>
+        <div data-pt="<strong>Nunca use um gerador de seed phrase online.</strong> Não importa o site, a reputação do serviço ou o quanto parece confiável. Se o site está acessível pela internet, há um vetor de ataque. Ponto final." data-en="<strong>Never use an online seed phrase generator.</strong> It doesn't matter the website, the service's reputation, or how trustworthy it seems. If the site is accessible via the internet, there is an attack vector. Period.">
           <strong>Nunca use um gerador de seed phrase online.</strong> Não importa o site, a reputação do serviço ou o quanto parece confiável. Se o site está acessível pela internet, há um vetor de ataque. Ponto final.
         </div>
       </div>
 
-      <h3>A lógica do offline</h3>
-      <p>
+      <h3 data-pt="A lógica do offline" data-en="The logic of offline">A lógica do offline</h3>
+      <p data-pt='Um dispositivo sem conexão com a internet não pode transmitir informações. Simples assim. Se sua seed phrase nunca existiu em um dispositivo conectado, ela nunca teve como "sair" por nenhum canal digital.' data-en='A device without an internet connection cannot transmit information. Simple as that. If your seed phrase never existed on a connected device, it never had a way to "leak" through any digital channel.'>
         Um dispositivo sem conexão com a internet não pode transmitir informações. Simples assim. Se sua seed phrase nunca existiu em um dispositivo conectado, ela nunca teve como "sair" por nenhum canal digital.
       </p>
-      <p>
+      <p data-pt="Além disso, quando você gera a entropia fisicamente (com moeda ou dado) e converte ela em seed phrase usando uma ferramenta offline, você tem total transparência do processo. Você pode verificar cada passo." data-en="Furthermore, when you generate entropy physically (with a coin or dice) and convert it into a seed phrase using an offline tool, you have full transparency of the process. You can verify each step.">
         Além disso, quando você gera a entropia fisicamente (com moeda ou dado) e converte ela em seed phrase usando uma ferramenta offline, você tem total transparência do processo. Você pode verificar cada passo.
       </p>
 
       <div class="card card-green">
-        <h3 style="margin-top:0">O modelo seguro de geração</h3>
+        <h3 style="margin-top:0" data-pt="O modelo seguro de geração" data-en="The secure generation model">O modelo seguro de geração</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <h4>Gerar entropia fisicamente</h4>
-              <p>Moeda, dado ou sorteio de papel. Método físico, resultado anotado em papel.</p>
+              <h4 data-pt="Gerar entropia fisicamente" data-en="Generate entropy physically">Gerar entropia fisicamente</h4>
+              <p data-pt="Moeda, dado ou sorteio de papel. Método físico, resultado anotado em papel." data-en="Coin, dice, or paper draw. Physical method, result written down on paper.">Moeda, dado ou sorteio de papel. Método físico, resultado anotado em papel.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-body">
-              <h4>Converter offline</h4>
-              <p>Usar o Ian Coleman (baixado e rodado sem internet), a ColdCard ou a Krux para converter os bits em palavras.</p>
+              <h4 data-pt="Converter offline" data-en="Convert offline">Converter offline</h4>
+              <p data-pt="Usar o Ian Coleman (baixado e rodado sem internet), a ColdCard ou a Krux para converter os bits em palavras." data-en="Use Ian Coleman (downloaded and run without internet), ColdCard, or Krux to convert the bits into words.">Usar o Ian Coleman (baixado e rodado sem internet), a ColdCard ou a Krux para converter os bits em palavras.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-body">
-              <h4>Anotar em papel</h4>
-              <p>Registrar as 24 palavras à mão, em papel físico, em local seguro. Nunca fotografar, nunca digitalizar.</p>
+              <h4 data-pt="Anotar em papel" data-en="Write down on paper">Anotar em papel</h4>
+              <p data-pt="Registrar as 24 palavras à mão, em papel físico, em local seguro. Nunca fotografar, nunca digitalizar." data-en="Write down the 24 words by hand, on physical paper, in a safe place. Never photograph, never digitize.">Registrar as 24 palavras à mão, em papel físico, em local seguro. Nunca fotografar, nunca digitalizar.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-body">
-              <h4>Fechar e apagar</h4>
-              <p>Depois de anotar, fechar a ferramenta e, se for software, apagar os arquivos temporários.</p>
+              <h4 data-pt="Fechar e apagar" data-en="Close and delete">Fechar e apagar</h4>
+              <p data-pt="Depois de anotar, fechar a ferramenta e, se for software, apagar os arquivos temporários." data-en="After writing down, close the tool and, if it's software, delete the temporary files.">Depois de anotar, fechar a ferramenta e, se for software, apagar os arquivos temporários.</p>
             </div>
           </div>
         </div>
@@ -937,13 +939,13 @@
 
       <div class="notice notice-tip">
         <span class="notice-icon">✅</span>
-        <div>
+        <div data-pt="Hardware wallets como a <strong>ColdCard</strong> e a <strong>Krux</strong> nunca se conectam à internet. Elas são projetadas especificamente para operar em modo air-gap — ou seja, sem nenhuma interface de rede, sequer a possibilidade física de uma." data-en="Hardware wallets like <strong>ColdCard</strong> and <strong>Krux</strong> never connect to the internet. They are specifically designed to operate in air-gap mode — that is, without any network interface, not even the physical possibility of one.">
           Hardware wallets como a <strong>ColdCard</strong> e a <strong>Krux</strong> nunca se conectam à internet. Elas são projetadas especificamente para operar em modo air-gap — ou seja, sem nenhuma interface de rede, sequer a possibilidade física de uma.</div>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" onclick="goTo(1)">← Anterior</button>
-        <button class="btn btn-next" onclick="goTo(3)">Próximo: Método da Moeda →</button>
+        <button class="btn btn-prev" onclick="goTo(1)" data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(3)" data-pt="Próximo: Método da Moeda →" data-en="Next: Coin Method →">Próximo: Método da Moeda →</button>
       </div>
     </div>
 
@@ -954,71 +956,71 @@
       <div class="section-header">
         <div class="section-icon">🪙</div>
         <div>
-          <h2>Método 1: Lançamento de Moeda</h2>
-          <p>O método mais puro de entropia binária</p>
+          <h2 data-pt="Método 1: Lançamento de Moeda" data-en="Method 1: Coin Flip">Método 1: Lançamento de Moeda</h2>
+          <p data-pt="O método mais puro de entropia binária" data-en="The purest method of binary entropy">O método mais puro de entropia binária</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt="Uma moeda justa tem exatamente 50% de chance de dar cara e 50% de dar coroa. É o exemplo mais puro de um bit de entropia: dois resultados igualmente prováveis, completamente imprevisíveis. É por isso que esse método é matematicamente elegante." data-en="A fair coin has exactly a 50% chance of landing heads and 50% tails. It is the purest example of one bit of entropy: two equally probable outcomes, completely unpredictable. That is why this method is mathematically elegant.">
         Uma moeda justa tem exatamente 50% de chance de dar cara e 50% de dar coroa. É o exemplo mais puro de um bit de entropia: dois resultados igualmente prováveis, completamente imprevisíveis. É por isso que esse método é matematicamente elegante.
       </p>
-      <p>
+      <p data-pt="Cada lançamento gera 1 bit. Para uma seed de 12 palavras, você precisa de 128 bits, ou seja, 128 lançamentos. Para 24 palavras, 256 lançamentos. Pode parecer muito, mas leva menos de 20 minutos." data-en="Each flip generates 1 bit. For a 12-word seed, you need 128 bits, that is, 128 flips. For 24 words, 256 flips. It may seem like a lot, but it takes less than 20 minutes.">
         Cada lançamento gera 1 bit. Para uma seed de 12 palavras, você precisa de 128 bits, ou seja, 128 lançamentos. Para 24 palavras, 256 lançamentos. Pode parecer muito, mas leva menos de 20 minutos.
       </p>
 
       <div class="notice notice-info">
         <span class="notice-icon">📝</span>
-        <div>A saída deste método é uma <strong>string binária</strong> (sequência de 0s e 1s) que você vai inserir no campo de entropia do Ian Coleman.</div>
+        <div data-pt="A saída deste método é uma <strong>string binária</strong> (sequência de 0s e 1s) que você vai inserir no campo de entropia do Ian Coleman." data-en="The output of this method is a <strong>binary string</strong> (sequence of 0s and 1s) that you will enter in the entropy field of Ian Coleman.">A saída deste método é uma <strong>string binária</strong> (sequência de 0s e 1s) que você vai inserir no campo de entropia do Ian Coleman.</div>
       </div>
 
-      <h3>O que você precisa</h3>
+      <h3 data-pt="O que você precisa" data-en="What you need">O que você precisa</h3>
       <div class="material-list">
         <div class="material-item">
           <span class="material-icon">🪙</span>
-          <span>Uma moeda qualquer (qualquer moeda é suficiente)</span>
+          <span data-pt="Uma moeda qualquer (qualquer moeda é suficiente)" data-en="Any coin (any coin will do)">Uma moeda qualquer (qualquer moeda é suficiente)</span>
         </div>
         <div class="material-item">
           <span class="material-icon">📄</span>
-          <span>Papel e caneta para anotar os resultados</span>
+          <span data-pt="Papel e caneta para anotar os resultados" data-en="Pen and paper to write down the results">Papel e caneta para anotar os resultados</span>
         </div>
         <div class="material-item">
           <span class="material-icon">📵</span>
-          <span>Ian Coleman baixado e pronto para rodar offline</span>
-          <span class="badge badge-orange" style="margin-left:auto">Seção 7</span>
+          <span data-pt="Ian Coleman baixado e pronto para rodar offline" data-en="Ian Coleman downloaded and ready to run offline">Ian Coleman baixado e pronto para rodar offline</span>
+          <span class="badge badge-orange" style="margin-left:auto" data-pt="Seção 7" data-en="Section 7">Seção 7</span>
         </div>
       </div>
 
-      <h3>Passo a passo</h3>
+      <h3 data-pt="Passo a passo" data-en="Step by step">Passo a passo</h3>
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <h4>Defina o padrão</h4>
-            <p>Antes de começar, defina: <strong>cara = 1, coroa = 0</strong>. Mantenha esse padrão durante todos os lançamentos. Qualquer convenção serve, desde que você não mude no meio.</p>
+            <h4 data-pt="Defina o padrão" data-en="Define the pattern">Defina o padrão</h4>
+            <p data-pt="Antes de começar, defina: <strong>cara = 1, coroa = 0</strong>. Mantenha esse padrão durante todos os lançamentos. Qualquer convenção serve, desde que você não mude no meio." data-en="Before starting, define: <strong>heads = 1, tails = 0</strong>. Keep this pattern throughout all flips. Any convention works, as long as you don't change it midway.">Antes de começar, defina: <strong>cara = 1, coroa = 0</strong>. Mantenha esse padrão durante todos os lançamentos. Qualquer convenção serve, desde que você não mude no meio.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <h4>Lance e anote</h4>
-            <p>Lance a moeda e registre o resultado (0 ou 1) imediatamente. Organize em grupos de 8 para facilitar a leitura:</p>
+            <h4 data-pt="Lance e anote" data-en="Flip and write down">Lance e anote</h4>
+            <p data-pt="Lance a moeda e registre o resultado (0 ou 1) imediatamente. Organize em grupos de 8 para facilitar a leitura:" data-en="Flip the coin and record the result (0 or 1) immediately. Organize in groups of 8 for easier reading:">Lance a moeda e registre o resultado (0 ou 1) imediatamente. Organize em grupos de 8 para facilitar a leitura:</p>
             <div class="code-block">
 10110100 11001010 01110011 10100101
 11010110 00111001 10110100 11001010
 01110011 10100101 11010110 00111001
 10110100 11001010 01110011 10100101
             </div>
-            <p>Acima: 128 bits (16 grupos de 8) → seed de 12 palavras</p>
+            <p data-pt="Acima: 128 bits (16 grupos de 8) → seed de 12 palavras" data-en="Above: 128 bits (16 groups of 8) → 12-word seed">Acima: 128 bits (16 grupos de 8) → seed de 12 palavras</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h4>Verifique a quantidade</h4>
-            <p>Conte os dígitos anotados antes de continuar:
+            <h4 data-pt="Verifique a quantidade" data-en="Verify the count">Verifique a quantidade</h4>
+            <p data-pt="Conte os dígitos anotados antes de continuar:" data-en="Count the digits written down before continuing:">Conte os dígitos anotados antes de continuar:
               <ul>
-                <li>Seed de 12 palavras → 128 dígitos (0s e 1s)</li>
-                <li>Seed de 24 palavras → 256 dígitos (0s e 1s)</li>
+                <li data-pt="Seed de 12 palavras → 128 dígitos (0s e 1s)" data-en="12-word seed → 128 digits (0s and 1s)">Seed de 12 palavras → 128 dígitos (0s e 1s)</li>
+                <li data-pt="Seed de 24 palavras → 256 dígitos (0s e 1s)" data-en="24-word seed → 256 digits (0s and 1s)">Seed de 24 palavras → 256 dígitos (0s e 1s)</li>
               </ul>
             </p>
           </div>
@@ -1026,31 +1028,31 @@
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-body">
-            <h4>Remova os espaços antes de inserir</h4>
-            <p>No Ian Coleman, insira apenas os dígitos, sem espaços ou quebras de linha. Selecione "Binary" como tipo de entropia. O resultado completo de 128 bits deve ser digitado em sequência contínua.</p>
+            <h4 data-pt="Remova os espaços antes de inserir" data-en="Remove spaces before entering">Remova os espaços antes de inserir</h4>
+            <p data-pt='No Ian Coleman, insira apenas os dígitos, sem espaços ou quebras de linha. Selecione "Binary" como tipo de entropia. O resultado completo de 128 bits deve ser digitado em sequência contínua.' data-en='In Ian Coleman, enter only the digits, without spaces or line breaks. Select "Binary" as the entropy type. The complete 128-bit result must be typed as a continuous sequence.'>No Ian Coleman, insira apenas os dígitos, sem espaços ou quebras de linha. Selecione "Binary" como tipo de entropia. O resultado completo de 128 bits deve ser digitado em sequência contínua.</p>
           </div>
         </div>
       </div>
 
       <div class="notice notice-tip">
         <span class="notice-icon">💡</span>
-        <div>Lance a moeda sobre uma superfície plana e deixe cair livremente. Não "direcione" o lançamento. O objetivo é que o resultado seja genuinamente imprevisível, inclusive para você.</div>
+        <div data-pt='Lance a moeda sobre uma superfície plana e deixe cair livremente. Não "direcione" o lançamento. O objetivo é que o resultado seja genuinamente imprevisível, inclusive para você.' data-en='Flip the coin on a flat surface and let it fall freely. Don&apos;t "direct" the flip. The goal is for the result to be genuinely unpredictable, even to you.'>Lance a moeda sobre uma superfície plana e deixe cair livremente. Não "direcione" o lançamento. O objetivo é que o resultado seja genuinamente imprevisível, inclusive para você.</div>
       </div>
 
       <div class="card">
-        <h3 style="margin-top:0">Resumo do método</h3>
+        <h3 style="margin-top:0" data-pt="Resumo do método" data-en="Method summary">Resumo do método</h3>
         <div class="entropy-visual">
-          <div class="entropy-row"><span class="key">Ferramenta física</span><span class="val">1 moeda</span></div>
-          <div class="entropy-row"><span class="key">Seed de 12 palavras</span><span class="val">128 lançamentos</span></div>
-          <div class="entropy-row"><span class="key">Seed de 24 palavras</span><span class="val">256 lançamentos</span></div>
-          <div class="entropy-row"><span class="key">Tipo de entropia no Ian Coleman</span><span class="val">Binary</span></div>
-          <div class="entropy-row"><span class="key">Formato da entrada</span><span class="val">10110100...</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Ferramenta física" data-en="Physical tool">Ferramenta física</span><span class="val" data-pt="1 moeda" data-en="1 coin">1 moeda</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Seed de 12 palavras" data-en="12-word seed">Seed de 12 palavras</span><span class="val" data-pt="128 lançamentos" data-en="128 flips">128 lançamentos</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Seed de 24 palavras" data-en="24-word seed">Seed de 24 palavras</span><span class="val" data-pt="256 lançamentos" data-en="256 flips">256 lançamentos</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Tipo de entropia no Ian Coleman" data-en="Entropy type in Ian Coleman">Tipo de entropia no Ian Coleman</span><span class="val">Binary</span></div>
+          <div class="entropy-row"><span class="key" data-pt="Formato da entrada" data-en="Input format">Formato da entrada</span><span class="val">10110100...</span></div>
         </div>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" onclick="goTo(2)">← Anterior</button>
-        <button class="btn btn-next" onclick="goTo(4)">Próximo: Método do Dado →</button>
+        <button class="btn btn-prev" onclick="goTo(2)" data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(4)" data-pt="Próximo: Método do Dado →" data-en="Next: Dice Method →">Próximo: Método do Dado →</button>
       </div>
     </div>
 
@@ -1061,69 +1063,69 @@
       <div class="section-header">
         <div class="section-icon">🎲</div>
         <div>
-          <h2>Método 2: Rolagem de Dado</h2>
-          <p>Mais rápido que a moeda, igualmente seguro</p>
+          <h2 data-pt="Método 2: Rolagem de Dado" data-en="Method 2: Dice Roll">Método 2: Rolagem de Dado</h2>
+          <p data-pt="Mais rápido que a moeda, igualmente seguro" data-en="Faster than the coin, equally secure">Mais rápido que a moeda, igualmente seguro</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt="Um dado de seis faces (D6) gera log₂(6) ≈ 2,585 bits de entropia por rolagem. Na prática, isso significa que você chega aos 128 bits necessários para uma seed de 12 palavras com apenas 50 rolagens, e aos 256 bits para 24 palavras com 99 rolagens." data-en="A six-sided die (D6) generates log₂(6) ≈ 2.585 bits of entropy per roll. In practice, this means you reach the 128 bits needed for a 12-word seed with just 50 rolls, and the 256 bits for 24 words with 99 rolls.">
         Um dado de seis faces (D6) gera log₂(6) ≈ 2,585 bits de entropia por rolagem. Na prática, isso significa que você chega aos 128 bits necessários para uma seed de 12 palavras com apenas 50 rolagens, e aos 256 bits para 24 palavras com 99 rolagens.
       </p>
-      <p>
+      <p data-pt="O dado é o método mais popular entre bitcoinheiros avançados por ser rápido e compatível nativamente com o Ian Coleman, a ColdCard e a Krux, que todos aceitam sequências de dados diretamente." data-en="The die is the most popular method among advanced bitcoiners because it is fast and natively compatible with Ian Coleman, ColdCard, and Krux, all of which accept dice sequences directly.">
         O dado é o método mais popular entre bitcoinheiros avançados por ser rápido e compatível nativamente com o Ian Coleman, a ColdCard e a Krux, que todos aceitam sequências de dados diretamente.
       </p>
 
       <div class="method-tabs" id="dice-tabs">
-        <button class="method-tab active" data-method="d6" onclick="switchMethod('dice', 'd6', this)">D6 (dado de 6 faces)</button>
-        <button class="method-tab" data-method="d20" onclick="switchMethod('dice', 'd20', this)">D20 (dado de 20 faces)</button>
+        <button class="method-tab active" data-method="d6" onclick="switchMethod('dice', 'd6', this)" data-pt="D6 (dado de 6 faces)" data-en="D6 (6-sided die)">D6 (dado de 6 faces)</button>
+        <button class="method-tab" data-method="d20" onclick="switchMethod('dice', 'd20', this)" data-pt="D20 (dado de 20 faces)" data-en="D20 (20-sided die)">D20 (dado de 20 faces)</button>
       </div>
 
       <div id="dice-d6" class="method-content active">
         <div class="card">
           <div class="entropy-visual">
-            <div class="entropy-row"><span class="key">Entropia por rolagem</span><span class="val">≈ 2,585 bits</span></div>
-            <div class="entropy-row"><span class="key">Seed de 12 palavras (128 bits)</span><span class="val">mínimo 50 rolagens</span></div>
-            <div class="entropy-row"><span class="key">Seed de 24 palavras (256 bits)</span><span class="val">mínimo 99 rolagens</span></div>
-            <div class="entropy-row"><span class="key">Valores válidos</span><span class="val">1, 2, 3, 4, 5, 6</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Entropia por rolagem" data-en="Entropy per roll">Entropia por rolagem</span><span class="val">≈ 2,585 bits</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Seed de 12 palavras (128 bits)" data-en="12-word seed (128 bits)">Seed de 12 palavras (128 bits)</span><span class="val" data-pt="mínimo 50 rolagens" data-en="minimum 50 rolls">mínimo 50 rolagens</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Seed de 24 palavras (256 bits)" data-en="24-word seed (256 bits)">Seed de 24 palavras (256 bits)</span><span class="val" data-pt="mínimo 99 rolagens" data-en="minimum 99 rolls">mínimo 99 rolagens</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Valores válidos" data-en="Valid values">Valores válidos</span><span class="val">1, 2, 3, 4, 5, 6</span></div>
           </div>
         </div>
 
-        <h3>O que você precisa</h3>
+        <h3 data-pt="O que você precisa" data-en="What you need">O que você precisa</h3>
         <div class="material-list">
-          <div class="material-item"><span class="material-icon">🎲</span><span>Um dado de 6 faces (qualquer dado de jogo de tabuleiro serve)</span></div>
-          <div class="material-item"><span class="material-icon">📄</span><span>Papel e caneta para anotar a sequência</span></div>
-          <div class="material-item"><span class="material-icon">📵</span><span>Ian Coleman offline, ColdCard ou Krux</span></div>
+          <div class="material-item"><span class="material-icon">🎲</span><span data-pt="Um dado de 6 faces (qualquer dado de jogo de tabuleiro serve)" data-en="A 6-sided die (any board game die will do)">Um dado de 6 faces (qualquer dado de jogo de tabuleiro serve)</span></div>
+          <div class="material-item"><span class="material-icon">📄</span><span data-pt="Papel e caneta para anotar a sequência" data-en="Pen and paper to write down the sequence">Papel e caneta para anotar a sequência</span></div>
+          <div class="material-item"><span class="material-icon">📵</span><span data-pt="Ian Coleman offline, ColdCard ou Krux" data-en="Ian Coleman offline, ColdCard, or Krux">Ian Coleman offline, ColdCard ou Krux</span></div>
         </div>
 
-        <h3>Passo a passo</h3>
+        <h3 data-pt="Passo a passo" data-en="Step by step">Passo a passo</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <h4>Role o dado e anote o resultado</h4>
-              <p>Jogue o dado em uma superfície plana e registre o número que aparecer. Anote como uma sequência contínua de números, sem separadores:</p>
+              <h4 data-pt="Role o dado e anote o resultado" data-en="Roll the die and write down the result">Role o dado e anote o resultado</h4>
+              <p data-pt="Jogue o dado em uma superfície plana e registre o número que aparecer. Anote como uma sequência contínua de números, sem separadores:" data-en="Roll the die on a flat surface and record the number that appears. Write it as a continuous sequence of numbers, without separators:">Jogue o dado em uma superfície plana e registre o número que aparecer. Anote como uma sequência contínua de números, sem separadores:</p>
               <div class="code-block">4 1 6 2 5 3 4 1 2 6 5 3 4 1 6 2 5 3 4 1 2 6 5 3 4 1 ...</div>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-body">
-              <h4>Complete o número mínimo de rolagens</h4>
-              <p>Não pare antes de atingir o mínimo. Mais rolagens aumentam a entropia — você pode rolar mais sem problema.</p>
+              <h4 data-pt="Complete o número mínimo de rolagens" data-en="Complete the minimum number of rolls">Complete o número mínimo de rolagens</h4>
+              <p data-pt="Não pare antes de atingir o mínimo. Mais rolagens aumentam a entropia — você pode rolar mais sem problema." data-en="Don't stop before reaching the minimum. More rolls increase entropy — you can roll more without any problem.">Não pare antes de atingir o mínimo. Mais rolagens aumentam a entropia — você pode rolar mais sem problema.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-body">
-              <h4>Insira no Ian Coleman</h4>
-              <p>No Ian Coleman, selecione "Dice" como tipo de entropia e insira a sequência sem espaços: <code>416253412653416253412653...</code></p>
+              <h4 data-pt="Insira no Ian Coleman" data-en="Enter in Ian Coleman">Insira no Ian Coleman</h4>
+              <p data-pt='No Ian Coleman, selecione "Dice" como tipo de entropia e insira a sequência sem espaços: <code>416253412653416253412653...</code>' data-en='In Ian Coleman, select "Dice" as the entropy type and enter the sequence without spaces: <code>416253412653416253412653...</code>'>No Ian Coleman, selecione "Dice" como tipo de entropia e insira a sequência sem espaços: <code>416253412653416253412653...</code></p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-body">
-              <h4>Ou insira diretamente na ColdCard / Krux</h4>
-              <p>Na ColdCard e na Krux, você rola os dados e insere cada resultado no momento, diretamente na interface do dispositivo. Não é necessário anotar antes.</p>
+              <h4 data-pt="Ou insira diretamente na ColdCard / Krux" data-en="Or enter directly on ColdCard / Krux">Ou insira diretamente na ColdCard / Krux</h4>
+              <p data-pt="Na ColdCard e na Krux, você rola os dados e insere cada resultado no momento, diretamente na interface do dispositivo. Não é necessário anotar antes." data-en="On ColdCard and Krux, you roll the dice and enter each result on the spot, directly on the device interface. No need to write it down first.">Na ColdCard e na Krux, você rola os dados e insere cada resultado no momento, diretamente na interface do dispositivo. Não é necessário anotar antes.</p>
             </div>
           </div>
         </div>
@@ -1132,30 +1134,30 @@
       <div id="dice-d20" class="method-content">
         <div class="card">
           <div class="entropy-visual">
-            <div class="entropy-row"><span class="key">Entropia por rolagem</span><span class="val">≈ 4,322 bits</span></div>
-            <div class="entropy-row"><span class="key">Seed de 12 palavras (128 bits)</span><span class="val">mínimo 30 rolagens</span></div>
-            <div class="entropy-row"><span class="key">Seed de 24 palavras (256 bits)</span><span class="val">mínimo 60 rolagens</span></div>
-            <div class="entropy-row"><span class="key">Valores válidos</span><span class="val">1 a 20</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Entropia por rolagem" data-en="Entropy per roll">Entropia por rolagem</span><span class="val">≈ 4,322 bits</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Seed de 12 palavras (128 bits)" data-en="12-word seed (128 bits)">Seed de 12 palavras (128 bits)</span><span class="val" data-pt="mínimo 30 rolagens" data-en="minimum 30 rolls">mínimo 30 rolagens</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Seed de 24 palavras (256 bits)" data-en="24-word seed (256 bits)">Seed de 24 palavras (256 bits)</span><span class="val" data-pt="mínimo 60 rolagens" data-en="minimum 60 rolls">mínimo 60 rolagens</span></div>
+            <div class="entropy-row"><span class="key" data-pt="Valores válidos" data-en="Valid values">Valores válidos</span><span class="val" data-pt="1 a 20" data-en="1 to 20">1 a 20</span></div>
           </div>
         </div>
 
-        <p>Um dado de 20 faces (comum em RPG) gera mais entropia por rolagem, então você precisa rolar menos vezes. O processo é idêntico ao D6, mas os valores vão de 1 a 20.</p>
-        <p>A Krux suporta D20 nativamente. No Ian Coleman, insira os valores como "Dice" também — mas verifique a documentação, pois a entrada aceita somente valores de 1 a 6 no modo Dice padrão; use Base 6 ou converta manualmente se necessário.</p>
+        <p data-pt="Um dado de 20 faces (comum em RPG) gera mais entropia por rolagem, então você precisa rolar menos vezes. O processo é idêntico ao D6, mas os valores vão de 1 a 20." data-en="A 20-sided die (common in RPG) generates more entropy per roll, so you need fewer rolls. The process is identical to D6, but the values range from 1 to 20.">Um dado de 20 faces (comum em RPG) gera mais entropia por rolagem, então você precisa rolar menos vezes. O processo é idêntico ao D6, mas os valores vão de 1 a 20.</p>
+        <p data-pt='A Krux suporta D20 nativamente. No Ian Coleman, insira os valores como "Dice" também — mas verifique a documentação, pois a entrada aceita somente valores de 1 a 6 no modo Dice padrão; use Base 6 ou converta manualmente se necessário.' data-en='Krux supports D20 natively. In Ian Coleman, enter the values as "Dice" as well — but check the documentation, as the input only accepts values from 1 to 6 in standard Dice mode; use Base 6 or convert manually if necessary.'>A Krux suporta D20 nativamente. No Ian Coleman, insira os valores como "Dice" também — mas verifique a documentação, pois a entrada aceita somente valores de 1 a 6 no modo Dice padrão; use Base 6 ou converta manualmente se necessário.</p>
 
         <div class="notice notice-info">
           <span class="notice-icon">ℹ️</span>
-          <div>O D20 é uma boa opção quando você usa a Krux, que tem suporte nativo para ele. Para usar com o Ian Coleman, o D6 é mais direto.</div>
+          <div data-pt="O D20 é uma boa opção quando você usa a Krux, que tem suporte nativo para ele. Para usar com o Ian Coleman, o D6 é mais direto." data-en="The D20 is a good option when using Krux, which has native support for it. For use with Ian Coleman, D6 is more straightforward.">O D20 é uma boa opção quando você usa a Krux, que tem suporte nativo para ele. Para usar com o Ian Coleman, o D6 é mais direto.</div>
         </div>
       </div>
 
       <div class="notice notice-warn">
         <span class="notice-icon">⚠️</span>
-        <div>Use um dado físico de qualidade, não um aplicativo de dado no celular. Aplicativos de dado são geradores de números pseudoaleatórios, não verdadeiramente aleatórios.</div>
+        <div data-pt="Use um dado físico de qualidade, não um aplicativo de dado no celular. Aplicativos de dado são geradores de números pseudoaleatórios, não verdadeiramente aleatórios." data-en="Use a quality physical die, not a dice app on your phone. Dice apps are pseudo-random number generators, not truly random.">Use um dado físico de qualidade, não um aplicativo de dado no celular. Aplicativos de dado são geradores de números pseudoaleatórios, não verdadeiramente aleatórios.</div>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" onclick="goTo(3)">← Anterior</button>
-        <button class="btn btn-next" onclick="goTo(5)">Próximo: Sorteio de Papel →</button>
+        <button class="btn btn-prev" onclick="goTo(3)" data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(5)" data-pt="Próximo: Sorteio de Papel →" data-en="Next: Paper Draw →">Próximo: Sorteio de Papel →</button>
       </div>
     </div>
 
@@ -1166,92 +1168,92 @@
       <div class="section-header">
         <div class="section-icon">📋</div>
         <div>
-          <h2>Método 3: Sorteio de Papel</h2>
-          <p>Entropia física, 100% verificável e auditável</p>
+          <h2 data-pt="Método 3: Sorteio de Papel" data-en="Method 3: Paper Draw">Método 3: Sorteio de Papel</h2>
+          <p data-pt="Entropia física, 100% verificável e auditável" data-en="Physical entropy, 100% verifiable and auditable">Entropia física, 100% verificável e auditável</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt="O método do sorteio de papel é diferente dos dois anteriores: em vez de gerar bits brutos para depois converter em palavras, você seleciona as palavras diretamente da lista BIP-39 por meio de um sorteio físico. O resultado final é uma seed de 24 palavras, onde as primeiras 23 foram sorteadas manualmente e a 24ª é calculada como checksum." data-en="The paper draw method is different from the previous two: instead of generating raw bits and then converting them into words, you select the words directly from the BIP-39 list through a physical draw. The final result is a 24-word seed, where the first 23 were manually drawn and the 24th is calculated as a checksum.">
         O método do sorteio de papel é diferente dos dois anteriores: em vez de gerar bits brutos para depois converter em palavras, você seleciona as palavras diretamente da lista BIP-39 por meio de um sorteio físico. O resultado final é uma seed de 24 palavras, onde as primeiras 23 foram sorteadas manualmente e a 24ª é calculada como checksum.
       </p>
 
-      <div class="analogy">
+      <div class="analogy" data-pt="É como um bingo: você imprime e recorta as 2.048 palavras da lista BIP-39, coloca tudo em um saco, mistura bem e sorteia 23 bilhetes. Cada palavra sorteada entra na sua seed na ordem em que foi retirada." data-en="It's like bingo: you print and cut out the 2,048 words from the BIP-39 list, put them all in a bag, mix well, and draw 23 slips. Each drawn word enters your seed in the order it was drawn.">
         É como um bingo: você imprime e recorta as 2.048 palavras da lista BIP-39, coloca tudo em um saco, mistura bem e sorteia 23 bilhetes. Cada palavra sorteada entra na sua seed na ordem em que foi retirada.
       </div>
 
       <div class="notice notice-info">
         <span class="notice-icon">📌</span>
-        <div>A 24ª palavra NÃO pode ser sorteada: ela precisa ser calculada matematicamente a partir das outras 23 (é o checksum do BIP-39). Você vai usar o Ian Coleman, a ColdCard ou a Krux para calcular essa última palavra.</div>
+        <div data-pt="A 24ª palavra NÃO pode ser sorteada: ela precisa ser calculada matematicamente a partir das outras 23 (é o checksum do BIP-39). Você vai usar o Ian Coleman, a ColdCard ou a Krux para calcular essa última palavra." data-en="The 24th word CANNOT be drawn: it needs to be mathematically calculated from the other 23 (it is the BIP-39 checksum). You will use Ian Coleman, ColdCard, or Krux to calculate this last word.">A 24ª palavra NÃO pode ser sorteada: ela precisa ser calculada matematicamente a partir das outras 23 (é o checksum do BIP-39). Você vai usar o Ian Coleman, a ColdCard ou a Krux para calcular essa última palavra.</div>
       </div>
 
-      <h3>O que você precisa</h3>
+      <h3 data-pt="O que você precisa" data-en="What you need">O que você precisa</h3>
       <div class="material-list">
-        <div class="material-item"><span class="material-icon">🖨️</span><span>Impressora e papel para imprimir a lista BIP-39 (2.048 palavras)</span></div>
-        <div class="material-item"><span class="material-icon">✂️</span><span>Tesoura para recortar cada palavra individualmente</span></div>
-        <div class="material-item"><span class="material-icon">🛍️</span><span>Saco opaco, chapéu ou tigela onde os papéis não sejam visíveis</span></div>
-        <div class="material-item"><span class="material-icon">📄</span><span>Papel para anotar as palavras sorteadas, em ordem</span></div>
-        <div class="material-item"><span class="material-icon">📵</span><span>Ian Coleman offline, ColdCard ou Krux para calcular a 24ª palavra</span></div>
+        <div class="material-item"><span class="material-icon">🖨️</span><span data-pt="Impressora e papel para imprimir a lista BIP-39 (2.048 palavras)" data-en="Printer and paper to print the BIP-39 list (2,048 words)">Impressora e papel para imprimir a lista BIP-39 (2.048 palavras)</span></div>
+        <div class="material-item"><span class="material-icon">✂️</span><span data-pt="Tesoura para recortar cada palavra individualmente" data-en="Scissors to cut out each word individually">Tesoura para recortar cada palavra individualmente</span></div>
+        <div class="material-item"><span class="material-icon">🛍️</span><span data-pt="Saco opaco, chapéu ou tigela onde os papéis não sejam visíveis" data-en="Opaque bag, hat, or bowl where the papers are not visible">Saco opaco, chapéu ou tigela onde os papéis não sejam visíveis</span></div>
+        <div class="material-item"><span class="material-icon">📄</span><span data-pt="Papel para anotar as palavras sorteadas, em ordem" data-en="Paper to write down the drawn words, in order">Papel para anotar as palavras sorteadas, em ordem</span></div>
+        <div class="material-item"><span class="material-icon">📵</span><span data-pt="Ian Coleman offline, ColdCard ou Krux para calcular a 24ª palavra" data-en="Ian Coleman offline, ColdCard, or Krux to calculate the 24th word">Ian Coleman offline, ColdCard ou Krux para calcular a 24ª palavra</span></div>
       </div>
 
-      <h3>Passo a passo</h3>
+      <h3 data-pt="Passo a passo" data-en="Step by step">Passo a passo</h3>
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <h4>Imprima e recorte a lista BIP-39</h4>
-            <p>A lista BIP-39 em inglês ou português pode ser baixada de fontes como o repositório do Ian Coleman no GitHub. Imprima e recorte cada uma das 2.048 palavras em papéis individuais.</p>
+            <h4 data-pt="Imprima e recorte a lista BIP-39" data-en="Print and cut the BIP-39 list">Imprima e recorte a lista BIP-39</h4>
+            <p data-pt="A lista BIP-39 em inglês ou português pode ser baixada de fontes como o repositório do Ian Coleman no GitHub. Imprima e recorte cada uma das 2.048 palavras em papéis individuais." data-en="The BIP-39 list in English or Portuguese can be downloaded from sources like the Ian Coleman repository on GitHub. Print and cut out each of the 2,048 words on individual slips of paper.">A lista BIP-39 em inglês ou português pode ser baixada de fontes como o repositório do Ian Coleman no GitHub. Imprima e recorte cada uma das 2.048 palavras em papéis individuais.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <h4>Dobre e misture bem no saco</h4>
-            <p>Dobre cada papel para que a palavra não seja visível. Coloque todos no saco e misture com vigor por pelo menos 1 minuto. O objetivo é que você não consiga prever qual palavra vai sair.</p>
+            <h4 data-pt="Dobre e misture bem no saco" data-en="Fold and mix well in the bag">Dobre e misture bem no saco</h4>
+            <p data-pt="Dobre cada papel para que a palavra não seja visível. Coloque todos no saco e misture com vigor por pelo menos 1 minuto. O objetivo é que você não consiga prever qual palavra vai sair." data-en="Fold each paper so the word is not visible. Put them all in the bag and mix vigorously for at least 1 minute. The goal is that you cannot predict which word will come out.">Dobre cada papel para que a palavra não seja visível. Coloque todos no saco e misture com vigor por pelo menos 1 minuto. O objetivo é que você não consiga prever qual palavra vai sair.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h4>Sorteie 23 palavras com reposição</h4>
-            <p>Retire um papel sem olhar, registre a palavra e o número que ela ocupa na lista BIP-39, <strong>devolva o papel ao saco</strong> e misture novamente antes de sortear a próxima. Repita 23 vezes.</p>
+            <h4 data-pt="Sorteie 23 palavras com reposição" data-en="Draw 23 words with replacement">Sorteie 23 palavras com reposição</h4>
+            <p data-pt="Retire um papel sem olhar, registre a palavra e o número que ela ocupa na lista BIP-39, <strong>devolva o papel ao saco</strong> e misture novamente antes de sortear a próxima. Repita 23 vezes." data-en="Pull out a paper without looking, record the word and its number in the BIP-39 list, <strong>return the paper to the bag</strong> and mix again before drawing the next one. Repeat 23 times.">Retire um papel sem olhar, registre a palavra e o número que ela ocupa na lista BIP-39, <strong>devolva o papel ao saco</strong> e misture novamente antes de sortear a próxima. Repita 23 vezes.</p>
             <ul>
-              <li>Sortear com reposição garante que todas as palavras tenham igual probabilidade em cada rodada</li>
-              <li>Palavras repetidas são válidas no BIP-39</li>
-              <li>Anote a ordem: palavra 1, palavra 2... palavra 23</li>
+              <li data-pt="Sortear com reposição garante que todas as palavras tenham igual probabilidade em cada rodada" data-en="Drawing with replacement ensures all words have equal probability in each round">Sortear com reposição garante que todas as palavras tenham igual probabilidade em cada rodada</li>
+              <li data-pt="Palavras repetidas são válidas no BIP-39" data-en="Repeated words are valid in BIP-39">Palavras repetidas são válidas no BIP-39</li>
+              <li data-pt="Anote a ordem: palavra 1, palavra 2... palavra 23" data-en="Write down the order: word 1, word 2... word 23">Anote a ordem: palavra 1, palavra 2... palavra 23</li>
             </ul>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-body">
-            <h4>Calcule a 24ª palavra offline</h4>
-            <p>A 24ª palavra é o checksum das 23 anteriores. Use um dos métodos abaixo para calculá-la:</p>
+            <h4 data-pt="Calcule a 24ª palavra offline" data-en="Calculate the 24th word offline">Calcule a 24ª palavra offline</h4>
+            <p data-pt="A 24ª palavra é o checksum das 23 anteriores. Use um dos métodos abaixo para calculá-la:" data-en="The 24th word is the checksum of the previous 23. Use one of the methods below to calculate it:">A 24ª palavra é o checksum das 23 anteriores. Use um dos métodos abaixo para calculá-la:</p>
             <ul>
-              <li><strong>Ian Coleman offline:</strong> insira as 23 palavras nos campos correspondentes; o programa calcula a 24ª automaticamente</li>
-              <li><strong>ColdCard:</strong> use o menu "Import Existing" → insira as 23 palavras → o device aponta as opções válidas para a 24ª</li>
-              <li><strong>Krux:</strong> selecione "New Mnemonic" → "Manual Entry" → insira 23 palavras → o dispositivo calcula a última</li>
+              <li data-pt='<strong>Ian Coleman offline:</strong> insira as 23 palavras nos campos correspondentes; o programa calcula a 24ª automaticamente' data-en='<strong>Ian Coleman offline:</strong> enter the 23 words in the corresponding fields; the program calculates the 24th automatically'><strong>Ian Coleman offline:</strong> insira as 23 palavras nos campos correspondentes; o programa calcula a 24ª automaticamente</li>
+              <li data-pt='<strong>ColdCard:</strong> use o menu "Import Existing" → insira as 23 palavras → o device aponta as opções válidas para a 24ª' data-en='<strong>ColdCard:</strong> use the "Import Existing" menu → enter the 23 words → the device shows valid options for the 24th'><strong>ColdCard:</strong> use o menu "Import Existing" → insira as 23 palavras → o device aponta as opções válidas para a 24ª</li>
+              <li data-pt='<strong>Krux:</strong> selecione "New Mnemonic" → "Manual Entry" → insira 23 palavras → o dispositivo calcula a última' data-en='<strong>Krux:</strong> select "New Mnemonic" → "Manual Entry" → enter 23 words → the device calculates the last one'><strong>Krux:</strong> selecione "New Mnemonic" → "Manual Entry" → insira 23 palavras → o dispositivo calcula a última</li>
             </ul>
           </div>
         </div>
         <div class="step">
           <div class="step-num">5</div>
           <div class="step-body">
-            <h4>Registre as 24 palavras na ordem correta</h4>
-            <p>Anote as 24 palavras à mão, em papel, na ordem exata. Guarde em local seguro e offline.</p>
+            <h4 data-pt="Registre as 24 palavras na ordem correta" data-en="Record the 24 words in the correct order">Registre as 24 palavras na ordem correta</h4>
+            <p data-pt="Anote as 24 palavras à mão, em papel, na ordem exata. Guarde em local seguro e offline." data-en="Write down the 24 words by hand, on paper, in the exact order. Store in a safe and offline location.">Anote as 24 palavras à mão, em papel, na ordem exata. Guarde em local seguro e offline.</p>
           </div>
         </div>
       </div>
 
       <div class="card card-green">
-        <h3 style="margin-top:0">Por que esse método é especialmente transparente?</h3>
-        <p style="font-size:14px; color: var(--muted); margin:0">
+        <h3 style="margin-top:0" data-pt="Por que esse método é especialmente transparente?" data-en="Why is this method especially transparent?">Por que esse método é especialmente transparente?</h3>
+        <p style="font-size:14px; color: var(--muted); margin:0" data-pt="Diferente dos métodos de moeda e dado, onde você precisa confiar na conversão feita pelo software, no sorteio de papel as palavras já saem diretamente da lista BIP-39. Você não depende de nenhum software para gerar as primeiras 23 palavras — só para calcular o checksum da última. Isso torna o processo auditável do início ao fim." data-en="Unlike the coin and dice methods, where you need to trust the conversion done by the software, in the paper draw the words come directly from the BIP-39 list. You don't depend on any software to generate the first 23 words — only to calculate the checksum of the last one. This makes the process auditable from start to finish.">
           Diferente dos métodos de moeda e dado, onde você precisa confiar na conversão feita pelo software, no sorteio de papel as palavras já saem diretamente da lista BIP-39. Você não depende de nenhum software para gerar as primeiras 23 palavras — só para calcular o checksum da última. Isso torna o processo auditável do início ao fim.
         </p>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" onclick="goTo(4)">← Anterior</button>
-        <button class="btn btn-next" onclick="goTo(6)">Próximo: Ian Coleman →</button>
+        <button class="btn btn-prev" onclick="goTo(4)" data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" onclick="goTo(6)" data-pt="Próximo: Ian Coleman →" data-en="Next: Ian Coleman →">Próximo: Ian Coleman →</button>
       </div>
     </div>
 
@@ -1262,12 +1264,12 @@
       <div class="section-header">
         <div class="section-icon">🛠️</div>
         <div>
-          <h2>Convertendo entropia em seed phrase</h2>
-          <p>Ian Coleman, ColdCard e Krux</p>
+          <h2 data-pt="Convertendo entropia em seed phrase" data-en="Converting entropy into a seed phrase">Convertendo entropia em seed phrase</h2>
+          <p data-pt="Ian Coleman, ColdCard e Krux" data-en="Ian Coleman, ColdCard, and Krux">Ian Coleman, ColdCard e Krux</p>
         </div>
       </div>
 
-      <p>
+      <p data-pt="Você tem sua sequência de entropia anotada em papel. Agora precisa de uma ferramenta que converta esses dados na sua seed phrase de 12 ou 24 palavras. As três opções abaixo são as mais confiáveis e auditáveis disponíveis. Nenhuma delas requer conexão com a internet para funcionar." data-en="You have your entropy sequence written down on paper. Now you need a tool that converts this data into your 12 or 24-word seed phrase. The three options below are the most reliable and auditable available. None of them require an internet connection to work.">
         Você tem sua sequência de entropia anotada em papel. Agora precisa de uma ferramenta que converta esses dados na sua seed phrase de 12 ou 24 palavras. As três opções abaixo são as mais confiáveis e auditáveis disponíveis. Nenhuma delas requer conexão com a internet para funcionar.
       </p>
 
@@ -1278,7 +1280,7 @@
             <span style="font-size:22px">💻</span>
             <div>
               <div>Ian Coleman BIP-39</div>
-              <div style="font-size:12px; font-weight:400; color: var(--muted)">Ferramenta de software para rodar no navegador, sem internet</div>
+              <div style="font-size:12px; font-weight:400; color: var(--muted)" data-pt="Ferramenta de software para rodar no navegador, sem internet" data-en="Software tool to run in the browser, without internet">Ferramenta de software para rodar no navegador, sem internet</div>
             </div>
           </div>
           <span class="tool-card-arrow">▼</span>
@@ -1286,106 +1288,106 @@
         <div class="tool-card-body">
           <div class="notice notice-warn" style="margin-top:0">
             <span class="notice-icon">🚨</span>
-            <div><strong>Nunca use o Ian Coleman online.</strong> O site <code>iancoleman.io/bip39</code> existe, mas você nunca deve inserir sua entropia nele. Sempre baixe e rode localmente, sem internet.</div>
+            <div data-pt="<strong>Nunca use o Ian Coleman online.</strong> O site <code>iancoleman.io/bip39</code> existe, mas você nunca deve inserir sua entropia nele. Sempre baixe e rode localmente, sem internet." data-en="<strong>Never use Ian Coleman online.</strong> The site <code>iancoleman.io/bip39</code> exists, but you should never enter your entropy there. Always download and run locally, without internet."><strong>Nunca use o Ian Coleman online.</strong> O site <code>iancoleman.io/bip39</code> existe, mas você nunca deve inserir sua entropia nele. Sempre baixe e rode localmente, sem internet.</div>
           </div>
 
-          <h3 style="margin-top: 8px">Passo 1 — Baixar a ferramenta</h3>
+          <h3 style="margin-top: 8px" data-pt="Passo 1 — Baixar a ferramenta" data-en="Step 1 — Download the tool">Passo 1 — Baixar a ferramenta</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <h4>Acesse o repositório oficial</h4>
-                <p>Em um computador com internet (diferente do que você vai usar offline), acesse: <code>github.com/iancoleman/bip39</code></p>
+                <h4 data-pt="Acesse o repositório oficial" data-en="Access the official repository">Acesse o repositório oficial</h4>
+                <p data-pt="Em um computador com internet (diferente do que você vai usar offline), acesse: <code>github.com/iancoleman/bip39</code>" data-en="On a computer with internet (different from the one you will use offline), go to: <code>github.com/iancoleman/bip39</code>">Em um computador com internet (diferente do que você vai usar offline), acesse: <code>github.com/iancoleman/bip39</code></p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h4>Baixe o arquivo ZIP</h4>
-                <p>Clique no botão verde "Code" e selecione "Download ZIP". Alternativamente, baixe diretamente da aba "Releases" para obter a versão estável assinada.</p>
+                <h4 data-pt="Baixe o arquivo ZIP" data-en="Download the ZIP file">Baixe o arquivo ZIP</h4>
+                <p data-pt='Clique no botão verde "Code" e selecione "Download ZIP". Alternativamente, baixe diretamente da aba "Releases" para obter a versão estável assinada.' data-en='Click the green "Code" button and select "Download ZIP". Alternatively, download directly from the "Releases" tab to get the signed stable version.'>Clique no botão verde "Code" e selecione "Download ZIP". Alternativamente, baixe diretamente da aba "Releases" para obter a versão estável assinada.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <h4>Extraia os arquivos</h4>
-                <p>Extraia o ZIP em um pendrive ou pasta local. O arquivo principal é o <code>index.html</code>.</p>
+                <h4 data-pt="Extraia os arquivos" data-en="Extract the files">Extraia os arquivos</h4>
+                <p data-pt="Extraia o ZIP em um pendrive ou pasta local. O arquivo principal é o <code>index.html</code>." data-en="Extract the ZIP to a USB drive or local folder. The main file is <code>index.html</code>.">Extraia o ZIP em um pendrive ou pasta local. O arquivo principal é o <code>index.html</code>.</p>
               </div>
             </div>
           </div>
 
-          <h3>Passo 2 — Preparar o ambiente offline</h3>
+          <h3 data-pt="Passo 2 — Preparar o ambiente offline" data-en="Step 2 — Prepare the offline environment">Passo 2 — Preparar o ambiente offline</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">4</div>
               <div class="step-body">
-                <h4>Desconecte da internet</h4>
-                <p>Antes de abrir o arquivo, desconecte o cabo de rede (ethernet), desligue o Wi-Fi e, se possível, ative o modo avião. Confirme que não há conexão ativa.</p>
+                <h4 data-pt="Desconecte da internet" data-en="Disconnect from the internet">Desconecte da internet</h4>
+                <p data-pt="Antes de abrir o arquivo, desconecte o cabo de rede (ethernet), desligue o Wi-Fi e, se possível, ative o modo avião. Confirme que não há conexão ativa." data-en="Before opening the file, disconnect the network cable (ethernet), turn off Wi-Fi, and if possible, enable airplane mode. Confirm there is no active connection.">Antes de abrir o arquivo, desconecte o cabo de rede (ethernet), desligue o Wi-Fi e, se possível, ative o modo avião. Confirme que não há conexão ativa.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">5</div>
               <div class="step-body">
-                <h4>Abra o arquivo index.html</h4>
-                <p>Dê dois cliques no arquivo <code>index.html</code> para abrir no navegador. Ele carrega completamente localmente — não há requisição de rede.</p>
+                <h4 data-pt="Abra o arquivo index.html" data-en="Open the index.html file">Abra o arquivo index.html</h4>
+                <p data-pt="Dê dois cliques no arquivo <code>index.html</code> para abrir no navegador. Ele carrega completamente localmente — não há requisição de rede." data-en="Double-click the <code>index.html</code> file to open in the browser. It loads completely locally — there is no network request.">Dê dois cliques no arquivo <code>index.html</code> para abrir no navegador. Ele carrega completamente localmente — não há requisição de rede.</p>
               </div>
             </div>
           </div>
 
-          <h3>Passo 3 — Gerar a seed phrase</h3>
+          <h3 data-pt="Passo 3 — Gerar a seed phrase" data-en="Step 3 — Generate the seed phrase">Passo 3 — Gerar a seed phrase</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">6</div>
               <div class="step-body">
-                <h4>Ative os detalhes de entropia</h4>
-                <p>Clique em <strong>"Show Entropy Details"</strong>. Isso revela o campo onde você vai inserir sua entropia manualmente.</p>
+                <h4 data-pt="Ative os detalhes de entropia" data-en="Enable entropy details">Ative os detalhes de entropia</h4>
+                <p data-pt='Clique em <strong>"Show Entropy Details"</strong>. Isso revela o campo onde você vai inserir sua entropia manualmente.' data-en='Click <strong>"Show Entropy Details"</strong>. This reveals the field where you will enter your entropy manually.'>Clique em <strong>"Show Entropy Details"</strong>. Isso revela o campo onde você vai inserir sua entropia manualmente.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">7</div>
               <div class="step-body">
-                <h4>Selecione o tipo de entropia</h4>
-                <p>No campo "Entropy Type", selecione o tipo correspondente ao seu método:</p>
+                <h4 data-pt="Selecione o tipo de entropia" data-en="Select the entropy type">Selecione o tipo de entropia</h4>
+                <p data-pt='No campo "Entropy Type", selecione o tipo correspondente ao seu método:' data-en='In the "Entropy Type" field, select the type corresponding to your method:'>No campo "Entropy Type", selecione o tipo correspondente ao seu método:</p>
                 <ul>
-                  <li><strong>Binary</strong> → para lançamento de moeda (sequência de 0s e 1s)</li>
-                  <li><strong>Dice</strong> → para rolagem de dado D6 (sequência de 1 a 6)</li>
-                  <li><strong>Hexadecimal</strong> → para entropia gerada por outros meios</li>
+                  <li data-pt="<strong>Binary</strong> → para lançamento de moeda (sequência de 0s e 1s)" data-en="<strong>Binary</strong> → for coin flips (sequence of 0s and 1s)"><strong>Binary</strong> → para lançamento de moeda (sequência de 0s e 1s)</li>
+                  <li data-pt="<strong>Dice</strong> → para rolagem de dado D6 (sequência de 1 a 6)" data-en="<strong>Dice</strong> → for D6 dice rolls (sequence of 1 to 6)"><strong>Dice</strong> → para rolagem de dado D6 (sequência de 1 a 6)</li>
+                  <li data-pt="<strong>Hexadecimal</strong> → para entropia gerada por outros meios" data-en="<strong>Hexadecimal</strong> → for entropy generated by other means"><strong>Hexadecimal</strong> → para entropia gerada por outros meios</li>
                 </ul>
               </div>
             </div>
             <div class="step">
               <div class="step-num">8</div>
               <div class="step-body">
-                <h4>Insira sua entropia</h4>
-                <p>Cole ou digite a sequência de bits ou rolagens no campo "Entropy". O painel à direita mostra em tempo real quantos bits você já inseriu e se é suficiente para a seed desejada.</p>
+                <h4 data-pt="Insira sua entropia" data-en="Enter your entropy">Insira sua entropia</h4>
+                <p data-pt='Cole ou digite a sequência de bits ou rolagens no campo "Entropy". O painel à direita mostra em tempo real quantos bits você já inseriu e se é suficiente para a seed desejada.' data-en='Paste or type the bit or roll sequence in the "Entropy" field. The right panel shows in real time how many bits you have entered and whether it is enough for the desired seed.'>Cole ou digite a sequência de bits ou rolagens no campo "Entropy". O painel à direita mostra em tempo real quantos bits você já inseriu e se é suficiente para a seed desejada.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">9</div>
               <div class="step-body">
-                <h4>Configure o número de palavras e o idioma</h4>
-                <p>Em "Mnemonic Length", selecione 12 ou 24 palavras. Em "Mnemonic Language", você pode selecionar Portuguese se preferir palavras em português (mas atenção: a maioria das carteiras só aceita o wordlist em inglês).</p>
+                <h4 data-pt="Configure o número de palavras e o idioma" data-en="Configure the number of words and language">Configure o número de palavras e o idioma</h4>
+                <p data-pt='Em "Mnemonic Length", selecione 12 ou 24 palavras. Em "Mnemonic Language", você pode selecionar Portuguese se preferir palavras em português (mas atenção: a maioria das carteiras só aceita o wordlist em inglês).' data-en='In "Mnemonic Length", select 12 or 24 words. In "Mnemonic Language", you can select Portuguese if you prefer words in Portuguese (but note: most wallets only accept the English wordlist).'>Em "Mnemonic Length", selecione 12 ou 24 palavras. Em "Mnemonic Language", você pode selecionar Portuguese se preferir palavras em português (mas atenção: a maioria das carteiras só aceita o wordlist em inglês).</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">10</div>
               <div class="step-body">
-                <h4>Anote as palavras geradas</h4>
-                <p>As palavras aparecem no campo "BIP39 Mnemonic". Anote todas, na ordem, à mão, em papel. Confira duas vezes antes de fechar o navegador.</p>
+                <h4 data-pt="Anote as palavras geradas" data-en="Write down the generated words">Anote as palavras geradas</h4>
+                <p data-pt='As palavras aparecem no campo "BIP39 Mnemonic". Anote todas, na ordem, à mão, em papel. Confira duas vezes antes de fechar o navegador.' data-en='The words appear in the "BIP39 Mnemonic" field. Write them all down, in order, by hand, on paper. Check twice before closing the browser.'>As palavras aparecem no campo "BIP39 Mnemonic". Anote todas, na ordem, à mão, em papel. Confira duas vezes antes de fechar o navegador.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">11</div>
               <div class="step-body">
-                <h4>Feche e limpe</h4>
-                <p>Feche o navegador sem salvar o estado. Se quiser mais segurança, reinicie o computador e limpe o cache do navegador antes de reconectá-lo à internet.</p>
+                <h4 data-pt="Feche e limpe" data-en="Close and clean up">Feche e limpe</h4>
+                <p data-pt="Feche o navegador sem salvar o estado. Se quiser mais segurança, reinicie o computador e limpe o cache do navegador antes de reconectá-lo à internet." data-en="Close the browser without saving state. For extra security, restart the computer and clear the browser cache before reconnecting to the internet.">Feche o navegador sem salvar o estado. Se quiser mais segurança, reinicie o computador e limpe o cache do navegador antes de reconectá-lo à internet.</p>
               </div>
             </div>
           </div>
 
           <div class="notice notice-tip">
             <span class="notice-icon">✅</span>
-            <div>Para o método de sorteio de papel: insira as 23 palavras nos campos de BIP39 Mnemonic diretamente. O Ian Coleman calcula automaticamente quais valores válidos a 24ª palavra pode ter.</div>
+            <div data-pt="Para o método de sorteio de papel: insira as 23 palavras nos campos de BIP39 Mnemonic diretamente. O Ian Coleman calcula automaticamente quais valores válidos a 24ª palavra pode ter." data-en="For the paper draw method: enter the 23 words in the BIP39 Mnemonic fields directly. Ian Coleman automatically calculates which valid values the 24th word can have.">Para o método de sorteio de papel: insira as 23 palavras nos campos de BIP39 Mnemonic diretamente. O Ian Coleman calcula automaticamente quais valores válidos a 24ª palavra pode ter.</div>
           </div>
         </div>
       </div>
@@ -1397,66 +1399,66 @@
             <span style="font-size:22px">💳</span>
             <div>
               <div>ColdCard</div>
-              <div style="font-size:12px; font-weight:400; color: var(--muted)">Hardware wallet air-gap — geração via rolagem de dados no dispositivo</div>
+              <div style="font-size:12px; font-weight:400; color: var(--muted)" data-pt="Hardware wallet air-gap — geração via rolagem de dados no dispositivo" data-en="Air-gap hardware wallet — generation via dice rolls on the device">Hardware wallet air-gap — geração via rolagem de dados no dispositivo</div>
             </div>
           </div>
           <span class="tool-card-arrow">▼</span>
         </div>
         <div class="tool-card-body">
-          <p>A ColdCard é uma das hardware wallets mais respeitadas do ecossistema Bitcoin. Ela nunca se conecta à internet e oferece suporte nativo à geração de seed via dados, combinando a entropia física com o gerador de números aleatórios do próprio hardware.</p>
+          <p data-pt="A ColdCard é uma das hardware wallets mais respeitadas do ecossistema Bitcoin. Ela nunca se conecta à internet e oferece suporte nativo à geração de seed via dados, combinando a entropia física com o gerador de números aleatórios do próprio hardware." data-en="ColdCard is one of the most respected hardware wallets in the Bitcoin ecosystem. It never connects to the internet and offers native support for seed generation via dice, combining physical entropy with the hardware's own random number generator.">A ColdCard é uma das hardware wallets mais respeitadas do ecossistema Bitcoin. Ela nunca se conecta à internet e oferece suporte nativo à geração de seed via dados, combinando a entropia física com o gerador de números aleatórios do próprio hardware.</p>
 
           <div class="notice notice-info" style="margin-top: 0">
             <span class="notice-icon">ℹ️</span>
-            <div>Este guia cobre apenas a geração de seed por dados. A ColdCard precisa estar sem nenhuma carteira configurada (estado de fábrica ou após ter sido limpa).</div>
+            <div data-pt="Este guia cobre apenas a geração de seed por dados. A ColdCard precisa estar sem nenhuma carteira configurada (estado de fábrica ou após ter sido limpa)." data-en="This guide covers only seed generation via dice. The ColdCard needs to be without any wallet configured (factory state or after being wiped).">Este guia cobre apenas a geração de seed por dados. A ColdCard precisa estar sem nenhuma carteira configurada (estado de fábrica ou após ter sido limpa).</div>
           </div>
 
-          <h3>Passo a passo — Seed via dados na ColdCard</h3>
+          <h3 data-pt="Passo a passo — Seed via dados na ColdCard" data-en="Step by step — Seed via dice on ColdCard">Passo a passo — Seed via dados na ColdCard</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <h4>Acesse o menu de nova seed</h4>
-                <p>Na tela inicial da ColdCard, navegue até: <strong>New Wallet → New Seed Words → Dice Rolls</strong></p>
+                <h4 data-pt="Acesse o menu de nova seed" data-en="Access the new seed menu">Acesse o menu de nova seed</h4>
+                <p data-pt="Na tela inicial da ColdCard, navegue até: <strong>New Wallet → New Seed Words → Dice Rolls</strong>" data-en="On the ColdCard home screen, navigate to: <strong>New Wallet → New Seed Words → Dice Rolls</strong>">Na tela inicial da ColdCard, navegue até: <strong>New Wallet → New Seed Words → Dice Rolls</strong></p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h4>Selecione o número de palavras</h4>
-                <p>Escolha entre 12 ou 24 palavras. Para auto-custódia séria, prefira 24.</p>
+                <h4 data-pt="Selecione o número de palavras" data-en="Select the number of words">Selecione o número de palavras</h4>
+                <p data-pt="Escolha entre 12 ou 24 palavras. Para auto-custódia séria, prefira 24." data-en="Choose between 12 or 24 words. For serious self-custody, prefer 24.">Escolha entre 12 ou 24 palavras. Para auto-custódia séria, prefira 24.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <h4>Role o dado e insira cada resultado</h4>
-                <p>A interface da ColdCard mostra os números de 1 a 6. A cada rolagem, pressione a tecla correspondente ao resultado que apareceu no dado físico. A tela exibe o contador de rolagens e a entropia acumulada.</p>
+                <h4 data-pt="Role o dado e insira cada resultado" data-en="Roll the die and enter each result">Role o dado e insira cada resultado</h4>
+                <p data-pt="A interface da ColdCard mostra os números de 1 a 6. A cada rolagem, pressione a tecla correspondente ao resultado que apareceu no dado físico. A tela exibe o contador de rolagens e a entropia acumulada." data-en="The ColdCard interface shows numbers 1 to 6. For each roll, press the key corresponding to the result that appeared on the physical die. The screen shows the roll counter and accumulated entropy.">A interface da ColdCard mostra os números de 1 a 6. A cada rolagem, pressione a tecla correspondente ao resultado que apareceu no dado físico. A tela exibe o contador de rolagens e a entropia acumulada.</p>
                 <ul>
-                  <li>Mínimo de 50 rolagens para 12 palavras</li>
-                  <li>Mínimo de 99 rolagens para 24 palavras</li>
-                  <li>Você pode rolar mais — sempre aumenta a segurança</li>
+                  <li data-pt="Mínimo de 50 rolagens para 12 palavras" data-en="Minimum 50 rolls for 12 words">Mínimo de 50 rolagens para 12 palavras</li>
+                  <li data-pt="Mínimo de 99 rolagens para 24 palavras" data-en="Minimum 99 rolls for 24 words">Mínimo de 99 rolagens para 24 palavras</li>
+                  <li data-pt="Você pode rolar mais — sempre aumenta a segurança" data-en="You can roll more — it always increases security">Você pode rolar mais — sempre aumenta a segurança</li>
                 </ul>
               </div>
             </div>
             <div class="step">
               <div class="step-num">4</div>
               <div class="step-body">
-                <h4>Confirme para gerar</h4>
-                <p>Após atingir o mínimo de rolagens, pressione ✓ para confirmar. A ColdCard usa sua sequência de dados combinada com seu próprio TRNG (True Random Number Generator) para calcular a seed final.</p>
+                <h4 data-pt="Confirme para gerar" data-en="Confirm to generate">Confirme para gerar</h4>
+                <p data-pt="Após atingir o mínimo de rolagens, pressione ✓ para confirmar. A ColdCard usa sua sequência de dados combinada com seu próprio TRNG (True Random Number Generator) para calcular a seed final." data-en="After reaching the minimum rolls, press ✓ to confirm. ColdCard uses your dice sequence combined with its own TRNG (True Random Number Generator) to calculate the final seed.">Após atingir o mínimo de rolagens, pressione ✓ para confirmar. A ColdCard usa sua sequência de dados combinada com seu próprio TRNG (True Random Number Generator) para calcular a seed final.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">5</div>
               <div class="step-body">
-                <h4>Anote as palavras exibidas</h4>
-                <p>A ColdCard exibe as palavras uma a uma ou em grupos. Anote todas à mão, na ordem exata, em papel. Nunca fotografe a tela. Confirme no dispositivo que você anotou corretamente antes de prosseguir.</p>
+                <h4 data-pt="Anote as palavras exibidas" data-en="Write down the displayed words">Anote as palavras exibidas</h4>
+                <p data-pt="A ColdCard exibe as palavras uma a uma ou em grupos. Anote todas à mão, na ordem exata, em papel. Nunca fotografe a tela. Confirme no dispositivo que você anotou corretamente antes de prosseguir." data-en="ColdCard displays the words one by one or in groups. Write them all down by hand, in the exact order, on paper. Never photograph the screen. Confirm on the device that you wrote them down correctly before proceeding.">A ColdCard exibe as palavras uma a uma ou em grupos. Anote todas à mão, na ordem exata, em papel. Nunca fotografe a tela. Confirme no dispositivo que você anotou corretamente antes de prosseguir.</p>
               </div>
             </div>
           </div>
 
           <div class="card card-orange" style="margin-top:20px">
             <p style="font-size: 14px; margin:0; color: var(--text)">
-              A ColdCard documenta abertamente o algoritmo de conversão de dados em seed. Você pode verificar a matemática por conta própria no documento oficial "Verifying Dice Roll Math" disponível em <code>coldcard.com/docs</code>.
+              <span data-pt='A ColdCard documenta abertamente o algoritmo de conversão de dados em seed. Você pode verificar a matemática por conta própria no documento oficial "Verifying Dice Roll Math" disponível em <code>coldcard.com/docs</code>.' data-en='ColdCard openly documents the dice-to-seed conversion algorithm. You can verify the math yourself in the official document "Verifying Dice Roll Math" available at <code>coldcard.com/docs</code>.'>A ColdCard documenta abertamente o algoritmo de conversão de dados em seed. Você pode verificar a matemática por conta própria no documento oficial "Verifying Dice Roll Math" disponível em <code>coldcard.com/docs</code>.</span>
             </p>
           </div>
         </div>
@@ -1469,106 +1471,106 @@
             <span style="font-size:22px">🔓</span>
             <div>
               <div>Krux</div>
-              <div style="font-size:12px; font-weight:400; color: var(--muted)">Hardware wallet open-source — suporte a dados, câmera e seleção manual</div>
+              <div style="font-size:12px; font-weight:400; color: var(--muted)" data-pt="Hardware wallet open-source — suporte a dados, câmera e seleção manual" data-en="Open-source hardware wallet — support for dice, camera, and manual selection">Hardware wallet open-source — suporte a dados, câmera e seleção manual</div>
             </div>
           </div>
           <span class="tool-card-arrow">▼</span>
         </div>
         <div class="tool-card-body">
-          <p>
+          <p data-pt="O Krux é um firmware open-source que transforma dispositivos genéricos de mercado em hardware wallets Bitcoin. Além da geração por dado, ele oferece dois métodos únicos: geração por câmera (hash da imagem como entropia) e seleção manual de palavras BIP-39. Os três se aplicam a seeds de 12 ou 24 palavras." data-en="Krux is an open-source firmware that transforms generic market devices into Bitcoin hardware wallets. In addition to dice generation, it offers two unique methods: camera generation (image hash as entropy) and manual BIP-39 word selection. All three apply to 12 or 24-word seeds.">
             O Krux é um firmware open-source que transforma dispositivos genéricos de mercado em hardware wallets Bitcoin. Além da geração por dado, ele oferece dois métodos únicos: geração por câmera (hash da imagem como entropia) e seleção manual de palavras BIP-39. Os três se aplicam a seeds de 12 ou 24 palavras.
           </p>
 
-          <h3>Método A — Dados (D6 ou D20)</h3>
+          <h3 data-pt="Método A — Dados (D6 ou D20)" data-en="Method A — Dice (D6 or D20)">Método A — Dados (D6 ou D20)</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <h4>Acesse New Mnemonic</h4>
-                <p>Na tela inicial do Krux: <strong>New Mnemonic → selecione 12 ou 24 palavras → Dice (D6 ou D20)</strong></p>
+                <h4 data-pt="Acesse New Mnemonic" data-en="Access New Mnemonic">Acesse New Mnemonic</h4>
+                <p data-pt="Na tela inicial do Krux: <strong>New Mnemonic → selecione 12 ou 24 palavras → Dice (D6 ou D20)</strong>" data-en="On the Krux home screen: <strong>New Mnemonic → select 12 or 24 words → Dice (D6 or D20)</strong>">Na tela inicial do Krux: <strong>New Mnemonic → selecione 12 ou 24 palavras → Dice (D6 ou D20)</strong></p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h4>Insira cada rolagem</h4>
-                <p>A tela mostra o teclado de entrada. Digite cada resultado após rolar o dado físico. O Krux exibe o contador de rolagens e o hash acumulado da entropia.</p>
+                <h4 data-pt="Insira cada rolagem" data-en="Enter each roll">Insira cada rolagem</h4>
+                <p data-pt="A tela mostra o teclado de entrada. Digite cada resultado após rolar o dado físico. O Krux exibe o contador de rolagens e o hash acumulado da entropia." data-en="The screen shows the input keyboard. Enter each result after rolling the physical die. Krux displays the roll counter and accumulated entropy hash.">A tela mostra o teclado de entrada. Digite cada resultado após rolar o dado físico. O Krux exibe o contador de rolagens e o hash acumulado da entropia.</p>
                 <ul>
-                  <li>D6, 12 palavras: mínimo 50 rolagens</li>
-                  <li>D6, 24 palavras: mínimo 99 rolagens</li>
-                  <li>D20, 12 palavras: mínimo 30 rolagens</li>
-                  <li>D20, 24 palavras: mínimo 60 rolagens</li>
+                  <li data-pt="D6, 12 palavras: mínimo 50 rolagens" data-en="D6, 12 words: minimum 50 rolls">D6, 12 palavras: mínimo 50 rolagens</li>
+                  <li data-pt="D6, 24 palavras: mínimo 99 rolagens" data-en="D6, 24 words: minimum 99 rolls">D6, 24 palavras: mínimo 99 rolagens</li>
+                  <li data-pt="D20, 12 palavras: mínimo 30 rolagens" data-en="D20, 12 words: minimum 30 rolls">D20, 12 palavras: mínimo 30 rolagens</li>
+                  <li data-pt="D20, 24 palavras: mínimo 60 rolagens" data-en="D20, 24 words: minimum 60 rolls">D20, 24 palavras: mínimo 60 rolagens</li>
                 </ul>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <h4>Confirme e anote</h4>
-                <p>O Krux exibe o hash SHA-256 da sua sequência para verificação opcional. Confirme para gerar e visualizar as palavras da seed. Anote tudo à mão.</p>
+                <h4 data-pt="Confirme e anote" data-en="Confirm and write down">Confirme e anote</h4>
+                <p data-pt="O Krux exibe o hash SHA-256 da sua sequência para verificação opcional. Confirme para gerar e visualizar as palavras da seed. Anote tudo à mão." data-en="Krux displays the SHA-256 hash of your sequence for optional verification. Confirm to generate and view the seed words. Write everything down by hand.">O Krux exibe o hash SHA-256 da sua sequência para verificação opcional. Confirme para gerar e visualizar as palavras da seed. Anote tudo à mão.</p>
               </div>
             </div>
           </div>
 
           <hr class="divider">
 
-          <h3>Método B — Câmera</h3>
-          <p>O Krux tira uma foto de uma cena aleatória e usa o hash dos dados da imagem como entropia. É um método rápido, mas menos auditável do que os físicos.</p>
+          <h3 data-pt="Método B — Câmera" data-en="Method B — Camera">Método B — Câmera</h3>
+          <p data-pt="O Krux tira uma foto de uma cena aleatória e usa o hash dos dados da imagem como entropia. É um método rápido, mas menos auditável do que os físicos." data-en="Krux takes a photo of a random scene and uses the hash of the image data as entropy. It is a fast method, but less auditable than physical ones.">O Krux tira uma foto de uma cena aleatória e usa o hash dos dados da imagem como entropia. É um método rápido, mas menos auditável do que os físicos.</p>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <h4>Selecione Camera</h4>
-                <p><strong>New Mnemonic → 12 ou 24 palavras → Camera</strong>. O Krux exibe métricas de qualidade de entropia enquanto você enquadra a cena.</p>
+                <h4 data-pt="Selecione Camera" data-en="Select Camera">Selecione Camera</h4>
+                <p data-pt="<strong>New Mnemonic → 12 ou 24 palavras → Camera</strong>. O Krux exibe métricas de qualidade de entropia enquanto você enquadra a cena." data-en="<strong>New Mnemonic → 12 or 24 words → Camera</strong>. Krux displays entropy quality metrics while you frame the scene."><strong>New Mnemonic → 12 ou 24 palavras → Camera</strong>. O Krux exibe métricas de qualidade de entropia enquanto você enquadra a cena.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h4>Aponte para uma cena complexa e aleatória</h4>
-                <p>Idealmente: uma superfície texturizada, uma parede com detalhes, ou qualquer cena com muita variação visual. Evite fundos lisos ou imagens uniformes, que geram menos entropia.</p>
+                <h4 data-pt="Aponte para uma cena complexa e aleatória" data-en="Point at a complex and random scene">Aponte para uma cena complexa e aleatória</h4>
+                <p data-pt="Idealmente: uma superfície texturizada, uma parede com detalhes, ou qualquer cena com muita variação visual. Evite fundos lisos ou imagens uniformes, que geram menos entropia." data-en="Ideally: a textured surface, a wall with details, or any scene with lots of visual variation. Avoid plain backgrounds or uniform images, which generate less entropy.">Idealmente: uma superfície texturizada, uma parede com detalhes, ou qualquer cena com muita variação visual. Evite fundos lisos ou imagens uniformes, que geram menos entropia.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <h4>Capture e anote</h4>
-                <p>Pressione para capturar. O Krux gera e exibe as palavras da seed. Anote todas à mão.</p>
+                <h4 data-pt="Capture e anote" data-en="Capture and write down">Capture e anote</h4>
+                <p data-pt="Pressione para capturar. O Krux gera e exibe as palavras da seed. Anote todas à mão." data-en="Press to capture. Krux generates and displays the seed words. Write them all down by hand.">Pressione para capturar. O Krux gera e exibe as palavras da seed. Anote todas à mão.</p>
               </div>
             </div>
           </div>
 
           <hr class="divider">
 
-          <h3>Método C — Seleção Manual de Palavras</h3>
-          <p>Este método é o equivalente eletrônico do sorteio de papel: você escolhe as primeiras 23 palavras manualmente (de qualquer forma que preferir) e o Krux calcula a 24ª.</p>
+          <h3 data-pt="Método C — Seleção Manual de Palavras" data-en="Method C — Manual Word Selection">Método C — Seleção Manual de Palavras</h3>
+          <p data-pt="Este método é o equivalente eletrônico do sorteio de papel: você escolhe as primeiras 23 palavras manualmente (de qualquer forma que preferir) e o Krux calcula a 24ª." data-en="This method is the electronic equivalent of the paper draw: you choose the first 23 words manually (any way you prefer) and Krux calculates the 24th.">Este método é o equivalente eletrônico do sorteio de papel: você escolhe as primeiras 23 palavras manualmente (de qualquer forma que preferir) e o Krux calcula a 24ª.</p>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <h4>Selecione Manual</h4>
-                <p><strong>New Mnemonic → 12 ou 24 palavras → Manual</strong>.</p>
+                <h4 data-pt="Selecione Manual" data-en="Select Manual">Selecione Manual</h4>
+                <p data-pt="<strong>New Mnemonic → 12 ou 24 palavras → Manual</strong>." data-en="<strong>New Mnemonic → 12 or 24 words → Manual</strong>."><strong>New Mnemonic → 12 ou 24 palavras → Manual</strong>.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <h4>Insira as palavras uma a uma</h4>
-                <p>O Krux exibe um teclado inteligente que filtra automaticamente as palavras válidas conforme você digita. Para a última palavra, ele restringe as opções às que possuem checksum válido.</p>
+                <h4 data-pt="Insira as palavras uma a uma" data-en="Enter the words one by one">Insira as palavras uma a uma</h4>
+                <p data-pt="O Krux exibe um teclado inteligente que filtra automaticamente as palavras válidas conforme você digita. Para a última palavra, ele restringe as opções às que possuem checksum válido." data-en="Krux displays a smart keyboard that automatically filters valid words as you type. For the last word, it restricts the options to those with a valid checksum.">O Krux exibe um teclado inteligente que filtra automaticamente as palavras válidas conforme você digita. Para a última palavra, ele restringe as opções às que possuem checksum válido.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <h4>Confirme e salve o mnemônico</h4>
-                <p>Após inserir todas as palavras, o Krux exibe a seed completa para confirmação. Anote e guarde com segurança.</p>
+                <h4 data-pt="Confirme e salve o mnemônico" data-en="Confirm and save the mnemonic">Confirme e salve o mnemônico</h4>
+                <p data-pt="Após inserir todas as palavras, o Krux exibe a seed completa para confirmação. Anote e guarde com segurança." data-en="After entering all the words, Krux displays the complete seed for confirmation. Write it down and store securely.">Após inserir todas as palavras, o Krux exibe a seed completa para confirmação. Anote e guarde com segurança.</p>
               </div>
             </div>
           </div>
 
           <div class="notice notice-tip" style="margin-top: 20px">
             <span class="notice-icon">✅</span>
-            <div>O Krux exibe o hash SHA-256 de toda a sequência de rolagens antes de gerar a seed. Você pode verificar esse hash de forma independente para confirmar que o dispositivo calculou corretamente.</div>
+            <div data-pt="O Krux exibe o hash SHA-256 de toda a sequência de rolagens antes de gerar a seed. Você pode verificar esse hash de forma independente para confirmar que o dispositivo calculou corretamente." data-en="Krux displays the SHA-256 hash of the entire roll sequence before generating the seed. You can independently verify this hash to confirm the device calculated correctly.">O Krux exibe o hash SHA-256 de toda a sequência de rolagens antes de gerar a seed. Você pode verificar esse hash de forma independente para confirmar que o dispositivo calculou corretamente.</div>
           </div>
         </div>
       </div>
@@ -1579,8 +1581,8 @@
       <div class="section-header">
         <div class="section-icon">🏁</div>
         <div>
-          <h2>Próximos passos</h2>
-          <p>Você gerou sua seed. E agora?</p>
+          <h2 data-pt="Próximos passos" data-en="Next steps">Próximos passos</h2>
+          <p data-pt="Você gerou sua seed. E agora?" data-en="You generated your seed. Now what?">Você gerou sua seed. E agora?</p>
         </div>
       </div>
 
@@ -1589,37 +1591,37 @@
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <h4>Faça o backup em metal</h4>
-              <p>Papel queima e molha. Considere gravar sua seed em uma placa de aço inoxidável ou usar um produto específico para backup em metal. Isso protege contra incêndio e água.</p>
+              <h4 data-pt="Faça o backup em metal" data-en="Make a metal backup">Faça o backup em metal</h4>
+              <p data-pt="Papel queima e molha. Considere gravar sua seed em uma placa de aço inoxidável ou usar um produto específico para backup em metal. Isso protege contra incêndio e água." data-en="Paper burns and gets wet. Consider engraving your seed on a stainless steel plate or using a specific metal backup product. This protects against fire and water.">Papel queima e molha. Considere gravar sua seed em uma placa de aço inoxidável ou usar um produto específico para backup em metal. Isso protege contra incêndio e água.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-body">
-              <h4>Considere uma passphrase (25ª palavra)</h4>
-              <p>Uma passphrase adiciona uma camada extra de segurança. Mesmo que alguém encontre sua seed, sem a passphrase não consegue acessar os fundos. Mas atenção: se você perder a passphrase, perde os fundos.</p>
+              <h4 data-pt="Considere uma passphrase (25ª palavra)" data-en="Consider a passphrase (25th word)">Considere uma passphrase (25ª palavra)</h4>
+              <p data-pt="Uma passphrase adiciona uma camada extra de segurança. Mesmo que alguém encontre sua seed, sem a passphrase não consegue acessar os fundos. Mas atenção: se você perder a passphrase, perde os fundos." data-en="A passphrase adds an extra layer of security. Even if someone finds your seed, without the passphrase they cannot access the funds. But be careful: if you lose the passphrase, you lose the funds.">Uma passphrase adiciona uma camada extra de segurança. Mesmo que alguém encontre sua seed, sem a passphrase não consegue acessar os fundos. Mas atenção: se você perder a passphrase, perde os fundos.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-body">
-              <h4>Teste a recuperação antes de depositar</h4>
-              <p>Antes de enviar qualquer quantia significativa, teste recuperar a carteira a partir da seed em uma carteira diferente. Verifique se os endereços coincidem.</p>
+              <h4 data-pt="Teste a recuperação antes de depositar" data-en="Test recovery before depositing">Teste a recuperação antes de depositar</h4>
+              <p data-pt="Antes de enviar qualquer quantia significativa, teste recuperar a carteira a partir da seed em uma carteira diferente. Verifique se os endereços coincidem." data-en="Before sending any significant amount, test recovering the wallet from the seed on a different wallet. Verify that the addresses match.">Antes de enviar qualquer quantia significativa, teste recuperar a carteira a partir da seed em uma carteira diferente. Verifique se os endereços coincidem.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-body">
-              <h4>Configure a auto-custódia completa</h4>
-              <p>Veja o guia completo de como configurar sua carteira de auto-custódia em <a href="https://letabuild.com/custodia/">letabuild.com/custodia</a>.</p>
+              <h4 data-pt="Configure a auto-custódia completa" data-en="Set up complete self-custody">Configure a auto-custódia completa</h4>
+              <p data-pt='Veja o guia completo de como configurar sua carteira de auto-custódia em <a href="https://letabuild.com/custodia/">letabuild.com/custodia</a>.' data-en='See the complete guide on how to set up your self-custody wallet at <a href="https://letabuild.com/custodia/">letabuild.com/custodia</a>.'>Veja o guia completo de como configurar sua carteira de auto-custódia em <a href="https://letabuild.com/custodia/">letabuild.com/custodia</a>.</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="nav-buttons">
-        <button class="btn btn-prev" onclick="goTo(5)">← Anterior</button>
-        <button class="btn btn-next" style="background: var(--green)" onclick="alert('Tutorial concluído! Guarde sua seed phrase com segurança.')">Concluir ✓</button>
+        <button class="btn btn-prev" onclick="goTo(5)" data-pt="← Anterior" data-en="← Previous">← Anterior</button>
+        <button class="btn btn-next" style="background: var(--green)" id="btn-conclude" data-pt="Concluir ✓" data-en="Finish ✓">Concluir ✓</button>
       </div>
     </div>
 
@@ -1627,8 +1629,8 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p class="footer-text">Conteúdo baseado nos tutoriais do canal <a href="https://www.youtube.com/@bitcoinheiros" target="_blank" rel="noopener">bitcoinheiros</a> e nas documentações oficiais do <a href="https://github.com/iancoleman/bip39" target="_blank" rel="noopener">Ian Coleman BIP-39</a>, <a href="https://coldcard.com/docs" target="_blank" rel="noopener">ColdCard</a> e <a href="https://selfcustody.github.io/krux/" target="_blank" rel="noopener">Krux</a>.</p>
-    <p class="footer-text">Feito por <a href="https://letabuild.com">letabuild.com</a> &middot; Sem cookies, sem rastreamento.</p>
+    <p class="footer-text" data-pt='Conteúdo baseado nos tutoriais do canal <a href="https://www.youtube.com/@bitcoinheiros" target="_blank" rel="noopener">bitcoinheiros</a> e nas documentações oficiais do <a href="https://github.com/iancoleman/bip39" target="_blank" rel="noopener">Ian Coleman BIP-39</a>, <a href="https://coldcard.com/docs" target="_blank" rel="noopener">ColdCard</a> e <a href="https://selfcustody.github.io/krux/" target="_blank" rel="noopener">Krux</a>.' data-en='Content based on tutorials from the <a href="https://www.youtube.com/@bitcoinheiros" target="_blank" rel="noopener">bitcoinheiros</a> channel and the official documentation of <a href="https://github.com/iancoleman/bip39" target="_blank" rel="noopener">Ian Coleman BIP-39</a>, <a href="https://coldcard.com/docs" target="_blank" rel="noopener">ColdCard</a>, and <a href="https://selfcustody.github.io/krux/" target="_blank" rel="noopener">Krux</a>.'>Conteúdo baseado nos tutoriais do canal <a href="https://www.youtube.com/@bitcoinheiros" target="_blank" rel="noopener">bitcoinheiros</a> e nas documentações oficiais do <a href="https://github.com/iancoleman/bip39" target="_blank" rel="noopener">Ian Coleman BIP-39</a>, <a href="https://coldcard.com/docs" target="_blank" rel="noopener">ColdCard</a> e <a href="https://selfcustody.github.io/krux/" target="_blank" rel="noopener">Krux</a>.</p>
+    <p class="footer-text" data-pt='Feito por <a href="https://letabuild.com">letabuild.com</a> &middot; Sem cookies, sem rastreamento.' data-en='Made by <a href="https://letabuild.com">letabuild.com</a> &middot; No cookies, no tracking.'>Feito por <a href="https://letabuild.com">letabuild.com</a> &middot; Sem cookies, sem rastreamento.</p>
   </footer>
 
   <script>
@@ -1641,6 +1643,20 @@
       document.getElementById('disclaimer-overlay').classList.add('hidden');
       document.getElementById('btn-next-0').disabled = false;
     }
+
+    // Conclude button with bilingual alert
+    document.addEventListener('DOMContentLoaded', function() {
+      var concludeBtn = document.getElementById('btn-conclude');
+      if (concludeBtn) {
+        concludeBtn.addEventListener('click', function() {
+          var lang = (window.letabuildLang && window.letabuildLang.get()) || 'pt';
+          var msg = lang === 'pt'
+            ? 'Tutorial concluído! Guarde sua seed phrase com segurança.'
+            : 'Tutorial complete! Store your seed phrase securely.';
+          alert(msg);
+        });
+      }
+    });
 
     function goTo(n) {
       // Bloqueia navegação enquanto o aviso não foi confirmado

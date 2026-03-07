@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 <script src="/theme-toggle.js"></script>
+<script src="/lang-toggle.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,10 +29,11 @@
                 </svg>
                 <h1>SAT Converter</h1>
             </div>
+            <button id="langToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:#b0a090;min-width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 8px;"></button>
             <button id="themeToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:#b0a090;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;" title="Alternar tema"></button>
             <div class="status-bar">
                 <span class="status-dot" id="statusDot"></span>
-                <span class="status-text" id="statusText">Conectando...</span>
+                <span class="status-text" id="statusText" data-pt="Conectando..." data-en="Connecting...">Conectando...</span>
             </div>
         </header>
 
@@ -54,7 +56,7 @@
         </section>
 
         <section class="converter-card">
-            <h2 class="section-title">Conversor</h2>
+            <h2 class="section-title" data-pt="Conversor" data-en="Converter">Conversor</h2>
             <div class="converter-fields">
                 <div class="input-group">
                     <label for="satsInput">
@@ -62,45 +64,45 @@
                         Satoshis
                     </label>
                     <input type="text" id="satsInput" inputmode="numeric" placeholder="0" autocomplete="off">
-                    <span class="input-hint">1 BTC = 100.000.000 sats</span>
+                    <span class="input-hint">1 BTC = 100,000,000 sats</span>
                 </div>
                 <div class="input-group">
                     <label for="brlInput">
                         <span class="input-icon">R$</span>
-                        Reais
+                        <span data-pt="Reais" data-en="Brazilian Real">Reais</span>
                     </label>
                     <input type="text" id="brlInput" inputmode="decimal" placeholder="0,00" autocomplete="off">
                 </div>
                 <div class="input-group">
                     <label for="usdInput">
                         <span class="input-icon">$</span>
-                        Dólares
+                        <span data-pt="Dolares" data-en="Dollars">Dólares</span>
                     </label>
                     <input type="text" id="usdInput" inputmode="decimal" placeholder="0.00" autocomplete="off">
                 </div>
             </div>
             <div class="last-update">
-                Atualizado: <span id="lastUpdate">--</span>
+                <span data-pt="Atualizado:" data-en="Updated:">Atualizado:</span> <span id="lastUpdate">--</span>
             </div>
         </section>
 
         <section class="purchasing-card">
             <div class="purchasing-header">
-                <h2 class="section-title">Poder de Compra em Sats</h2>
+                <h2 class="section-title" data-pt="Poder de Compra em Sats" data-en="Purchasing Power in Sats">Poder de Compra em Sats</h2>
             </div>
             <div class="purchasing-list" id="purchasingList">
                 <!-- Items rendered by JS -->
             </div>
             <div class="add-item-form" id="addItemForm">
-                <input type="text" id="newItemName" placeholder="Nome do item" maxlength="40" autocomplete="off">
-                <input type="text" id="newItemPrice" inputmode="decimal" placeholder="Preço em R$" autocomplete="off">
+                <input type="text" id="newItemName" data-pt="Nome do item" data-en="Item name" placeholder="Nome do item" maxlength="40" autocomplete="off">
+                <input type="text" id="newItemPrice" inputmode="decimal" data-pt="Preco em R$" data-en="Price in R$" placeholder="Preço em R$" autocomplete="off">
                 <button id="addItemBtn" class="btn-add" title="Adicionar item">+</button>
             </div>
         </section>
 
         <footer class="footer">
-            <p>Cotações via CoinGecko API. Atualização a cada 30s.</p>
-            <p>Feito por <a href="https://letabuild.com" target="_blank" rel="noopener">letabuild.com</a></p>
+            <p data-pt="Cotacoes via CoinGecko API. Atualizacao a cada 30s." data-en="Quotes via CoinGecko API. Updated every 30s.">Cotações via CoinGecko API. Atualização a cada 30s.</p>
+            <p data-pt='Feito por <a href="https://letabuild.com" target="_blank" rel="noopener">letabuild.com</a>' data-en='Made by <a href="https://letabuild.com" target="_blank" rel="noopener">letabuild.com</a>'>Feito por <a href="https://letabuild.com" target="_blank" rel="noopener">letabuild.com</a></p>
         </footer>
     </div>
 

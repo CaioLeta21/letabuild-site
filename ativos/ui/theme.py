@@ -10,12 +10,12 @@ CUSTOM_CSS = """
 
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background-color: #0D1117;
-        border-right: 1px solid #1E2533;
+        background-color: #0a0a0a;
+        border-right: 1px solid #2a2218;
     }
 
     [data-testid="stSidebar"] .stMarkdown h1 {
-        color: #00D4AA;
+        color: #e08a3a;
         font-size: 1.4rem;
         font-weight: 700;
         letter-spacing: -0.5px;
@@ -23,8 +23,8 @@ CUSTOM_CSS = """
 
     /* Metric cards */
     .metric-card {
-        background: linear-gradient(135deg, #1A1F2E 0%, #1E2538 100%);
-        border: 1px solid #2A3040;
+        background: linear-gradient(135deg, #1a1610 0%, #241e16 100%);
+        border: 1px solid #2a2218;
         border-radius: 12px;
         padding: 1.2rem;
         margin-bottom: 0.8rem;
@@ -32,11 +32,11 @@ CUSTOM_CSS = """
     }
 
     .metric-card:hover {
-        border-color: #00D4AA;
+        border-color: #e08a3a;
     }
 
     .metric-label {
-        color: #8B95A5;
+        color: #d0b898;
         font-size: 0.78rem;
         font-weight: 500;
         text-transform: uppercase;
@@ -52,7 +52,7 @@ CUSTOM_CSS = """
     }
 
     .metric-value.positive {
-        color: #00D4AA;
+        color: #3fb950;
     }
 
     .metric-value.negative {
@@ -71,29 +71,29 @@ CUSTOM_CSS = """
         font-weight: 600;
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
-        border-bottom: 2px solid #00D4AA;
+        border-bottom: 2px solid #e08a3a;
         display: inline-block;
     }
 
     /* Info box */
     .info-box {
-        background: #1A1F2E;
+        background: #1a1610;
         border-left: 3px solid #6C63FF;
         border-radius: 0 8px 8px 0;
         padding: 0.8rem 1rem;
         margin: 0.8rem 0;
-        color: #8B95A5;
+        color: #d0b898;
         font-size: 0.85rem;
     }
 
     /* Warning box */
     .warning-box {
-        background: #1A1F2E;
+        background: #1a1610;
         border-left: 3px solid #FFD93D;
         border-radius: 0 8px 8px 0;
         padding: 0.8rem 1rem;
         margin: 0.8rem 0;
-        color: #8B95A5;
+        color: #d0b898;
         font-size: 0.85rem;
     }
 
@@ -103,38 +103,38 @@ CUSTOM_CSS = """
     }
 
     .dataframe th {
-        background-color: #1A1F2E !important;
-        color: #8B95A5 !important;
+        background-color: #1a1610 !important;
+        color: #d0b898 !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
         font-size: 0.75rem !important;
         letter-spacing: 0.5px !important;
-        border-bottom: 2px solid #2A3040 !important;
+        border-bottom: 2px solid #2a2218 !important;
     }
 
     .dataframe td {
-        background-color: #0E1117 !important;
+        background-color: #0a0a0a !important;
         color: #FAFAFA !important;
-        border-bottom: 1px solid #1A1F2E !important;
+        border-bottom: 1px solid #1a1610 !important;
     }
 
     /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 2px;
-        background-color: #1A1F2E;
+        background-color: #1a1610;
         border-radius: 10px;
         padding: 4px;
     }
 
     .stTabs [data-baseweb="tab"] {
         border-radius: 8px;
-        color: #8B95A5;
+        color: #d0b898;
         font-weight: 500;
     }
 
     .stTabs [aria-selected="true"] {
-        background-color: #00D4AA !important;
-        color: #0E1117 !important;
+        background-color: #e08a3a !important;
+        color: #0a0a0a !important;
     }
 
     /* Selectbox */
@@ -146,13 +146,13 @@ CUSTOM_CSS = """
     .stButton > button {
         border-radius: 8px;
         font-weight: 600;
-        border: 1px solid #2A3040;
+        border: 1px solid #2a2218;
         transition: all 0.2s;
     }
 
     .stButton > button:hover {
-        border-color: #00D4AA;
-        color: #00D4AA;
+        border-color: #e08a3a;
+        color: #e08a3a;
     }
 
     /* Number input */
@@ -162,7 +162,36 @@ CUSTOM_CSS = """
 
     /* Divider */
     hr {
-        border-color: #1E2533;
+        border-color: #2a2218;
+    }
+
+    /* Back to letabuild button */
+    .back-to-home {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 999999;
+        background: #1a1610;
+        border: 1px solid #2a2218;
+        border-radius: 8px;
+        padding: 6px 14px;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .back-to-home:hover {
+        border-color: #e08a3a;
+        background: #241e16;
+    }
+    .back-to-home span {
+        color: #d0b898;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    .back-to-home:hover span {
+        color: #e08a3a;
     }
 
     /* Hide Streamlit branding */
@@ -176,14 +205,14 @@ CUSTOM_CSS = """
         height: 6px;
     }
     ::-webkit-scrollbar-track {
-        background: #0E1117;
+        background: #0a0a0a;
     }
     ::-webkit-scrollbar-thumb {
-        background: #2A3040;
+        background: #2a2218;
         border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: #3A4050;
+        background: #3a3028;
     }
 </style>
 """

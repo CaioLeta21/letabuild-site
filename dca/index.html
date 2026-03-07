@@ -9,12 +9,12 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --border: #30363d;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --accent: #f0883e;
+      --bg: #0a0a0a;
+      --surface: #1a1610;
+      --border: #2a2218;
+      --text: #ffffff;
+      --muted: #d0b898;
+      --accent: #e08a3a;
       --green: #3fb950;
       --red: #f85149;
     }
@@ -209,7 +209,40 @@
       .summary-grid { grid-template-columns: 1fr 1fr; }
       .chart-wrap { height: 240px; }
     }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f9fb;
+        --surface: #ffffff;
+        --border: #e8e0d8;
+        --text: #1a2b3c;
+        --muted: #7a8a98;
+        --accent: #e08a3a;
+        --green: #2ea043;
+        --red: #cf222e;
+      }
+    }
+    html[data-theme="light"] {
+      --bg: #f6f9fb;
+      --surface: #ffffff;
+      --border: #e8e0d8;
+      --text: #1a2b3c;
+      --muted: #7a8a98;
+      --accent: #e08a3a;
+      --green: #2ea043;
+      --red: #cf222e;
+    }
+    html[data-theme="dark"] {
+      --bg: #0a0a0a;
+      --surface: #1a1610;
+      --border: #2a2218;
+      --text: #ffffff;
+      --muted: #d0b898;
+      --accent: #e08a3a;
+      --green: #3fb950;
+      --red: #f85149;
+    }
   </style>
+<script src="/theme-toggle.js"></script>
 </head>
 <body>
 
@@ -219,6 +252,7 @@
     <a href="/" class="nav-logo">leta<span>build</span></a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Simulador DCA</span>
+    <button id="themeToggle" style="margin-left:auto;background:none;border:1px solid rgba(224,138,58,0.15);color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;" title="Alternar tema"></button>
   </nav>
 </header>
 

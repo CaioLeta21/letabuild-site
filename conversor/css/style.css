@@ -6,16 +6,16 @@
 }
 
 :root {
-    --bg: #0D1117;
-    --card: #161B22;
-    --card-border: #21262D;
-    --text: #E6EDF3;
-    --text-secondary: #8B949E;
-    --accent: #F7931A;
-    --accent-hover: #FF9F2E;
-    --green: #3FB950;
-    --red: #F85149;
-    --input-bg: #0D1117;
+    --bg: #0a0a0a;
+    --card: #1a1610;
+    --card-border: #2a2218;
+    --text: #ffffff;
+    --text-secondary: #d0b898;
+    --accent: #e08a3a;
+    --accent-hover: #f09a4a;
+    --green: #3fb950;
+    --red: #f85149;
+    --input-bg: #0a0a0a;
     --radius: 12px;
     --radius-sm: 8px;
 }
@@ -227,7 +227,7 @@ body {
 }
 
 .input-group input::placeholder {
-    color: #30363D;
+    color: var(--card-border);
 }
 
 .input-group input:focus {
@@ -434,6 +434,48 @@ body {
 .loading .market-value {
     animation: pulse 1.5s ease-in-out infinite;
     color: var(--text-secondary);
+}
+
+/* ===== Light Mode ===== */
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg: #f6f9fb;
+        --card: #ffffff;
+        --card-border: #e8e0d8;
+        --text: #1a2b3c;
+        --text-secondary: #7a8a98;
+        --accent: #e08a3a;
+        --accent-hover: #d07a2a;
+        --green: #2ea043;
+        --red: #cf222e;
+        --input-bg: #f0ece8;
+    }
+}
+
+html[data-theme="light"] {
+    --bg: #f6f9fb;
+    --card: #ffffff;
+    --card-border: #e8e0d8;
+    --text: #1a2b3c;
+    --text-secondary: #7a8a98;
+    --accent: #e08a3a;
+    --accent-hover: #d07a2a;
+    --green: #2ea043;
+    --red: #cf222e;
+    --input-bg: #f0ece8;
+}
+
+html[data-theme="dark"] {
+    --bg: #0a0a0a;
+    --card: #1a1610;
+    --card-border: #2a2218;
+    --text: #ffffff;
+    --text-secondary: #d0b898;
+    --accent: #e08a3a;
+    --accent-hover: #f09a4a;
+    --green: #3fb950;
+    --red: #f85149;
+    --input-bg: #0a0a0a;
 }
 
 /* ===== Responsive ===== */

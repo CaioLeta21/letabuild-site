@@ -7,16 +7,32 @@
 <meta name="description" content="Sinais de compra e venda de Bitcoin baseados em indicadores on-chain e de mercado.">
 <link rel="stylesheet" href="./_astro/btcindicators.DRb51OTm.css">
 <style>
-  body { margin: 0; background: #0d1117; }
+  body { margin: 0; background: #0a0a0a; }
   .back-link {
     display: inline-block; padding: 16px 24px; font-size: 13px;
-    color: #8b949e; text-decoration: none; font-family: system-ui, sans-serif;
+    color: #b0a090; text-decoration: none; font-family: system-ui, sans-serif;
   }
-  .back-link:hover { color: #f0883e; }
+  .back-link:hover { color: #e08a3a; }
+  @media (prefers-color-scheme: light) {
+    body { background: #f6f9fb; }
+    .back-link { color: #7a8a98; }
+    .back-link:hover { color: #e08a3a; }
+  }
+  html[data-theme="light"] body { background: #f6f9fb; }
+  html[data-theme="light"] .back-link { color: #7a8a98; }
+  html[data-theme="light"] .back-link:hover { color: #e08a3a; }
+  html[data-theme="dark"] body { background: #0a0a0a; }
+  html[data-theme="dark"] .back-link { color: #b0a090; }
+  html[data-theme="dark"] .back-link:hover { color: #e08a3a; }
 </style>
+<script src="/theme-toggle.js"></script>
 </head>
 <body>
 <a class="back-link" href="/">&#8249; letabuild.com</a>
+
+<div style="display:flex;justify-content:flex-end;padding:0 24px;">
+<button id="themeToggle" style="background:none;border:1px solid rgba(224,138,58,0.15);color:#b0a090;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;" title="Alternar tema"></button>
+</div>
 
 <div class="btc-dashboard" data-locale="pt">
   <div class="bd-header">

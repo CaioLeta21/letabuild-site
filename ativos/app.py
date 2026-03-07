@@ -14,9 +14,14 @@ from config.constants import CURRENCIES, DEFAULT_CURRENCY
 
 inject_theme()
 
+st.markdown(
+    '<a href="https://letabuild.com" class="back-to-home" target="_self">'
+    '<span>← letabuild.com</span></a>',
+    unsafe_allow_html=True,
+)
+
 # ── Sidebar ──────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("[← letabuild.com](https://letabuild.com)", unsafe_allow_html=True)
     st.markdown("# Análise de Ativos")
     st.markdown("---")
 

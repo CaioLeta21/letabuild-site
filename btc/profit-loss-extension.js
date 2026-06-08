@@ -5,7 +5,9 @@
     date: "8 jun 2026"
   };
   let profitLossDataPromise = null;
+  let realizedPriceDataPromise = null;
   let profitLossRange = "max";
+  let realizedPriceRange = "max";
 
   function isEnglish() {
     const root = document.querySelector(".btc-dashboard");
@@ -47,26 +49,97 @@
     return Math.round(value).toLocaleString("pt-BR") + " BTC";
   }
 
+  function formatUsd(value) {
+    if (!Number.isFinite(value)) return "N/A";
+    return "$" + Math.round(value).toLocaleString("pt-BR");
+  }
+
+  function getRealizedPriceSignal(ratio) {
+    if (!Number.isFinite(ratio)) return { label: "N/A", className: "neutral" };
+    if (ratio < 1) return { label: text("COMPRA FORTE", "STRONG BUY"), className: "buy-strong" };
+    if (ratio < 1.5) return { label: text("COMPRA", "BUY"), className: "buy" };
+    if (ratio < 2.5) return { label: text("NEUTRO", "NEUTRAL"), className: "neutral" };
+    if (ratio < 3.5) return { label: text("VENDA", "SELL"), className: "sell" };
+    return { label: text("VENDA FORTE", "STRONG SELL"), className: "sell-strong" };
+  }
+
+  async function loadRealizedPriceData() {
+    if (!realizedPriceDataPromise) {
+      realizedPriceDataPromise = (async () => {
+        let url = "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics";
+        let params = {
+          assets: "btc",
+          metrics: "PriceUSD,CapMVRVCur",
+          frequency: "1d",
+          start_time: "2012-01-01",
+          page_size: "10000"
+        };
+        const rows = [];
+        while (url) {
+          const suffix = params ? "?" + new URLSearchParams(params).toString() : "";
+          const response = await fetch(url + suffix);
+          if (!response.ok) throw new Error("Coin Metrics API error");
+          const payload = await response.json();
+          for (const row of payload.data || []) {
+            const price = Number(row.PriceUSD);
+            const ratio = Number(row.CapMVRVCur);
+            if (!Number.isFinite(price) || !Number.isFinite(ratio) || ratio <= 0) continue;
+            rows.push({
+              d: row.time.slice(0, 10),
+              t: new Date(row.time).getTime(),
+              price,
+              ratio,
+              realizedPrice: price / ratio
+            });
+          }
+          url = payload.next_page_url || null;
+          params = null;
+        }
+        return rows;
+      })();
+    }
+    return realizedPriceDataPromise;
+  }
+
+  function setLatestRealizedPriceValues(data) {
+    const latest = data[data.length - 1];
+    if (!latest) return;
+    const value = document.getElementById("bd-card-value-realized_price");
+    const signal = document.getElementById("bd-card-signal-realized_price");
+    const current = document.getElementById("bd-realized-current");
+    const market = document.getElementById("bd-realized-market-current");
+    const ratio = document.getElementById("bd-realized-ratio-current");
+    const nextSignal = getRealizedPriceSignal(latest.ratio);
+
+    if (value) value.textContent = formatUsd(latest.realizedPrice);
+    if (signal) {
+      signal.textContent = nextSignal.label;
+      signal.dataset.signal = nextSignal.className;
+    }
+    if (current) current.textContent = formatUsd(latest.realizedPrice);
+    if (market) market.textContent = formatUsd(latest.price);
+    if (ratio) ratio.textContent = latest.ratio.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "x";
+  }
+
   async function loadProfitLossData() {
     if (!profitLossDataPromise) {
       profitLossDataPromise = Promise.all([
-        fetch("https://api.bitcoin-data.com/v1/supply-profit").then((response) => response.json()),
-        fetch("https://api.bitcoin-data.com/v1/supply-loss").then((response) => response.json())
-      ]).then(([profitRows, lossRows]) => {
-        const lossByDate = new Map(lossRows.map((row) => [row.d, row.supplyLossBtc]));
+        fetch("https://charts.bgeometrics.com/files/profit_loss.json").then((response) => response.json()),
+        fetch("https://charts.bgeometrics.com/files/profit_loss_btc_price.json").then((response) => response.json())
+      ]).then(([profitRows, priceRows]) => {
+        const priceByTime = new Map(priceRows.map(([timestamp, price]) => [timestamp, Number(price)]));
         return profitRows
-          .map((row) => {
-            const profitBtc = Number(row.supplyProfitBtc);
-            const lossBtc = Number(lossByDate.get(row.d));
-            const total = profitBtc + lossBtc;
-            if (!Number.isFinite(total) || total <= 0) return null;
+          .map(([timestamp, profitPct]) => {
+            const parsedProfitPct = Number(profitPct);
+            if (!Number.isFinite(parsedProfitPct)) return null;
+            const date = new Date(timestamp);
+            const price = priceByTime.get(timestamp);
             return {
-              d: row.d,
-              t: row.unixTs * 1000,
-              profitBtc,
-              lossBtc,
-              profitPct: (profitBtc / total) * 100,
-              lossPct: (lossBtc / total) * 100
+              d: date.toISOString().slice(0, 10),
+              t: timestamp,
+              price,
+              profitPct: parsedProfitPct,
+              lossPct: 100 - parsedProfitPct
             };
           })
           .filter(Boolean);
@@ -82,8 +155,10 @@
     if (value) value.textContent = formatPct(latest.profitPct);
     const profitValue = document.getElementById("bd-profit-current");
     const lossValue = document.getElementById("bd-loss-current");
+    const bar = document.querySelector(".bd-profit-loss-bar");
     if (profitValue) profitValue.textContent = formatPct(latest.profitPct);
     if (lossValue) lossValue.textContent = formatPct(latest.lossPct);
+    if (bar) bar.style.gridTemplateColumns = `minmax(0, ${latest.profitPct}fr) minmax(0, ${latest.lossPct}fr)`;
   }
 
   function filterRange(data, range) {
@@ -177,8 +252,9 @@
       tooltip.style.top = `${Math.max(10, event.clientY - rect.top - 80)}px`;
       tooltip.innerHTML = `
         <strong>${closest.d}</strong>
-        <span class="bd-profit">${text("Lucro", "Profit")}: ${formatPct(closest.profitPct)} <small>${formatBtc(closest.profitBtc)}</small></span>
-        <span class="bd-loss">${text("Prejuizo", "Loss")}: ${formatPct(closest.lossPct)} <small>${formatBtc(closest.lossBtc)}</small></span>
+        <span class="bd-profit">${text("Lucro", "Profit")}: ${formatPct(closest.profitPct)}</span>
+        <span class="bd-loss">${text("Prejuizo", "Loss")}: ${formatPct(closest.lossPct)}</span>
+        ${Number.isFinite(closest.price) ? `<span>${text("Preco BTC", "BTC price")}: ${formatUsd(closest.price)}</span>` : ""}
       `;
     });
 
@@ -186,6 +262,50 @@
       hover.style.display = "none";
       tooltip.hidden = true;
     });
+  }
+
+  function renderRealizedPriceChart(data) {
+    const host = document.getElementById("bd-realized-price-chart");
+    if (!host || !data.length) return;
+
+    const visible = filterRange(data, realizedPriceRange);
+    const width = 960;
+    const height = 420;
+    const pad = { top: 28, right: 60, bottom: 42, left: 70 };
+    const xMin = visible[0].t;
+    const xMax = visible[visible.length - 1].t;
+    const allValues = visible.flatMap((row) => [row.price, row.realizedPrice]).filter((value) => value > 0);
+    const yMin = Math.min(...allValues) * 0.82;
+    const yMax = Math.max(...allValues) * 1.18;
+    const logMin = Math.log10(yMin);
+    const logMax = Math.log10(yMax);
+    const x = (row) => pad.left + ((row.t - xMin) / (xMax - xMin || 1)) * (width - pad.left - pad.right);
+    const y = (value) => pad.top + ((logMax - Math.log10(value)) / (logMax - logMin || 1)) * (height - pad.top - pad.bottom);
+    const pricePath = buildPath(visible, x, y, "price");
+    const realizedPath = buildPath(visible, x, y, "realizedPrice");
+    const latest = visible[visible.length - 1];
+    const ticks = [1000, 3000, 10000, 30000, 100000, 300000].filter((tick) => tick >= yMin && tick <= yMax);
+    const yearTicks = [];
+    let lastYear = "";
+    for (const row of visible) {
+      const year = row.d.slice(0, 4);
+      if (year !== lastYear) {
+        yearTicks.push(row);
+        lastYear = year;
+      }
+    }
+
+    host.innerHTML = `
+      <div class="bd-profit-loss-chart-shell">
+        <svg class="bd-profit-loss-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${text("Grafico de preco do Bitcoin contra realized price", "Bitcoin price versus realized price chart")}">
+          ${ticks.map((tick) => `<line x1="${pad.left}" y1="${y(tick)}" x2="${width - pad.right}" y2="${y(tick)}" class="bd-pl-grid"></line><text x="${width - pad.right + 10}" y="${y(tick) + 4}" class="bd-pl-axis">$${(tick / 1000).toLocaleString("pt-BR")}k</text>`).join("")}
+          ${yearTicks.map((row) => `<line x1="${x(row)}" y1="${pad.top}" x2="${x(row)}" y2="${height - pad.bottom}" class="bd-pl-grid-x"></line><text x="${x(row)}" y="${height - 14}" text-anchor="middle" class="bd-pl-axis">${row.d.slice(0, 4)}</text>`).join("")}
+          <path d="${pricePath}" class="bd-pl-line bd-realized-market-line"></path>
+          <path d="${realizedPath}" class="bd-pl-line bd-realized-line"></path>
+          <circle cx="${x(latest)}" cy="${y(latest.realizedPrice)}" r="4.5" class="bd-realized-dot"></circle>
+        </svg>
+      </div>
+    `;
   }
 
   function setRangeButtons() {
@@ -197,6 +317,73 @@
         setRangeButtons();
         renderProfitLossChart(data);
       }, { once: true });
+    });
+  }
+
+  function setRealizedPriceRangeButtons() {
+    document.querySelectorAll("[data-realized-price-range]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.realizedPriceRange === realizedPriceRange);
+      button.addEventListener("click", async () => {
+        realizedPriceRange = button.dataset.realizedPriceRange;
+        const data = await loadRealizedPriceData();
+        setRealizedPriceRangeButtons();
+        renderRealizedPriceChart(data);
+      }, { once: true });
+    });
+  }
+
+  function openRealizedPriceDetail() {
+    const detail = document.getElementById("bd-detail");
+    const content = document.getElementById("bd-detail-content");
+    if (!detail || !content) return;
+
+    document.querySelectorAll(".bd-card.active").forEach((card) => card.classList.remove("active"));
+    document.getElementById("bd-card-realized_price")?.classList.add("active");
+
+    content.innerHTML = `
+      <button class="bd-close-btn" id="bd-close-detail">x</button>
+      <h3>${text("Realized Price do Bitcoin", "Bitcoin Realized Price")}</h3>
+      <p class="bd-profit-loss-note">${text(
+        "Realized Price e o preco medio de aquisicao on-chain do mercado. Ele e calculado aqui como Preco BTC dividido pelo MVRV Ratio da Coin Metrics. Quando o preco de mercado se aproxima dessa linha, o Bitcoin costuma estar em uma zona historicamente importante de acumulacao e capitulacao.",
+        "Realized Price is the market's on-chain average acquisition price. It is calculated here as BTC Price divided by Coin Metrics MVRV Ratio. When market price approaches this line, Bitcoin is usually in a historically important accumulation and capitulation zone."
+      )}</p>
+      <div class="bd-profit-loss-current">
+        <div class="bd-profit-loss-box">
+          <div class="bd-profit-loss-label">${text("Realized Price", "Realized Price")}</div>
+          <div class="bd-profit-loss-value bd-realized" id="bd-realized-current">...</div>
+        </div>
+        <div class="bd-profit-loss-box">
+          <div class="bd-profit-loss-label">${text("Preco de mercado", "Market price")}</div>
+          <div class="bd-profit-loss-value" id="bd-realized-market-current">...</div>
+        </div>
+      </div>
+      <p class="bd-profit-loss-note">${text("MVRV atual", "Current MVRV")}: <strong id="bd-realized-ratio-current">...</strong></p>
+      <div class="bd-profit-loss-toolbar">
+        <button data-realized-price-range="1">1A</button>
+        <button data-realized-price-range="2">2A</button>
+        <button data-realized-price-range="4">4A</button>
+        <button data-realized-price-range="max">MAX</button>
+      </div>
+      <div id="bd-realized-price-chart" class="bd-profit-loss-chart">
+        <div class="bd-profit-loss-loading">${text("Carregando dados reais...", "Loading real data...")}</div>
+      </div>
+      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://community-api.coinmetrics.io/v4/timeseries/asset-metrics" target="_blank" rel="noopener">Coin Metrics Community API</a>. ${text("Calculo", "Calculation")}: PriceUSD / CapMVRVCur.</p>
+    `;
+
+    detail.classList.add("open");
+    setRealizedPriceRangeButtons();
+    loadRealizedPriceData()
+      .then((data) => {
+        setLatestRealizedPriceValues(data);
+        renderRealizedPriceChart(data);
+      })
+      .catch(() => {
+        const host = document.getElementById("bd-realized-price-chart");
+        if (host) host.innerHTML = `<div class="bd-profit-loss-error">${text("Nao foi possivel carregar a API agora.", "Could not load the API right now.")}</div>`;
+      });
+    document.getElementById("bd-close-detail")?.addEventListener("click", () => {
+      detail.classList.remove("open");
+      document.getElementById("bd-card-realized_price")?.classList.remove("active");
     });
   }
 
@@ -226,8 +413,8 @@
       </div>
       <div class="bd-profit-loss-bar" aria-hidden="true"><span></span><span></span></div>
       <p class="bd-profit-loss-note">${text(
-        "O grafico abaixo e plotado com valores diarios reais de supply em lucro e supply em prejuizo, carregados da API Bitcoin Data/BGeometrics.",
-        "The chart below is plotted with real daily values for supply in profit and supply in loss, loaded from the Bitcoin Data/BGeometrics API."
+        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo. A fonte publica mais longa encontrada para esta metrica com acesso sem chave comeca em 2014.",
+        "The chart below is plotted with real daily percentage values for supply in profit/loss. The longest public no-key source found for this metric starts in 2014."
       )}</p>
       <div class="bd-profit-loss-toolbar">
         <button data-profit-loss-range="1">1A</button>
@@ -238,7 +425,7 @@
       <div id="bd-profit-loss-chart" class="bd-profit-loss-chart">
         <div class="bd-profit-loss-loading">${text("Carregando dados reais...", "Loading real data...")}</div>
       </div>
-      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://api.bitcoin-data.com/scalar.html" target="_blank" rel="noopener">Bitcoin Data API/BGeometrics</a>. ${text("Definicao metodologica", "Methodology")}: <a href="https://docs.glassnode.com/guides-and-tutorials/metric-guides/profit-loss-supply/percent-supply-in-profit" target="_blank" rel="noopener">Glassnode</a>.</p>
+      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://charts.bgeometrics.com/graphics/supply_in_profit.html" target="_blank" rel="noopener">BGeometrics Supply in Profit / Loss (%)</a>. ${text("Definicao metodologica", "Methodology")}: <a href="https://docs.glassnode.com/guides-and-tutorials/metric-guides/profit-loss-supply/percent-supply-in-profit" target="_blank" rel="noopener">Glassnode</a>.</p>
     `;
 
     detail.classList.add("open");
@@ -271,6 +458,23 @@
     });
   }
 
+  function addRealizedPriceHandlers() {
+    const card = document.getElementById("bd-card-realized_price");
+    if (!card || card.dataset.realizedPriceBound === "true") return;
+    card.dataset.realizedPriceBound = "true";
+    card.classList.add("bd-card-realized-price");
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", text("Abrir grafico de realized price", "Open realized price chart"));
+    card.addEventListener("click", openRealizedPriceDetail);
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openRealizedPriceDetail();
+      }
+    });
+  }
+
   function injectRsiSecondaryDetail() {
     const detail = document.getElementById("bd-detail");
     const content = document.getElementById("bd-detail-content");
@@ -293,13 +497,17 @@
     markCard();
     updateCardLanguage();
     addProfitLossHandlers();
-    document.getElementById("bd-card-rsi_monthly")?.addEventListener("click", () => {
-      window.setTimeout(injectRsiSecondaryDetail, 80);
-    });
+    addRealizedPriceHandlers();
+    loadRealizedPriceData()
+      .then(setLatestRealizedPriceValues)
+      .catch(() => {
+        const signal = document.getElementById("bd-card-signal-realized_price");
+        if (signal) signal.textContent = text("SEM DADOS", "NO DATA");
+      });
     document.getElementById("langToggle")?.addEventListener("click", () => {
       window.setTimeout(() => {
         updateCardLanguage();
-        injectRsiSecondaryDetail();
+        loadRealizedPriceData().then(setLatestRealizedPriceValues).catch(() => {});
       }, 80);
     });
   }

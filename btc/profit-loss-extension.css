@@ -7,6 +7,31 @@
   color: var(--bd-accent);
 }
 
+.btc-dashboard .bd-card-realized-price .bd-card-signal[data-signal="buy-strong"] {
+  background: rgba(0, 200, 83, 0.16);
+  color: var(--bd-green);
+}
+
+.btc-dashboard .bd-card-realized-price .bd-card-signal[data-signal="buy"] {
+  background: rgba(105, 240, 174, 0.14);
+  color: #69f0ae;
+}
+
+.btc-dashboard .bd-card-realized-price .bd-card-signal[data-signal="neutral"] {
+  background: rgba(255, 214, 0, 0.14);
+  color: #ffd600;
+}
+
+.btc-dashboard .bd-card-realized-price .bd-card-signal[data-signal="sell"] {
+  background: rgba(255, 109, 0, 0.14);
+  color: #ff6d00;
+}
+
+.btc-dashboard .bd-card-realized-price .bd-card-signal[data-signal="sell-strong"] {
+  background: rgba(255, 23, 68, 0.14);
+  color: #ff1744;
+}
+
 .btc-dashboard .bd-profit-loss-current {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -42,6 +67,10 @@
 
 .btc-dashboard .bd-loss {
   color: var(--bd-red);
+}
+
+.btc-dashboard .bd-realized {
+  color: #58a6ff;
 }
 
 .btc-dashboard .bd-profit-loss-bar {
@@ -158,6 +187,21 @@
 
 .btc-dashboard .bd-pl-loss {
   stroke: var(--bd-red);
+}
+
+.btc-dashboard .bd-realized-market-line {
+  stroke: var(--bd-accent);
+}
+
+.btc-dashboard .bd-realized-line {
+  stroke: #58a6ff;
+  stroke-dasharray: 7 5;
+}
+
+.btc-dashboard .bd-realized-dot {
+  fill: #58a6ff;
+  stroke: var(--bd-bg);
+  stroke-width: 2;
 }
 
 .btc-dashboard .bd-pl-hover-line {

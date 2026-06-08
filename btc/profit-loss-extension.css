@@ -1,0 +1,112 @@
+.btc-dashboard .bd-card-profit-loss {
+  position: relative;
+}
+
+.btc-dashboard .bd-card-profit-loss .bd-card-signal {
+  background: rgba(224, 138, 58, 0.18);
+  color: var(--bd-accent);
+}
+
+.btc-dashboard .bd-profit-loss-current {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.btc-dashboard .bd-profit-loss-box {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--bd-border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.btc-dashboard .bd-profit-loss-label {
+  color: var(--bd-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.btc-dashboard .bd-profit-loss-value {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.btc-dashboard .bd-profit {
+  color: var(--bd-green);
+}
+
+.btc-dashboard .bd-loss {
+  color: var(--bd-red);
+}
+
+.btc-dashboard .bd-profit-loss-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 50.43fr) minmax(0, 49.56fr);
+  height: 18px;
+  overflow: hidden;
+  border: 1px solid var(--bd-border);
+  border-radius: 8px;
+  margin: 0 0 14px;
+  background: var(--bd-bg);
+}
+
+.btc-dashboard .bd-profit-loss-bar span:first-child {
+  background: linear-gradient(90deg, rgba(63, 185, 80, 0.5), rgba(63, 185, 80, 0.92));
+}
+
+.btc-dashboard .bd-profit-loss-bar span:last-child {
+  background: linear-gradient(90deg, rgba(248, 81, 73, 0.9), rgba(248, 81, 73, 0.5));
+}
+
+.btc-dashboard .bd-profit-loss-note,
+.btc-dashboard .bd-rsi-secondary-note {
+  color: var(--bd-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+.btc-dashboard .bd-profit-loss-iframe {
+  width: 100%;
+  min-height: 620px;
+  border: 1px solid var(--bd-border);
+  border-radius: 10px;
+  background: var(--bd-bg);
+}
+
+.btc-dashboard .bd-profit-loss-source {
+  color: var(--bd-text-muted);
+  font-size: 0.78rem;
+  margin: 8px 0 0;
+}
+
+.btc-dashboard .bd-profit-loss-source a {
+  color: var(--bd-accent);
+}
+
+.btc-dashboard .bd-rsi-secondary {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bd-border);
+}
+
+.btc-dashboard .bd-rsi-secondary h4 {
+  color: var(--bd-accent);
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 700px) {
+  .btc-dashboard .bd-profit-loss-current {
+    grid-template-columns: 1fr;
+  }
+
+  .btc-dashboard .bd-profit-loss-iframe {
+    min-height: 520px;
+  }
+}

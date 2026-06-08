@@ -10,6 +10,7 @@
 <title>Termômetro do Bitcoin - Leta Build</title>
 <meta name="description" content="Sinais de compra e venda de Bitcoin baseados em indicadores on-chain e de mercado.">
 <link rel="stylesheet" href="./_astro/btcindicators.DRb51OTm.css">
+<link rel="stylesheet" href="./profit-loss-extension.css">
 <style>
   body { margin: 0; background: #0a0a0a; }
   .back-link {
@@ -122,10 +123,10 @@
           <div class="bd-card-value" id="bd-card-value-rsi_monthly">...</div>
           <span class="bd-card-signal" id="bd-card-signal-rsi_monthly"></span>
         </div>
-        <div class="bd-card" id="bd-card-rsi_xau_monthly">
-          <div class="bd-card-title" data-pt="RSI Mensal BTC/XAU" data-en="RSI Monthly BTC/XAU">RSI Mensal BTC/XAU</div>
-          <div class="bd-card-value" id="bd-card-value-rsi_xau_monthly">...</div>
-          <span class="bd-card-signal" id="bd-card-signal-rsi_xau_monthly"></span>
+        <div class="bd-card" id="bd-card-profit_loss_supply">
+          <div class="bd-card-title" data-pt="% Supply em Lucro" data-en="% Supply in Profit">% Supply em Lucro</div>
+          <div class="bd-card-value" id="bd-card-value-profit_loss_supply">50,43%</div>
+          <span class="bd-card-signal" id="bd-card-signal-profit_loss_supply" data-pt="CRUZOU" data-en="CROSSED">CRUZOU</span>
         </div>
         <div class="bd-card" id="bd-card-cvdd">
           <div class="bd-card-title">CVDD</div>
@@ -164,5 +165,6 @@
 </div>
 
 <script type="module" src="./_astro/indicadoresbtc.astro_astro_type_script_index_0_lang.DrhD0joh.js"></script>
+<script src="./profit-loss-extension.js"></script>
 </body>
 </html>

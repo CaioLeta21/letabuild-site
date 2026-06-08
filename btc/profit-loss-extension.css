@@ -71,12 +71,134 @@
   margin: 0 0 14px;
 }
 
+.btc-dashboard .bd-profit-loss-toolbar {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.btc-dashboard .bd-profit-loss-toolbar button {
+  background: none;
+  border: 1px solid var(--bd-border);
+  border-radius: 4px;
+  color: var(--bd-text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+}
+
+.btc-dashboard .bd-profit-loss-toolbar button.active {
+  background: rgba(224, 138, 58, 0.16);
+  border-color: rgba(224, 138, 58, 0.45);
+  color: var(--bd-accent);
+}
+
 .btc-dashboard .bd-profit-loss-chart {
-  display: block;
   width: 100%;
   border: 1px solid var(--bd-border);
   border-radius: 10px;
   background: var(--bd-bg);
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.btc-dashboard .bd-profit-loss-loading,
+.btc-dashboard .bd-profit-loss-error {
+  align-items: center;
+  color: var(--bd-text-muted);
+  display: flex;
+  min-height: 420px;
+  justify-content: center;
+}
+
+.btc-dashboard .bd-profit-loss-chart-shell {
+  position: relative;
+  width: 100%;
+}
+
+.btc-dashboard .bd-profit-loss-svg {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.btc-dashboard .bd-pl-grid,
+.btc-dashboard .bd-pl-grid-x {
+  stroke: rgba(139, 148, 158, 0.18);
+  stroke-width: 1;
+}
+
+.btc-dashboard .bd-pl-grid-x {
+  stroke-dasharray: 2 8;
+}
+
+.btc-dashboard .bd-pl-midline {
+  stroke: rgba(224, 138, 58, 0.55);
+  stroke-dasharray: 5 6;
+}
+
+.btc-dashboard .bd-pl-axis {
+  fill: var(--bd-text-muted);
+  font-size: 12px;
+}
+
+.btc-dashboard .bd-pl-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+.btc-dashboard .bd-pl-profit {
+  stroke: var(--bd-green);
+}
+
+.btc-dashboard .bd-pl-loss {
+  stroke: var(--bd-red);
+}
+
+.btc-dashboard .bd-pl-hover-line {
+  stroke: rgba(230, 237, 243, 0.42);
+  stroke-width: 1;
+}
+
+.btc-dashboard .bd-pl-profit-dot {
+  fill: var(--bd-green);
+  stroke: var(--bd-bg);
+  stroke-width: 2;
+}
+
+.btc-dashboard .bd-pl-loss-dot {
+  fill: var(--bd-red);
+  stroke: var(--bd-bg);
+  stroke-width: 2;
+}
+
+.btc-dashboard .bd-pl-tooltip {
+  background: rgba(10, 10, 10, 0.92);
+  border: 1px solid var(--bd-border);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color: var(--bd-text);
+  min-width: 210px;
+  padding: 10px 12px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+}
+
+.btc-dashboard .bd-pl-tooltip strong,
+.btc-dashboard .bd-pl-tooltip span {
+  display: block;
+}
+
+.btc-dashboard .bd-pl-tooltip small {
+  color: var(--bd-text-muted);
+  display: block;
+  margin-top: 2px;
 }
 
 .btc-dashboard .bd-profit-loss-source {
@@ -106,9 +228,13 @@
     grid-template-columns: 1fr;
   }
 
-  .btc-dashboard .bd-profit-loss-chart {
-    min-height: 260px;
-    object-fit: cover;
-    object-position: right center;
+  .btc-dashboard .bd-profit-loss-toolbar {
+    justify-content: flex-start;
+  }
+
+  .btc-dashboard .bd-profit-loss-chart,
+  .btc-dashboard .bd-profit-loss-loading,
+  .btc-dashboard .bd-profit-loss-error {
+    min-height: 300px;
   }
 }

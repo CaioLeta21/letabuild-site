@@ -128,7 +128,7 @@
         fetch("https://charts.bgeometrics.com/files/profit_loss_btc_price.json").then((response) => response.json())
       ]).then(([profitRows, priceRows]) => {
         const priceByTime = new Map(priceRows.map(([timestamp, price]) => [timestamp, Number(price)]));
-        return profitRows
+        const rows = profitRows
           .map(([timestamp, profitPct]) => {
             const parsedProfitPct = Number(profitPct);
             if (!Number.isFinite(parsedProfitPct)) return null;
@@ -143,6 +143,14 @@
             };
           })
           .filter((row) => row && row.d >= "2016-01-01");
+        return rows.filter((row, index) => {
+          const prev = rows[index - 1];
+          const next = rows[index + 1];
+          if (!prev || !next) return true;
+          const isolatedZero = row.profitPct <= 1 && prev.profitPct >= 20 && next.profitPct >= 20;
+          const isolatedHundred = row.profitPct >= 99 && prev.profitPct <= 80 && next.profitPct <= 80;
+          return !isolatedZero && !isolatedHundred;
+        });
       });
     }
     return profitLossDataPromise;
@@ -413,8 +421,8 @@
       </div>
       <div class="bd-profit-loss-bar" aria-hidden="true"><span></span><span></span></div>
       <p class="bd-profit-loss-note">${text(
-        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo. A serie publica sem chave encontrada tem trechos quebrados antes de 2016, por isso a visualizacao comeca em 2016.",
-        "The chart below is plotted with real daily percentage values for supply in profit/loss. The public no-key series found has broken segments before 2016, so this view starts in 2016."
+        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo. A serie publica sem chave encontrada tem trechos quebrados antes de 2016, por isso a visualizacao comeca em 2016. Pontos isolados claramente invalidos da propria serie sao removidos, sem interpolacao.",
+        "The chart below is plotted with real daily percentage values for supply in profit/loss. The public no-key series found has broken segments before 2016, so this view starts in 2016. Clearly invalid isolated points from the source series are removed without interpolation."
       )}</p>
       <div class="bd-profit-loss-toolbar">
         <button data-profit-loss-range="1">1A</button>

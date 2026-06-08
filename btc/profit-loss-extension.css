@@ -71,9 +71,9 @@
   margin: 0 0 14px;
 }
 
-.btc-dashboard .bd-profit-loss-iframe {
+.btc-dashboard .bd-profit-loss-chart {
+  display: block;
   width: 100%;
-  min-height: 620px;
   border: 1px solid var(--bd-border);
   border-radius: 10px;
   background: var(--bd-bg);
@@ -106,7 +106,9 @@
     grid-template-columns: 1fr;
   }
 
-  .btc-dashboard .bd-profit-loss-iframe {
-    min-height: 520px;
+  .btc-dashboard .bd-profit-loss-chart {
+    min-height: 260px;
+    object-fit: cover;
+    object-position: right center;
   }
 }

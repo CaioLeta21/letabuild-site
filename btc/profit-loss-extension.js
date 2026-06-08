@@ -63,10 +63,10 @@
       </div>
       <div class="bd-profit-loss-bar" aria-hidden="true"><span></span><span></span></div>
       <p class="bd-profit-loss-note">${text(
-        `Valor de referencia da captura mais recente: ${current.date}. O grafico abaixo vem da ChartInspect, com serie historica real.`,
-        `Reference value from the latest screenshot: ${current.date}. The chart below comes from ChartInspect, with a real historical series.`
+        `Valor de referencia da captura mais recente: ${current.date}. O grafico abaixo usa a captura real da serie historica, sem depender de embed externo.`,
+        `Reference value from the latest screenshot: ${current.date}. The chart below uses the real historical-series screenshot, without depending on an external embed.`
       )}</p>
-      <iframe class="bd-profit-loss-iframe" src="https://chartinspect.com/charts/profit-loss" loading="lazy" title="Bitcoin Supply In Profit/Loss"></iframe>
+      <img class="bd-profit-loss-chart" src="./profit-loss-chart.png" alt="${text("Grafico Bitcoin Percentage Of Supply In Profit And Loss", "Bitcoin Percentage Of Supply In Profit And Loss chart")}">
       <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://chartinspect.com/charts/profit-loss" target="_blank" rel="noopener">ChartInspect</a>. ${text("Definicao metodologica", "Methodology")}: <a href="https://docs.glassnode.com/guides-and-tutorials/metric-guides/profit-loss-supply/percent-supply-in-profit" target="_blank" rel="noopener">Glassnode</a>.</p>
     `;
 

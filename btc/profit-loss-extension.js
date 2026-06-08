@@ -142,7 +142,7 @@
               lossPct: 100 - parsedProfitPct
             };
           })
-          .filter(Boolean);
+          .filter((row) => row && row.d >= "2016-01-01");
       });
     }
     return profitLossDataPromise;
@@ -413,8 +413,8 @@
       </div>
       <div class="bd-profit-loss-bar" aria-hidden="true"><span></span><span></span></div>
       <p class="bd-profit-loss-note">${text(
-        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo. A fonte publica mais longa encontrada para esta metrica com acesso sem chave comeca em 2014.",
-        "The chart below is plotted with real daily percentage values for supply in profit/loss. The longest public no-key source found for this metric starts in 2014."
+        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo. A serie publica sem chave encontrada tem trechos quebrados antes de 2016, por isso a visualizacao comeca em 2016.",
+        "The chart below is plotted with real daily percentage values for supply in profit/loss. The public no-key series found has broken segments before 2016, so this view starts in 2016."
       )}</p>
       <div class="bd-profit-loss-toolbar">
         <button data-profit-loss-range="1">1A</button>

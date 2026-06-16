@@ -6,6 +6,7 @@ Atualiza os dados estáticos do Simulador DCA (letabuild.com/dca/).
 Executado diariamente via GitHub Actions.
 
 Dados atualizados:
+  - BTC_DATA     : Bitcoin (BTC-USD)     — Yahoo Finance
   - SP500_DATA   : S&P 500 (^GSPC)      — Yahoo Finance
   - QQQ_DATA     : QQQ (Nasdaq-100)      — Yahoo Finance
   - GLD_DATA     : Ouro via GLD ETF      — Yahoo Finance
@@ -39,6 +40,7 @@ MAX_RETRIES = 3
 RETRY_DELAY = 10  # segundos entre tentativas
 
 YFINANCE_TICKERS = {
+    "BTC_DATA":   "BTC-USD",
     "SP500_DATA": "^GSPC",
     "QQQ_DATA":   "QQQ",
     "GLD_DATA":   "GLD",

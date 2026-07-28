@@ -1,0 +1,45 @@
+name: Atualizar supply em lucro/prejuizo
+
+on:
+  schedule:
+    # Todo dia as 9h20 UTC (6h20 de Brasilia), depois do fechamento diario das fontes
+    - cron: '20 9 * * *'
+  workflow_dispatch:
+    # Permite trigger manual pelo GitHub Actions UI
+
+permissions:
+  contents: write   # necessario para commitar e fazer push
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Executar script de atualizacao
+        run: python scripts/update_supply_profit.py
+
+      - name: Commitar e publicar se houver mudancas
+        run: |
+          git config user.name  "letabuild-bot"
+          git config user.email "bot@letabuild.com"
+          git add btc/data/supply-profit.json
+          if git diff --staged --quiet; then
+            echo "Nenhuma mudanca nos dados. Nada a commitar."
+          else
+            DAY=$(date '+%Y-%m-%d')
+            git commit -m "BTC: atualizacao automatica do supply em lucro/prejuizo (${DAY})"
+            git pull --rebase
+            git push
+            echo "Dados atualizados e publicados com sucesso!"
+          fi

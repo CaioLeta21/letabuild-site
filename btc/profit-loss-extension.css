@@ -100,6 +100,14 @@
   margin: 0 0 14px;
 }
 
+.btc-dashboard .bd-profit-loss-updated {
+  color: var(--bd-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin: 10px 0 14px;
+}
+
 .btc-dashboard .bd-profit-loss-toolbar {
   display: flex;
   gap: 6px;

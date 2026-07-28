@@ -1,9 +1,10 @@
 (function () {
   const current = {
-    profit: "50,43%",
-    loss: "49,56%",
-    date: "8 jun 2026"
+    profit: "...",
+    loss: "..."
   };
+  const SUPPLY_PROFIT_URL = "./data/supply-profit.json";
+  let profitLossMeta = null;
   let profitLossDataPromise = null;
   let realizedPriceDataPromise = null;
   let profitLossRange = "max";
@@ -20,11 +21,8 @@
 
   function updateCardLanguage() {
     const title = document.querySelector("#bd-card-profit_loss_supply .bd-card-title");
-    const signal = document.querySelector("#bd-card-signal-profit_loss_supply");
     const nextTitle = text("% Supply em Lucro", "% Supply in Profit");
-    const nextSignal = text("CRUZOU", "CROSSED");
     if (title && title.textContent !== nextTitle) title.textContent = nextTitle;
-    if (signal && signal.textContent !== nextSignal) signal.textContent = nextSignal;
   }
 
   function markCard() {
@@ -33,7 +31,7 @@
     card.classList.add("bd-card-profit-loss");
     card.setAttribute("role", "button");
     card.setAttribute("tabindex", "0");
-    card.setAttribute("aria-label", text("Abrir grafico de supply em lucro e prejuizo", "Open supply in profit and loss chart"));
+    card.setAttribute("aria-label", text("Abrir gráfico de supply em lucro e prejuízo", "Open supply in profit and loss chart"));
   }
 
   function setActiveCard() {
@@ -121,39 +119,121 @@
     if (ratio) ratio.textContent = latest.ratio.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "x";
   }
 
+  function buildRow(timestamp, profitPct, price) {
+    const parsedProfitPct = Number(profitPct);
+    // Atencao: Number(null) devolve 0. Sem este teste explicito, dias sem dado na fonte
+    // viram "0% em lucro / 100% em prejuizo" e derrubam o grafico ate zero.
+    if (profitPct === null || profitPct === undefined || profitPct === "" || !Number.isFinite(parsedProfitPct)) return null;
+    if (parsedProfitPct < 0 || parsedProfitPct > 100) return null;
+    const parsedPrice = Number(price);
+    return {
+      d: new Date(timestamp).toISOString().slice(0, 10),
+      t: timestamp,
+      price: Number.isFinite(parsedPrice) && parsedPrice > 0 ? parsedPrice : undefined,
+      profitPct: parsedProfitPct,
+      lossPct: 100 - parsedProfitPct
+    };
+  }
+
+  function dropIsolatedOutliers(rows) {
+    return rows.filter((row, index) => {
+      const prev = rows[index - 1];
+      const next = rows[index + 1];
+      if (!prev || !next) return true;
+      const isolatedZero = row.profitPct <= 1 && prev.profitPct >= 20 && next.profitPct >= 20;
+      const isolatedHundred = row.profitPct >= 99 && prev.profitPct <= 80 && next.profitPct <= 80;
+      return !isolatedZero && !isolatedHundred;
+    });
+  }
+
+  // Fonte primaria: JSON gerado todo dia por scripts/update_supply_profit.py (GitHub Actions)
+  // a partir da API da BGeometrics em api.bitcoin-data.com. Servido pelo proprio dominio,
+  // sem rate limit no navegador do visitante.
+  async function loadLocalProfitLossData() {
+    const response = await fetch(SUPPLY_PROFIT_URL, { cache: "no-cache" });
+    if (!response.ok) throw new Error("supply-profit.json indisponivel");
+    const payload = await response.json();
+    const rows = (payload.points || [])
+      .map(([timestamp, profitPct, price]) => buildRow(timestamp, profitPct, price))
+      .filter(Boolean);
+    if (!rows.length) throw new Error("supply-profit.json sem pontos validos");
+    profitLossMeta = {
+      lastDate: payload.last_date || rows[rows.length - 1].d,
+      updatedAt: payload.updated_at || null,
+      legacyUntil: payload.legacy_until || null,
+      origin: "local"
+    };
+    return dropIsolatedOutliers(rows);
+  }
+
+  // Reserva: serie estatica publica da BGeometrics. Ficou congelada em 2026-04-26,
+  // por isso so entra se o arquivo local falhar.
+  async function loadFallbackProfitLossData() {
+    const [profitRows, priceRows] = await Promise.all([
+      fetch("https://charts.bgeometrics.com/files/profit_loss.json").then((response) => response.json()),
+      fetch("https://charts.bgeometrics.com/files/profit_loss_btc_price.json").then((response) => response.json())
+    ]);
+    const priceByTime = new Map(priceRows.map(([timestamp, price]) => [timestamp, Number(price)]));
+    const rows = profitRows
+      .map(([timestamp, profitPct]) => buildRow(timestamp, profitPct, priceByTime.get(timestamp)))
+      .filter((row) => row && row.d >= "2016-01-01");
+    if (!rows.length) throw new Error("serie de reserva sem pontos validos");
+    profitLossMeta = {
+      lastDate: rows[rows.length - 1].d,
+      updatedAt: null,
+      legacyUntil: null,
+      origin: "fallback"
+    };
+    return dropIsolatedOutliers(rows);
+  }
+
   async function loadProfitLossData() {
     if (!profitLossDataPromise) {
-      profitLossDataPromise = Promise.all([
-        fetch("https://charts.bgeometrics.com/files/profit_loss.json").then((response) => response.json()),
-        fetch("https://charts.bgeometrics.com/files/profit_loss_btc_price.json").then((response) => response.json())
-      ]).then(([profitRows, priceRows]) => {
-        const priceByTime = new Map(priceRows.map(([timestamp, price]) => [timestamp, Number(price)]));
-        const rows = profitRows
-          .map(([timestamp, profitPct]) => {
-            const parsedProfitPct = Number(profitPct);
-            if (!Number.isFinite(parsedProfitPct)) return null;
-            const date = new Date(timestamp);
-            const price = priceByTime.get(timestamp);
-            return {
-              d: date.toISOString().slice(0, 10),
-              t: timestamp,
-              price,
-              profitPct: parsedProfitPct,
-              lossPct: 100 - parsedProfitPct
-            };
-          })
-          .filter((row) => row && row.d >= "2016-01-01");
-        return rows.filter((row, index) => {
-          const prev = rows[index - 1];
-          const next = rows[index + 1];
-          if (!prev || !next) return true;
-          const isolatedZero = row.profitPct <= 1 && prev.profitPct >= 20 && next.profitPct >= 20;
-          const isolatedHundred = row.profitPct >= 99 && prev.profitPct <= 80 && next.profitPct <= 80;
-          return !isolatedZero && !isolatedHundred;
-        });
-      });
+      profitLossDataPromise = loadLocalProfitLossData().catch(() => loadFallbackProfitLossData());
     }
     return profitLossDataPromise;
+  }
+
+  // Paleta identica a dos demais cards do painel (btc-dashboard).
+  const SIGNAL_COLORS = {
+    compra_forte: "#00C853",
+    compra: "#69F0AE",
+    neutro: "#FFD600",
+    venda: "#FF6D00",
+    venda_forte: "#FF1744"
+  };
+
+  function getProfitLossSignal(data) {
+    const latest = data[data.length - 1];
+    if (!latest) return { pt: "SEM DADOS", en: "NO DATA", color: "#8b949e" };
+
+    // Cruzamento da linha de 50% nos ultimos 30 dias: o sinal que a metrica existe para dar.
+    const window = data.slice(-31);
+    const crossed = window.some((row, index) => {
+      const prev = window[index - 1];
+      if (!prev) return false;
+      return (prev.profitPct - 50) * (row.profitPct - 50) < 0;
+    });
+    if (crossed) return { pt: "CRUZOU", en: "CROSSED", color: SIGNAL_COLORS.neutro };
+
+    const pct = latest.profitPct;
+    if (pct <= 50) return { pt: "COMPRA FORTE", en: "STRONG BUY", color: SIGNAL_COLORS.compra_forte };
+    if (pct <= 70) return { pt: "COMPRA", en: "BUY", color: SIGNAL_COLORS.compra };
+    if (pct <= 90) return { pt: "NEUTRO", en: "NEUTRAL", color: SIGNAL_COLORS.neutro };
+    if (pct <= 95) return { pt: "VENDA", en: "SELL", color: SIGNAL_COLORS.venda };
+    return { pt: "VENDA FORTE", en: "STRONG SELL", color: SIGNAL_COLORS.venda_forte };
+  }
+
+  function formatDay(day) {
+    if (!day) return "";
+    const parsed = new Date(day + "T00:00:00Z");
+    if (Number.isNaN(parsed.getTime())) return day;
+    return parsed.toLocaleDateString(isEnglish() ? "en-US" : "pt-BR", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC"
+    });
   }
 
   function setLatestProfitLossValues(data) {
@@ -161,12 +241,34 @@
     if (!latest) return;
     const value = document.getElementById("bd-card-value-profit_loss_supply");
     if (value) value.textContent = formatPct(latest.profitPct);
+
+    const signalEl = document.getElementById("bd-card-signal-profit_loss_supply");
+    if (signalEl) {
+      const signal = getProfitLossSignal(data);
+      // O lang-toggle.js troca textos pelos atributos data-pt/data-en. Atualizar os dois
+      // impede que o rotulo volte a um valor fixo ao alternar o idioma.
+      signalEl.dataset.pt = signal.pt;
+      signalEl.dataset.en = signal.en;
+      signalEl.textContent = text(signal.pt, signal.en);
+      signalEl.style.backgroundColor = signal.color + "33";
+      signalEl.style.color = signal.color;
+    }
+
     const profitValue = document.getElementById("bd-profit-current");
     const lossValue = document.getElementById("bd-loss-current");
     const bar = document.querySelector(".bd-profit-loss-bar");
     if (profitValue) profitValue.textContent = formatPct(latest.profitPct);
     if (lossValue) lossValue.textContent = formatPct(latest.lossPct);
     if (bar) bar.style.gridTemplateColumns = `minmax(0, ${latest.profitPct}fr) minmax(0, ${latest.lossPct}fr)`;
+
+    const updated = document.getElementById("bd-profit-loss-updated");
+    if (updated) {
+      const stale = profitLossMeta?.origin === "fallback";
+      updated.textContent = text(
+        "Último dado disponível: " + formatDay(latest.d),
+        "Latest available data: " + formatDay(latest.d)
+      ) + (stale ? text(" (série de reserva)", " (fallback series)") : "");
+    }
   }
 
   function filterRange(data, range) {
@@ -212,7 +314,7 @@
 
     host.innerHTML = `
       <div class="bd-profit-loss-chart-shell">
-        <svg class="bd-profit-loss-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${text("Grafico interativo de supply em lucro e prejuizo", "Interactive supply in profit and loss chart")}">
+        <svg class="bd-profit-loss-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${text("Gráfico interativo de supply em lucro e prejuízo", "Interactive supply in profit and loss chart")}">
           ${ticks.map((tick) => `<line x1="${pad.left}" y1="${y(tick)}" x2="${width - pad.right}" y2="${y(tick)}" class="bd-pl-grid ${tick === 50 ? "bd-pl-midline" : ""}"></line><text x="${width - pad.right + 10}" y="${y(tick) + 4}" class="bd-pl-axis">${tick}%</text>`).join("")}
           ${yearTicks.map((row) => `<line x1="${x(row)}" y1="${pad.top}" x2="${x(row)}" y2="${height - pad.bottom}" class="bd-pl-grid-x"></line><text x="${x(row)}" y="${height - 14}" text-anchor="middle" class="bd-pl-axis">${row.d.slice(0, 4)}</text>`).join("")}
           <path d="${profitPath}" class="bd-pl-line bd-pl-profit"></path>
@@ -261,8 +363,8 @@
       tooltip.innerHTML = `
         <strong>${closest.d}</strong>
         <span class="bd-profit">${text("Lucro", "Profit")}: ${formatPct(closest.profitPct)}</span>
-        <span class="bd-loss">${text("Prejuizo", "Loss")}: ${formatPct(closest.lossPct)}</span>
-        ${Number.isFinite(closest.price) ? `<span>${text("Preco BTC", "BTC price")}: ${formatUsd(closest.price)}</span>` : ""}
+        <span class="bd-loss">${text("Prejuízo", "Loss")}: ${formatPct(closest.lossPct)}</span>
+        ${Number.isFinite(closest.price) ? `<span>${text("Preço BTC", "BTC price")}: ${formatUsd(closest.price)}</span>` : ""}
       `;
     });
 
@@ -305,7 +407,7 @@
 
     host.innerHTML = `
       <div class="bd-profit-loss-chart-shell">
-        <svg class="bd-profit-loss-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${text("Grafico de preco do Bitcoin contra realized price", "Bitcoin price versus realized price chart")}">
+        <svg class="bd-profit-loss-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${text("Gráfico de preço do Bitcoin contra realized price", "Bitcoin price versus realized price chart")}">
           ${ticks.map((tick) => `<line x1="${pad.left}" y1="${y(tick)}" x2="${width - pad.right}" y2="${y(tick)}" class="bd-pl-grid"></line><text x="${width - pad.right + 10}" y="${y(tick) + 4}" class="bd-pl-axis">$${(tick / 1000).toLocaleString("pt-BR")}k</text>`).join("")}
           ${yearTicks.map((row) => `<line x1="${x(row)}" y1="${pad.top}" x2="${x(row)}" y2="${height - pad.bottom}" class="bd-pl-grid-x"></line><text x="${x(row)}" y="${height - 14}" text-anchor="middle" class="bd-pl-axis">${row.d.slice(0, 4)}</text>`).join("")}
           <path d="${pricePath}" class="bd-pl-line bd-realized-market-line"></path>
@@ -361,7 +463,7 @@
           <div class="bd-profit-loss-value bd-realized" id="bd-realized-current">...</div>
         </div>
         <div class="bd-profit-loss-box">
-          <div class="bd-profit-loss-label">${text("Preco de mercado", "Market price")}</div>
+          <div class="bd-profit-loss-label">${text("Preço de mercado", "Market price")}</div>
           <div class="bd-profit-loss-value" id="bd-realized-market-current">...</div>
         </div>
       </div>
@@ -375,7 +477,7 @@
       <div id="bd-realized-price-chart" class="bd-profit-loss-chart">
         <div class="bd-profit-loss-loading">${text("Carregando dados reais...", "Loading real data...")}</div>
       </div>
-      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://community-api.coinmetrics.io/v4/timeseries/asset-metrics" target="_blank" rel="noopener">Coin Metrics Community API</a>. ${text("Calculo", "Calculation")}: PriceUSD / CapMVRVCur.</p>
+      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://community-api.coinmetrics.io/v4/timeseries/asset-metrics" target="_blank" rel="noopener">Coin Metrics Community API</a>. ${text("Cálculo", "Calculation")}: PriceUSD / CapMVRVCur.</p>
     `;
 
     detail.classList.add("open");
@@ -387,7 +489,7 @@
       })
       .catch(() => {
         const host = document.getElementById("bd-realized-price-chart");
-        if (host) host.innerHTML = `<div class="bd-profit-loss-error">${text("Nao foi possivel carregar a API agora.", "Could not load the API right now.")}</div>`;
+        if (host) host.innerHTML = `<div class="bd-profit-loss-error">${text("Não foi possível carregar a API agora.", "Could not load the API right now.")}</div>`;
       });
     document.getElementById("bd-close-detail")?.addEventListener("click", () => {
       detail.classList.remove("open");
@@ -404,7 +506,7 @@
 
     content.innerHTML = `
       <button class="bd-close-btn" id="bd-close-detail">x</button>
-      <h3>${text("Bitcoin % do Supply em Lucro/Prejuizo", "Bitcoin % of Supply in Profit/Loss")}</h3>
+      <h3>${text("Bitcoin % do Supply em Lucro/Prejuízo", "Bitcoin % of Supply in Profit/Loss")}</h3>
       <p class="bd-profit-loss-note">${text(
         "A metrica mostra a porcentagem do supply circulante que esta acima ou abaixo do seu custo de aquisicao on-chain. A leitura mais importante aqui e o cruzamento entre lucro e prejuizo, porque ele costuma aparecer depois da capitulacao e ajuda a confirmar mudanca de regime.",
         "This metric shows the percentage of circulating supply above or below its on-chain cost basis. The key reading is the cross between profit and loss, because it usually appears after capitulation and helps confirm a regime change."
@@ -415,14 +517,15 @@
           <div class="bd-profit-loss-value bd-profit" id="bd-profit-current">${current.profit}</div>
         </div>
         <div class="bd-profit-loss-box">
-          <div class="bd-profit-loss-label">${text("Supply em prejuizo", "Supply in loss")}</div>
+          <div class="bd-profit-loss-label">${text("Supply em prejuízo", "Supply in loss")}</div>
           <div class="bd-profit-loss-value bd-loss" id="bd-loss-current">${current.loss}</div>
         </div>
       </div>
       <div class="bd-profit-loss-bar" aria-hidden="true"><span></span><span></span></div>
+      <p class="bd-profit-loss-updated" id="bd-profit-loss-updated"></p>
       <p class="bd-profit-loss-note">${text(
-        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo. A serie publica sem chave encontrada tem trechos quebrados antes de 2016, por isso a visualizacao comeca em 2016. Pontos isolados claramente invalidos da propria serie sao removidos, sem interpolacao.",
-        "The chart below is plotted with real daily percentage values for supply in profit/loss. The public no-key series found has broken segments before 2016, so this view starts in 2016. Clearly invalid isolated points from the source series are removed without interpolation."
+        "O grafico abaixo e plotado com valores diarios reais de percentual do supply em lucro/prejuizo, calculados como supply em lucro dividido pelo supply circulante. A serie e atualizada automaticamente todo dia. De 2016 ate 27/07/2022 os valores vem da serie historica da BGeometrics; de 28/07/2022 em diante vem da API da mesma casa, que segue publicando o dado. Na emenda a diferenca entre as duas metodologias e de 1,24 ponto percentual. Pontos isolados claramente invalidos sao removidos, sem interpolacao.",
+        "The chart below is plotted with real daily percentage values for supply in profit/loss, computed as supply in profit divided by circulating supply. The series updates automatically every day. From 2016 to 2022-07-27 values come from BGeometrics' historical series; from 2022-07-28 onward they come from the same provider's API, which is still publishing. At the splice the gap between both methodologies is 1.24 percentage points. Clearly invalid isolated points are removed without interpolation."
       )}</p>
       <div class="bd-profit-loss-toolbar">
         <button data-profit-loss-range="1">1A</button>
@@ -433,7 +536,7 @@
       <div id="bd-profit-loss-chart" class="bd-profit-loss-chart">
         <div class="bd-profit-loss-loading">${text("Carregando dados reais...", "Loading real data...")}</div>
       </div>
-      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://charts.bgeometrics.com/graphics/supply_in_profit.html" target="_blank" rel="noopener">BGeometrics Supply in Profit / Loss (%)</a>. ${text("Definicao metodologica", "Methodology")}: <a href="https://docs.glassnode.com/guides-and-tutorials/metric-guides/profit-loss-supply/percent-supply-in-profit" target="_blank" rel="noopener">Glassnode</a>.</p>
+      <p class="bd-profit-loss-source">${text("Fonte", "Source")}: <a href="https://api.bitcoin-data.com/v1/supply-profit" target="_blank" rel="noopener">BGeometrics / bitcoin-data.com</a> (supply-profit e supply-current). ${text("Preço", "Price")}: <a href="https://coinmetrics.io/community-network-data/" target="_blank" rel="noopener">Coin Metrics Community</a>. ${text("Definição metodológica", "Methodology")}: <a href="https://docs.glassnode.com/guides-and-tutorials/metric-guides/profit-loss-supply/percent-supply-in-profit" target="_blank" rel="noopener">Glassnode</a>.</p>
     `;
 
     detail.classList.add("open");
@@ -445,7 +548,7 @@
       })
       .catch(() => {
         const host = document.getElementById("bd-profit-loss-chart");
-        if (host) host.innerHTML = `<div class="bd-profit-loss-error">${text("Nao foi possivel carregar a API agora.", "Could not load the API right now.")}</div>`;
+        if (host) host.innerHTML = `<div class="bd-profit-loss-error">${text("Não foi possível carregar a API agora.", "Could not load the API right now.")}</div>`;
       });
     document.getElementById("bd-close-detail")?.addEventListener("click", () => {
       detail.classList.remove("open");
@@ -473,7 +576,7 @@
     card.classList.add("bd-card-realized-price");
     card.setAttribute("role", "button");
     card.setAttribute("tabindex", "0");
-    card.setAttribute("aria-label", text("Abrir grafico de realized price", "Open realized price chart"));
+    card.setAttribute("aria-label", text("Abrir gráfico de realized price", "Open realized price chart"));
     card.addEventListener("click", openRealizedPriceDetail);
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -492,7 +595,7 @@
     const secondary = document.createElement("div");
     secondary.className = "bd-rsi-secondary";
     secondary.innerHTML = `
-      <h4>${text("Leitura secundaria: RSI Mensal BTC/XAU", "Secondary reading: RSI Monthly BTC/XAU")}</h4>
+      <h4>${text("Leitura secundária: RSI Mensal BTC/XAU", "Secondary reading: RSI Monthly BTC/XAU")}</h4>
       <p class="bd-rsi-secondary-note">${text(
         "O BTC/XAU continua no calculo e na lista de indicadores, mas saiu da grade principal para preservar 4 colunas por 2 linhas. Ele mede a forca do Bitcoin contra o ouro e ajuda a separar valorizacao real de simples fraqueza do dolar.",
         "BTC/XAU remains in the calculation and indicator list, but it left the main grid to preserve 4 columns by 2 rows. It measures Bitcoin strength against gold and helps separate real appreciation from dollar weakness."
@@ -512,10 +615,25 @@
         const signal = document.getElementById("bd-card-signal-realized_price");
         if (signal) signal.textContent = text("SEM DADOS", "NO DATA");
       });
+    // O card do supply em lucro precisa refletir o dado do dia sem depender de o
+    // visitante abrir o detalhe. Antes o valor e o sinal ficavam fixos no HTML.
+    loadProfitLossData()
+      .then(setLatestProfitLossValues)
+      .catch(() => {
+        const value = document.getElementById("bd-card-value-profit_loss_supply");
+        const signal = document.getElementById("bd-card-signal-profit_loss_supply");
+        if (value) value.textContent = "N/A";
+        if (signal) {
+          signal.dataset.pt = "SEM DADOS";
+          signal.dataset.en = "NO DATA";
+          signal.textContent = text("SEM DADOS", "NO DATA");
+        }
+      });
     document.getElementById("langToggle")?.addEventListener("click", () => {
       window.setTimeout(() => {
         updateCardLanguage();
         loadRealizedPriceData().then(setLatestRealizedPriceValues).catch(() => {});
+        loadProfitLossData().then(setLatestProfitLossValues).catch(() => {});
       }, 80);
     });
   }

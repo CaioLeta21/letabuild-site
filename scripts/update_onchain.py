@@ -32,11 +32,13 @@ Ha duas series com o nome CVDD:
 - a do api.bitcoin-data.com: 4.699 em 2022-11-21, com o preco 3,4x acima do
   "piso" no fundo do ciclo. Escala diferente, nao serve como piso.
 
-A razao v2 / bitcoin-data e quase constante (3,32 em 2022, 3,43 em abr/2026) e
-anda devagar e de forma linear. Entao o historico v2 ate ANCHOR_UNTIL fica
-congelado no arquivo, e os dias seguintes sao a serie do bitcoin-data
-multiplicada pela razao, ajustada por regressao linear sobre o ultimo ano de
-sobreposicao e extrapolada. O erro da extrapolacao fica em torno de 1% ao ano.
+A razao v2 / bitcoin-data e quase constante: oscilou entre 3,39 e 3,43 no ano
+anterior a abr/2026 (3,32 em 2022), com picos isolados de ~3% quando as duas
+series registram o mesmo salto com um dia de diferenca. Entao o historico v2
+ate ANCHOR_UNTIL fica congelado no arquivo, e os dias seguintes sao a serie do
+bitcoin-data multiplicada pela mediana da razao nos ultimos 90 dias de
+sobreposicao. A incerteza fica em torno de 1-2%, irrelevante para as faixas
+do score (1,5x / 3x / 6x / 10x).
 
 Saidas
 ------
@@ -75,7 +77,9 @@ MERGED_PATH = os.path.join(DATA_DIR, "cvdd-btc-merged.json")
 SOPR_URL = "https://charts.bgeometrics.com/files/sopr_data.json"
 
 ANCHOR_UNTIL = "2026-04-02"   # ultimo dia da serie v2 original
-CALIB_DAYS = 365              # janela de sobreposicao usada na regressao
+CALIB_DAYS = 365              # janela de sobreposicao usada para checar estabilidade
+RATIO_DAYS = 90               # a razao aplicada e a mediana dos ultimos N dias
+MAX_RATIO_DEV = 0.03          # p95 do desvio da razao acima disso = falha
 MAX_SOURCE_AGE_DAYS = 30      # fonte mais velha que isso = falha
 
 
@@ -115,15 +119,6 @@ def update_sopr():
     print("SOPR: %d pontos, ultimo %s = %s" % (len(out), from_ms(out[-1][0]), out[-1][1]))
 
 
-def linear_fit(xs, ys):
-    n = len(xs)
-    mx, my = sum(xs) / n, sum(ys) / n
-    sxx = sum((x - mx) ** 2 for x in xs)
-    sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
-    slope = sxy / sxx if sxx else 0.0
-    return my - slope * mx, slope
-
-
 def update_cvdd():
     with open(CVDD_PATH, encoding="utf-8") as handle:
         current = json.load(handle)
@@ -139,24 +134,20 @@ def update_cvdd():
     overlap = sorted(d for d in upstream if d in anchor and upstream[d] > 0)
     if len(overlap) < 200:
         raise RuntimeError("CVDD: sobreposicao insuficiente para calibrar (%d dias)" % len(overlap))
-    xs = [days_between(ANCHOR_UNTIL, d) for d in overlap]
-    ys = [anchor[d] / upstream[d] for d in overlap]
-    intercept, slope = linear_fit(xs, ys)
-    resid = max(abs(y - (intercept + slope * x)) / y for x, y in zip(xs, ys))
-    print("CVDD: razao v2/bitcoin-data = %.4f + %.6f/dia (ajuste sobre %d dias, desvio max %.2f%%)"
-          % (intercept, slope, len(overlap), resid * 100))
-    worst = sorted(zip(overlap, xs, ys), key=lambda r: -abs(r[2] - (intercept + slope * r[1])) / r[2])[:8]
-    for d, x, y in worst:
-        print("  desvio %s: razao %.4f (v2 %.0f, bitcoin-data %.0f)" % (d, y, anchor[d], upstream[d]))
-    for d in overlap[::30]:
-        print("  amostra %s: razao %.4f" % (d, anchor[d] / upstream[d]))
-    if resid > 0.03:
-        raise RuntimeError("CVDD: razao entre as series deixou de ser estavel (desvio %.1f%%)" % (resid * 100))
+    ratios = [anchor[d] / upstream[d] for d in overlap]
+    recent = sorted(ratios[-RATIO_DAYS:])
+    ratio = recent[len(recent) // 2]
+    devs = sorted(abs(r - ratio) / ratio for r in ratios)
+    p95 = devs[int(len(devs) * 0.95)]
+    print("CVDD: razao v2/bitcoin-data = %.4f (mediana dos ultimos %d dias); desvio no ultimo ano: p95 %.2f%%, max %.2f%%"
+          % (ratio, RATIO_DAYS, p95 * 100, devs[-1] * 100))
+    if p95 > MAX_RATIO_DEV:
+        raise RuntimeError("CVDD: razao entre as series deixou de ser estavel (p95 %.1f%%)" % (p95 * 100))
 
     series = dict(anchor)
     for d, v in upstream.items():
         if d > ANCHOR_UNTIL and v > 0:
-            series[d] = round(v * (intercept + slope * days_between(ANCHOR_UNTIL, d)), 2)
+            series[d] = round(v * ratio, 2)
     days = sorted(series)
     check_fresh("CVDD", days[-1])
     write_json(CVDD_PATH, [{"d": d, "v": series[d]} for d in days])

@@ -145,6 +145,11 @@ def update_cvdd():
     resid = max(abs(y - (intercept + slope * x)) / y for x, y in zip(xs, ys))
     print("CVDD: razao v2/bitcoin-data = %.4f + %.6f/dia (ajuste sobre %d dias, desvio max %.2f%%)"
           % (intercept, slope, len(overlap), resid * 100))
+    worst = sorted(zip(overlap, xs, ys), key=lambda r: -abs(r[2] - (intercept + slope * r[1])) / r[2])[:8]
+    for d, x, y in worst:
+        print("  desvio %s: razao %.4f (v2 %.0f, bitcoin-data %.0f)" % (d, y, anchor[d], upstream[d]))
+    for d in overlap[::30]:
+        print("  amostra %s: razao %.4f" % (d, anchor[d] / upstream[d]))
     if resid > 0.03:
         raise RuntimeError("CVDD: razao entre as series deixou de ser estavel (desvio %.1f%%)" % (resid * 100))
 

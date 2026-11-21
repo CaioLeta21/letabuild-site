@@ -1,0 +1,52 @@
+name: Atualizar SOPR e CVDD
+
+on:
+  schedule:
+    # Todo dia as 9h45 UTC, depois do supply em lucro (9h20): a API do bitcoin-data
+    # limita 10 requisicoes por hora por IP.
+    - cron: '45 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Executar script de atualizacao
+        id: run
+        continue-on-error: true
+        run: python scripts/update_onchain.py
+
+      - name: Commitar e publicar se houver mudancas
+        run: |
+          git config user.name  "letabuild-bot"
+          git config user.email "bot@letabuild.com"
+          git add btc/data/sopr.json btc/data/cvdd.json btc/data/cvdd-btc-merged.json
+          if git diff --staged --quiet; then
+            echo "Nenhuma mudanca nos dados. Nada a commitar."
+          else
+            DAY=$(date '+%Y-%m-%d')
+            git commit -m "BTC: atualizacao automatica de SOPR e CVDD (${DAY})"
+            git pull --rebase
+            git push
+          fi
+
+      # Publica o que deu certo, mas deixa a Action vermelha se alguma fonte falhou
+      # (o GitHub avisa por e-mail).
+      - name: Falhar se alguma fonte falhou
+        if: steps.run.outcome == 'failure'
+        run: exit 1

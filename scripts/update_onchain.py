@@ -18,9 +18,17 @@ partir dele.
 
 SOPR
 ----
-Fonte: https://charts.bgeometrics.com/files/sopr_data.json  ([[ms, valor], ...])
-A serie e identica a que o servidor publicava (1.330 dias em comum, zero
-divergencia). A BGeometrics publica com ~1 semana de atraso.
+Fonte: checkonchain (James Check), grafico Plotly em
+https://charts-cdn.checkonchain.com/btconchain/realised/sopr/sopr_dark.html
+Sai com D-1 (o dia corrente tambem aparece, mas ainda em formacao, e e
+descartado). Historico desde 2011.
+
+Antes era a BGeometrics (sopr_data.json e a API bitcoin-data.com, que sao a
+mesma serie), mas ela publica com ~1 semana de atraso, o que esconde o SOPR
+justamente nas quedas fortes. As duas series medem o mesmo conceito, mas a do
+checkonchain oscila um pouco mais (mediana da diferenca 0,005; mesma nota de
+score em 84% dos dias do ultimo ano). As faixas do score (0,95/0,99/1,04/1,08)
+sao os niveis classicos de SOPR e valem para as duas.
 
 CVDD
 ----
@@ -55,15 +63,18 @@ Uso
     python scripts/update_onchain.py
 """
 
+import base64
 import datetime as dt
 import json
 import os
+import struct
 import sys
+import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from update_supply_profit import (  # noqa: E402
+    USER_AGENT,
     fetch_bitcoin_data_series,
-    fetch_json,
     fetch_prices,
     from_ms,
     to_ms,
@@ -75,7 +86,8 @@ SOPR_PATH = os.path.join(DATA_DIR, "sopr.json")
 CVDD_PATH = os.path.join(DATA_DIR, "cvdd.json")
 MERGED_PATH = os.path.join(DATA_DIR, "cvdd-btc-merged.json")
 
-SOPR_URL = "https://charts.bgeometrics.com/files/sopr_data.json"
+SOPR_URL = "https://charts-cdn.checkonchain.com/btconchain/realised/sopr/sopr_dark.html"
+SOPR_TRACE = "Spent Output Profit Ratio (SOPR)"
 
 ANCHOR_UNTIL = "2026-04-02"   # ultimo dia da serie v2 original
 CALIB_DAYS = 365              # janela de sobreposicao usada para checar estabilidade
@@ -105,45 +117,42 @@ def check_fresh(name, last_day):
         raise RuntimeError("%s: ultimo dado e de %s (%d dias)" % (name, last_day, age))
 
 
-def extend_sopr_with_api(static_rows):
-    """O JSON estatico da BGeometrics sai com ~1 semana de atraso. A API da mesma
-    empresa (bitcoin-data.com) tende a ter D-1. Acrescenta os dias novos da API,
-    mas so se ela bater com o estatico nos dias em comum (mesma serie)."""
-    last_static = from_ms(static_rows[-1][0])
-    start = (dt.date.fromisoformat(last_static) - dt.timedelta(days=30)).isoformat()
-    try:
-        api = fetch_bitcoin_data_series("sopr", "sopr", start, today().isoformat())
-    except Exception as error:  # noqa: BLE001
-        print("SOPR: API indisponivel (%s); fica so o estatico" % error)
-        return static_rows
-    static = {from_ms(ms): v for ms, v in static_rows}
-    common = [d for d in api if d in static]
-    if len(common) < 5:
-        print("SOPR: API com pouca sobreposicao (%d dias); fica so o estatico" % len(common))
-        return static_rows
-    worst = max(abs(api[d] - static[d]) for d in common)
-    if worst > 0.002:
-        print("SOPR: API diverge do estatico (ate %.4f); fica so o estatico" % worst)
-        return static_rows
-    # o dia corrente ainda esta em formacao: so entram dias fechados
-    yesterday = (today() - dt.timedelta(days=1)).isoformat()
-    new_days = sorted(d for d in api if last_static < d <= yesterday)
-    print("SOPR: API confere com o estatico em %d dias (dif max %.4f); +%d dias novos"
-          % (len(common), worst, len(new_days)))
-    return static_rows + [[to_ms(d), round(api[d], 4)] for d in new_days]
+def fetch_text(url):
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=120) as response:
+        return response.read().decode("utf-8")
+
+
+def decode_plotly(values):
+    """Plotly guarda arrays numericos como {"dtype": "f8", "bdata": base64}."""
+    if isinstance(values, dict) and "bdata" in values:
+        raw = base64.b64decode(values["bdata"])
+        fmt = {"f8": "d", "f4": "f"}[values["dtype"]]
+        return list(struct.unpack("<%d%s" % (len(raw) // struct.calcsize(fmt), fmt), raw))
+    return values
 
 
 def update_sopr():
-    rows = fetch_json(SOPR_URL)
-    if not isinstance(rows, list) or len(rows) < 1000:
-        raise RuntimeError("SOPR: resposta inesperada (%s)" % str(rows)[:200])
+    html = fetch_text(SOPR_URL)
+    pos = html.find("Plotly.newPlot(")
+    if pos < 0:
+        raise RuntimeError("SOPR: grafico Plotly nao encontrado em %s" % SOPR_URL)
+    traces, _ = json.JSONDecoder().raw_decode(html, html.index("[", pos))
+    trace = next((t for t in traces if t.get("name") == SOPR_TRACE), None)
+    if trace is None:
+        raise RuntimeError("SOPR: serie '%s' nao encontrada (o checkonchain mudou o grafico?)" % SOPR_TRACE)
+    xs, ys = decode_plotly(trace["x"]), decode_plotly(trace["y"])
+    # o dia corrente ainda esta em formacao: so entram dias fechados
+    yesterday = (today() - dt.timedelta(days=1)).isoformat()
     out = []
-    for row in rows:
-        if not isinstance(row, list) or len(row) < 2 or row[1] is None:
+    for x, y in zip(xs, ys):
+        day = str(x)[:10]
+        if y is None or y != y or day > yesterday:  # y != y -> NaN
             continue
-        out.append([int(row[0]), round(float(row[1]), 4)])
+        out.append([to_ms(day), round(float(y), 4)])
     out.sort(key=lambda r: r[0])
-    out = extend_sopr_with_api(out)
+    if len(out) < 3000 or not all(0.5 < v < 2 for _, v in out[-400:]):
+        raise RuntimeError("SOPR: serie com formato inesperado (%d pontos)" % len(out))
     check_fresh("SOPR", from_ms(out[-1][0]))
     write_json(SOPR_PATH, out)
     print("SOPR: %d pontos, ultimo %s = %s" % (len(out), from_ms(out[-1][0]), out[-1][1]))
@@ -194,8 +203,12 @@ def update_cvdd():
 
 
 def main():
+    jobs = (("SOPR", update_sopr), ("CVDD", update_cvdd))
+    only = set(sys.argv[1:])
     failures = []
-    for name, job in (("SOPR", update_sopr), ("CVDD", update_cvdd)):
+    for name, job in jobs:
+        if only and name.lower() not in only:
+            continue
         try:
             job()
         except Exception as error:  # noqa: BLE001

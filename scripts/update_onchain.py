@@ -66,6 +66,7 @@ from update_supply_profit import (  # noqa: E402
     fetch_json,
     fetch_prices,
     from_ms,
+    to_ms,
 )
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -104,6 +105,34 @@ def check_fresh(name, last_day):
         raise RuntimeError("%s: ultimo dado e de %s (%d dias)" % (name, last_day, age))
 
 
+def extend_sopr_with_api(static_rows):
+    """O JSON estatico da BGeometrics sai com ~1 semana de atraso. A API da mesma
+    empresa (bitcoin-data.com) tende a ter D-1. Acrescenta os dias novos da API,
+    mas so se ela bater com o estatico nos dias em comum (mesma serie)."""
+    last_static = from_ms(static_rows[-1][0])
+    start = (dt.date.fromisoformat(last_static) - dt.timedelta(days=30)).isoformat()
+    try:
+        api = fetch_bitcoin_data_series("sopr", "sopr", start, today().isoformat())
+    except Exception as error:  # noqa: BLE001
+        print("SOPR: API indisponivel (%s); fica so o estatico" % error)
+        return static_rows
+    static = {from_ms(ms): v for ms, v in static_rows}
+    common = [d for d in api if d in static]
+    if len(common) < 5:
+        print("SOPR: API com pouca sobreposicao (%d dias); fica so o estatico" % len(common))
+        return static_rows
+    worst = max(abs(api[d] - static[d]) for d in common)
+    if worst > 0.002:
+        print("SOPR: API diverge do estatico (ate %.4f); fica so o estatico" % worst)
+        return static_rows
+    # o dia corrente ainda esta em formacao: so entram dias fechados
+    yesterday = (today() - dt.timedelta(days=1)).isoformat()
+    new_days = sorted(d for d in api if last_static < d <= yesterday)
+    print("SOPR: API confere com o estatico em %d dias (dif max %.4f); +%d dias novos"
+          % (len(common), worst, len(new_days)))
+    return static_rows + [[to_ms(d), round(api[d], 4)] for d in new_days]
+
+
 def update_sopr():
     rows = fetch_json(SOPR_URL)
     if not isinstance(rows, list) or len(rows) < 1000:
@@ -114,6 +143,7 @@ def update_sopr():
             continue
         out.append([int(row[0]), round(float(row[1]), 4)])
     out.sort(key=lambda r: r[0])
+    out = extend_sopr_with_api(out)
     check_fresh("SOPR", from_ms(out[-1][0]))
     write_json(SOPR_PATH, out)
     print("SOPR: %d pontos, ultimo %s = %s" % (len(out), from_ms(out[-1][0]), out[-1][1]))

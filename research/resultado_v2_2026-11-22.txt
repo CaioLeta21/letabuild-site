@@ -1,0 +1,157 @@
+Score de 2018-08-02 a 2026-11-21 (3034 dias). Inicio de cada serie: sopr 2014-07-05, sth_mvrv 2014-06-29, funding 2020-03-13, fng 2018-08-02, bmsb 2014-11-22, rsi 2014-10-05
+
+=========== NIVEL ===========
+                                           14d             30d             60d             90d           
+  COMPRA tudo                        n=27    -1.2% p=0.89    -0.4% p=0.89    +0.5% p=0.93    +1.9% p=0.94  acerto90 53%
+  COMPRA 2018-2022                   n=16    -1.3% p=0.81    -1.5% p=0.86    -2.3% p=0.92    -1.3% p=0.93  acerto90 50%
+  COMPRA 2023-2026                   n=11    -1.1% p=0.83    +1.3% p=0.70    +4.9% p=0.65    +6.8% p=0.71  acerto90 60%
+  COMPRA acima da MM200              n=6     -0.5% p=0.67    -2.3% p=0.79    -6.4% p=0.90    -3.9% p=0.86  acerto90 50%
+  COMPRA abaixo da MM200             n=21    -1.4% p=0.89    +0.2% p=0.82    +2.5% p=0.83    +3.6% p=0.88  acerto90 55%
+  VENDA tudo                         n=24    +7.2% p=0.98    +9.7% p=0.91   +21.1% p=0.95   +34.2% p=0.96  acerto90 30%
+  VENDA 2018-2022                    n=10    +9.6% p=0.95   +12.9% p=0.87   +30.7% p=0.93   +60.5% p=0.98  acerto90 20%
+  VENDA 2023-2026                    n=14    +5.5% p=0.93    +7.4% p=0.83   +13.7% p=0.83   +14.0% p=0.63  acerto90 38%
+  VENDA acima da MM200               n=20    +6.8% p=0.96   +10.2% p=0.91   +17.4% p=0.84   +21.8% p=0.74  acerto90 36%
+  VENDA abaixo da MM200              n=4     +9.5% p=0.89    +7.5% p=0.65   +38.6% p=0.95   +93.5% p=0.99  acerto90 0%
+  eventos de COMPRA:
+    2018-08-08  preco    6267  score +1.00  MM200 abaixo  30d    +2%  90d    +3%  pior queda em 30d -2%
+    2018-11-18  preco    5555  score +1.00  MM200 abaixo  30d   -34%  90d   -35%  pior queda em 30d -43%
+    2018-12-27  preco    3585  score +1.00  MM200 abaixo  30d    -1%  90d   +12%  pior queda em 30d -2%
+    2019-01-29  preco    3396  score +1.00  MM200 abaixo  30d   +12%  90d   +52%  pior queda em 30d -1%
+    2019-09-26  preco    8092  score +1.00  MM200 abaixo  30d   +14%  90d   -11%  pior queda em 30d -8%
+    2019-11-22  preco    7278  score +1.20  MM200 abaixo  30d    +3%  90d   +32%  pior queda em 30d -9%
+    2020-03-09  preco    7896  score +1.40  MM200 abaixo  30d    -7%  90d   +23%  pior queda em 30d -37%
+    2021-04-25  preco   48947  score +1.00  MM200 acima   30d   -22%  90d   -30%  pior queda em 30d -29%
+    2021-09-21  preco   40526  score +1.00  MM200 abaixo  30d   +54%  90d   +16%  pior queda em 30d +0%
+    2021-12-04  preco   49160  score +1.00  MM200 acima   30d    -6%  90d   -20%  pior queda em 30d -6%
+    2022-01-04  preco   45906  score +1.00  MM200 abaixo  30d   -19%  90d    +2%  pior queda em 30d -24%
+    2022-02-22  preco   38203  score +1.17  MM200 abaixo  30d   +15%  90d   -24%  pior queda em 30d -2%
+    2022-05-08  preco   34059  score +1.00  MM200 abaixo  30d    -8%  90d   -32%  pior queda em 30d -16%
+    2022-06-09  preco   30064  score +1.00  MM200 abaixo  30d   -28%  90d   -36%  pior queda em 30d -37%
+    2022-08-26  preco   20246  score +1.17  MM200 abaixo  30d    -7%  90d   -18%  pior queda em 30d -9%
+    2022-11-09  preco   15758  score +1.00  MM200 abaixo  30d    +9%  90d   +48%  pior queda em 30d +0%
+    2024-06-24  preco   60259  score +1.00  MM200 acima   30d    +8%  90d    +5%  pior queda em 30d -7%
+    2024-08-03  preco   60688  score +1.00  MM200 abaixo  30d    -3%  90d   +14%  pior queda em 30d -10%
+    2024-10-05  preco   62030  score +1.00  MM200 abaixo  30d    +9%  90d   +58%  pior queda em 30d -3%
+    2025-02-24  preco   91870  score +1.00  MM200 acima   30d    -5%  90d   +19%  pior queda em 30d -14%
+    2025-03-27  preco   87211  score +1.00  MM200 acima   30d    +9%  90d   +23%  pior queda em 30d -12%
+    2025-09-25  preco  109166  score +1.00  MM200 acima   30d    +2%  90d   -20%  pior queda em 30d -2%
+    2025-11-04  preco  101350  score +1.50  MM200 abaixo  30d    -9%  90d   -22%  pior queda em 30d -16%
+    2025-12-31  preco   87517  score +1.17  MM200 abaixo  30d    -4%  90d   -22%  pior queda em 30d -4%
+    2026-03-19  preco   69949  score +1.17  MM200 abaixo  30d    +8%  90d    -8%  pior queda em 30d -6%
+    2026-06-03  preco   64233  score +1.17  MM200 abaixo  30d    -3%  90d   +21%  pior queda em 30d -9%
+    2026-11-16  preco   64943  score +1.00  MM200 abaixo  30d    -   90d    -   pior queda em 30d -9%
+  eventos de VENDA:
+    2019-02-20  preco    3932  score -1.00  MM200 abaixo  30d    +1%  90d  +103%  pior queda em 30d -6%
+    2019-03-27  preco    4027  score -1.20  MM200 abaixo  30d   +28%  90d  +191%  pior queda em 30d -0%
+    2019-06-11  preco    7922  score -1.20  MM200 acima   30d   +43%  90d   +30%  pior queda em 30d +0%
+    2019-08-04  preco   10987  score -1.00  MM200 acima   30d    -3%  90d   -15%  pior queda em 30d -14%
+    2020-07-26  preco    9934  score -1.00  MM200 acima   30d   +14%  90d   +32%  pior queda em 30d +0%
+    2020-09-01  preco   11970  score -1.00  MM200 acima   30d   -11%  90d   +64%  pior queda em 30d -16%
+    2020-10-21  preco   12848  score -1.33  MM200 acima   30d   +45%  90d  +182%  pior queda em 30d +0%
+    2021-02-03  preco   37578  score -1.00  MM200 acima   30d   +30%  90d   +43%  pior queda em 30d -1%
+    2021-03-11  preco   57847  score -1.00  MM200 acima   30d    +3%  90d   -35%  pior queda em 30d -11%
+    2022-11-05  preco   21283  score -1.00  MM200 abaixo  30d   -20%  90d   +10%  pior queda em 30d -26%
+    2023-01-11  preco   17834  score -1.00  MM200 abaixo  30d   +21%  90d   +70%  pior queda em 30d +0%
+    2023-03-14  preco   24769  score -1.50  MM200 acima   30d   +23%  90d    +5%  pior queda em 30d -1%
+    2023-04-22  preco   27828  score -1.00  MM200 acima   30d    -3%  90d    +8%  pior queda em 30d -4%
+    2023-06-23  preco   30638  score -1.00  MM200 acima   30d    -2%  90d   -13%  pior queda em 30d -3%
+    2023-10-24  preco   33881  score -1.17  MM200 acima   30d   +10%  90d   +17%  pior queda em 30d +0%
+    2023-11-28  preco   37828  score -1.17  MM200 acima   30d   +13%  90d   +44%  pior queda em 30d -0%
+    2024-01-04  preco   44251  score -1.17  MM200 acima   30d    -3%  90d   +49%  pior queda em 30d -11%
+    2024-02-12  preco   49990  score -1.17  MM200 acima   30d   +46%  90d   +23%  pior queda em 30d -1%
+    2024-03-23  preco   64361  score -1.00  MM200 acima   30d    +4%  90d    -0%  pior queda em 30d -5%
+    2024-11-11  preco   88860  score -1.50  MM200 acima   30d   +14%  90d    +8%  pior queda em 30d -2%
+    2024-12-11  preco  101310  score -1.00  MM200 acima   30d    -6%  90d   -18%  pior queda em 30d -9%
+    2025-07-12  preco  117382  score -1.17  MM200 acima   30d    +1%  90d    -3%  pior queda em 30d -4%
+    2026-08-19  preco   69268  score -1.00  MM200 acima   30d   +17%  90d    -6%  pior queda em 30d +0%
+    2026-10-21  preco   84176  score -1.33  MM200 acima   30d   -30%  90d    -   pior queda em 30d -30%
+
+=========== VIRADA ===========
+                                           14d             30d             60d             90d           
+  COMPRA tudo                        n=35    +2.0% p=0.47    +1.8% p=0.76    +6.9% p=0.67    +8.3% p=0.83  acerto90 48%
+  COMPRA 2018-2022                   n=20    +3.7% p=0.30    +2.1% p=0.68    +8.2% p=0.60    +7.5% p=0.80  acerto90 40%
+  COMPRA 2023-2026                   n=15    -0.2% p=0.80    +1.3% p=0.75    +5.2% p=0.68    +9.5% p=0.62  acerto90 60%
+  COMPRA acima da MM200              n=8     -2.5% p=0.84    -9.2% p=0.98   -11.5% p=0.98    -4.2% p=0.90  acerto90 50%
+  COMPRA abaixo da MM200             n=27    +3.3% p=0.27    +5.0% p=0.41   +12.3% p=0.32   +12.0% p=0.62  acerto90 48%
+  VENDA tudo                         n=28    +5.3% p=0.92   +12.1% p=0.98   +24.7% p=0.99   +36.1% p=0.98  acerto90 34%
+  VENDA 2018-2022                    n=13    +7.1% p=0.90   +20.2% p=0.99   +38.3% p=0.99   +58.3% p=0.99  acerto90 30%
+  VENDA 2023-2026                    n=15    +3.8% p=0.79    +5.1% p=0.65   +12.1% p=0.78   +14.0% p=0.63  acerto90 38%
+  VENDA acima da MM200               n=25    +5.4% p=0.92   +12.9% p=0.98   +22.6% p=0.97   +27.5% p=0.88  acerto90 39%
+  VENDA abaixo da MM200              n=3     +4.4% p=0.68    +5.7% p=0.58   +41.6% p=0.94  +102.4% p=0.99  acerto90 0%
+  eventos de COMPRA:
+    2018-08-16  preco    6291  score +0.80  MM200 abaixo  30d    +4%  90d   -11%  pior queda em 30d -2%
+    2018-12-04  preco    3893  score +1.40  MM200 abaixo  30d    -3%  90d    -5%  pior queda em 30d -18%
+    2019-01-04  preco    3828  score +0.20  MM200 abaixo  30d   -11%  90d   +28%  pior queda em 30d -11%
+    2019-02-08  preco    3612  score +0.20  MM200 abaixo  30d    +8%  90d   +70%  pior queda em 30d -1%
+    2019-10-01  preco    8315  score +0.40  MM200 abaixo  30d   +10%  90d   -13%  pior queda em 30d -10%
+    2019-11-27  preco    7527  score +1.00  MM200 abaixo  30d    -4%  90d   +24%  pior queda em 30d -12%
+    2019-12-27  preco    7237  score +0.00  MM200 abaixo  30d   +18%  90d    -7%  pior queda em 30d -4%
+    2020-03-23  preco    6486  score +1.50  MM200 abaixo  30d   +10%  90d   +43%  pior queda em 30d -9%
+    2021-04-26  preco   53943  score +0.33  MM200 acima   30d   -27%  90d   -35%  pior queda em 30d -36%
+    2021-06-15  preco   40255  score +1.50  MM200 abaixo  30d   -21%  90d   +12%  pior queda em 30d -21%
+    2021-07-17  preco   31548  score +1.50  MM200 abaixo  30d   +46%  90d   +95%  pior queda em 30d -6%
+    2021-09-23  preco   44861  score +0.50  MM200 abaixo  30d   +37%  90d    +9%  pior queda em 30d -8%
+    2021-12-21  preco   49082  score +0.67  MM200 acima   30d   -17%  90d   -16%  pior queda em 30d -17%
+    2022-01-30  preco   37984  score +1.33  MM200 abaixo  30d   +17%  90d    -1%  pior queda em 30d -3%
+    2022-03-01  preco   44334  score +0.33  MM200 abaixo  30d    +3%  90d   -28%  pior queda em 30d -15%
+    2022-05-22  preco   30332  score +1.17  MM200 abaixo  30d   -32%  90d   -30%  pior queda em 30d -37%
+    2022-06-26  preco   21067  score +1.33  MM200 abaixo  30d    +1%  90d   -10%  pior queda em 30d -9%
+    2022-07-26  preco   21182  score +0.67  MM200 abaixo  30d    +2%  90d    -9%  pior queda em 30d -1%
+    2022-09-05  preco   19798  score +0.67  MM200 abaixo  30d    +2%  90d   -14%  pior queda em 30d -7%
+    2022-11-23  preco   16574  score +0.50  MM200 abaixo  30d    +1%  90d   +47%  pior queda em 30d -2%
+    2024-06-30  preco   62763  score +0.67  MM200 acima   30d    +5%  90d    +5%  pior queda em 30d -11%
+    2024-08-08  preco   61909  score +1.17  MM200 acima   30d   -13%  90d   +22%  pior queda em 30d -13%
+    2024-09-13  preco   60537  score +1.00  MM200 abaixo  30d    +4%  90d   +65%  pior queda em 30d -4%
+    2024-10-13  preco   62759  score +0.50  MM200 abaixo  30d   +40%  90d   +51%  pior queda em 30d +0%
+    2025-03-02  preco   94328  score +0.83  MM200 acima   30d   -10%  90d   +11%  pior queda em 30d -16%
+    2025-04-01  preco   85227  score +1.00  MM200 abaixo  30d   +13%  90d   +26%  pior queda em 30d -10%
+    2025-05-01  preco   96412  score +0.00  MM200 acima   30d    +9%  90d   +22%  pior queda em 30d -2%
+    2025-09-29  preco  114341  score +0.17  MM200 acima   30d    -4%  90d   -23%  pior queda em 30d -7%
+    2025-10-29  preco  110206  score +0.50  MM200 acima   30d   -17%  90d   -19%  pior queda em 30d -23%
+    2025-12-03  preco   93609  score +1.33  MM200 abaixo  30d    -4%  90d   -27%  pior queda em 30d -9%
+    2026-01-02  preco   89940  score +0.83  MM200 abaixo  30d   -14%  90d   -26%  pior queda em 30d -14%
+    2026-03-04  preco   72667  score +1.17  MM200 abaixo  30d    -8%  90d    -8%  pior queda em 30d -9%
+    2026-04-05  preco   68922  score +0.67  MM200 abaixo  30d   +17%  90d    -8%  pior queda em 30d -0%
+    2026-06-11  preco   63475  score +0.67  MM200 abaixo  30d    +1%  90d   +23%  pior queda em 30d -8%
+    2026-07-11  preco   63893  score -0.17  MM200 abaixo  30d    +0%  90d   +29%  pior queda em 30d -3%
+  eventos de VENDA:
+    2019-02-24  preco    3754  score -0.40  MM200 abaixo  30d    +4%  90d  +115%  pior queda em 30d -1%
+    2019-03-26  preco    3918  score -0.80  MM200 abaixo  30d   +31%  90d  +181%  pior queda em 30d +0%
+    2019-04-25  preco    5128  score -1.40  MM200 acima   30d   +57%  90d   +91%  pior queda em 30d +0%
+    2019-06-04  preco    7650  score -1.20  MM200 acima   30d   +46%  90d   +36%  pior queda em 30d -0%
+    2019-07-05  preco   10998  score -1.40  MM200 acima   30d    -0%  90d   -25%  pior queda em 30d -14%
+    2019-08-12  preco   11385  score -0.40  MM200 acima   30d   -11%  90d   -21%  pior queda em 30d -17%
+    2020-08-21  preco   11525  score -1.50  MM200 acima   30d    -5%  90d   +55%  pior queda em 30d -12%
+    2020-11-02  preco   13596  score -1.00  MM200 acima   30d   +41%  90d  +144%  pior queda em 30d +0%
+    2020-12-04  preco   18733  score -1.50  MM200 acima   30d   +78%  90d  +159%  pior queda em 30d -4%
+    2021-01-17  preco   36070  score -1.50  MM200 acima   30d   +36%  90d   +67%  pior queda em 30d -16%
+    2021-02-23  preco   48560  score -1.33  MM200 acima   30d    +6%  90d   -20%  pior queda em 30d -7%
+    2021-03-25  preco   51547  score +0.00  MM200 acima   30d    -2%  90d   -35%  pior queda em 30d -2%
+    2022-11-07  preco   20569  score -0.50  MM200 abaixo  30d   -18%  90d   +12%  pior queda em 30d -23%
+    2023-02-10  preco   21621  score -1.50  MM200 acima   30d    +2%  90d   +25%  pior queda em 30d -6%
+    2023-03-12  preco   22066  score -0.33  MM200 acima   30d   +37%  90d   +17%  pior queda em 30d +0%
+    2023-04-19  preco   28797  score -1.33  MM200 acima   30d    -7%  90d    +4%  pior queda em 30d -7%
+    2023-05-19  preco   26890  score -0.17  MM200 acima   30d    -2%  90d    -1%  pior queda em 30d -7%
+    2023-07-06  preco   29980  score -0.50  MM200 acima   30d    -3%  90d    -7%  pior queda em 30d -3%
+    2023-11-14  preco   35591  score -1.33  MM200 acima   30d   +21%  90d   +40%  pior queda em 30d +0%
+    2023-12-15  preco   41978  score -1.50  MM200 acima   30d    -0%  90d   +70%  pior queda em 30d -1%
+    2024-01-14  preco   41888  score -0.17  MM200 acima   30d   +18%  90d   +54%  pior queda em 30d -6%
+    2024-03-16  preco   65434  score -1.33  MM200 acima   30d    -3%  90d    +1%  pior queda em 30d -5%
+    2024-04-15  preco   63393  score -0.33  MM200 acima   30d    +5%  90d    -4%  pior queda em 30d -8%
+    2024-11-25  preco   93343  score -1.33  MM200 acima   30d    +6%  90d    +3%  pior queda em 30d -2%
+    2024-12-25  preco   99235  score -0.17  MM200 acima   30d    +6%  90d   -12%  pior queda em 30d -7%
+    2025-07-18  preco  117959  score -0.67  MM200 acima   30d    -0%  90d    -8%  pior queda em 30d -5%
+    2026-09-07  preco   79073  score -1.50  MM200 acima   30d    +5%  90d    -   pior queda em 30d -4%
+    2026-10-07  preco   83274  score -1.33  MM200 acima   30d    -9%  90d    -   pior queda em 30d -9%
+
+Ultimos 10 dias:
+  2026-11-12 preco  71280 score +0.17  sopr=+1 sth_mvrv=+0 funding=-1 fng=+0 bmsb=+0 rsi=+1
+  2026-11-13 preco  68096 score +0.33  sopr=+1 sth_mvrv=+0 funding=-1 fng=+0 bmsb=+0 rsi=+2
+  2026-11-14 preco  63821 score +0.67  sopr=+1 sth_mvrv=+1 funding=-1 fng=+1 bmsb=+0 rsi=+2
+  2026-11-15 preco  65189 score +0.83  sopr=+2 sth_mvrv=+0 funding=-1 fng=+2 bmsb=+0 rsi=+2
+  2026-11-16 preco  64943 score +1.00  sopr=+2 sth_mvrv=+0 funding=+0 fng=+2 bmsb=+0 rsi=+2
+  2026-11-17 preco  64908 score +0.83  sopr=+2 sth_mvrv=+0 funding=+0 fng=+1 bmsb=+0 rsi=+2
+  2026-11-18 preco  62897 score +1.17  sopr=+2 sth_mvrv=+1 funding=+0 fng=+2 bmsb=+0 rsi=+2
+  2026-11-19 preco  61881 score +1.33  sopr=+2 sth_mvrv=+1 funding=+0 fng=+2 bmsb=+1 rsi=+2
+  2026-11-20 preco  58851 score +1.33  sopr=+2 sth_mvrv=+1 funding=+0 fng=+1 bmsb=+2 rsi=+2
+  2026-11-21 preco  60123 score +1.17  sopr=+2 sth_mvrv=+1 funding=+0 fng=+1 bmsb=+1 rsi=+2

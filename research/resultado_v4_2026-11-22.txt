@@ -1,0 +1,59 @@
+Ciclo longo de 2013-03-01; medio prazo de 2018-08-02
+
+== A) DCA semanal de 2014-01-06 a 2026-11-16 (672 semanas) ==
+esquema     melhora placebo p janelas 2a ganha janelas 4a ganha % investido   patrim. real
+W_STH        +11.2%     0.000  81% (med +4.1%)  70% (med +4.8%)       100%          -2.7%
+W_MAYER      +12.0%     0.000  87% (med +7.7%)  77% (med +9.2%)       100%          -0.8%
+W_MEDIO   so tem dados a partir de 2018-08-06; ver a tabela seguinte
+W_LONGO      +28.1%     0.000  97% (med +11.6%)  90% (med +17.2%)       100%          +0.7%
+
+== A) DCA semanal de 2018-08-06 a 2026-11-16 (433 semanas) ==
+esquema     melhora placebo p janelas 2a ganha janelas 4a ganha % investido   patrim. real
+W_STH        +12.7%     0.000  87% (med +3.5%)  86% (med +4.8%)       100%          -0.7%
+W_MAYER      +15.6%     0.000  94% (med +6.4%)  98% (med +8.8%)       100%          +0.8%
+W_MEDIO       +1.5%     0.341  55% (med +1.2%)  51% (med +0.1%)        99%          -3.1%
+W_LONGO      +16.4%     0.000 100% (med +11.7%) 100% (med +16.4%)       100%          +1.4%
+
+== B) Medio prazo filtrado pelo ciclo longo (2018-08-02 a 2026-11-21) ==
+  dias com ciclo longo em compra (>=0,5): 965 | em venda (<=-0,5): 330
+                                                     30d            60d            90d           
+  (referencia) dia aleatorio c/ ciclo longo em compra n=33    +5.7% p=0.33   +16.1% p=0.13   +20.8% p=0.26
+  NIVEL compra, ciclo longo em compra vs todos n=13    -0.5% p=0.78    +2.0% p=0.78    +7.1% p=0.71
+  NIVEL compra, ciclo longo em compra vs regime n=13    -0.5% p=0.90    +2.0% p=0.94    +7.1% p=0.90
+  NIVEL venda, ciclo longo em venda vs todos   n=6     +7.6% p=0.68    +9.6% p=0.53    -1.0% p=0.19
+  NIVEL venda, ciclo longo em venda vs regime  n=6     +7.6% p=0.55    +9.6% p=0.51    -1.0% p=0.33
+      compra 2018-08-08 preco    6267  medio +1.00  longo +0.57  30d   +2%  90d   +3%
+      compra 2018-12-27 preco    3585  medio +1.00  longo +1.14  30d   -1%  90d  +12%
+      compra 2019-01-29 preco    3396  medio +1.00  longo +1.43  30d  +12%  90d  +52%
+      compra 2019-09-26 preco    8092  medio +1.00  longo +0.86  30d  +14%  90d  -11%
+      compra 2019-11-22 preco    7278  medio +1.20  longo +0.86  30d   +3%  90d  +32%
+      compra 2020-03-09 preco    7896  medio +1.40  longo +0.71  30d   -7%  90d  +23%
+      compra 2022-05-08 preco   34059  medio +1.00  longo +0.71  30d   -8%  90d  -32%
+      compra 2022-06-09 preco   30064  medio +1.00  longo +0.71  30d  -28%  90d  -36%
+      compra 2022-08-26 preco   20246  medio +1.17  longo +1.29  30d   -7%  90d  -18%
+      compra 2022-11-09 preco   15758  medio +1.00  longo +1.29  30d   +9%  90d  +48%
+      compra 2026-03-19 preco   69949  medio +1.17  longo +0.71  30d   +8%  90d   -8%
+      compra 2026-06-03 preco   64233  medio +1.17  longo +0.86  30d   -3%  90d  +21%
+      compra 2026-11-16 preco   64943  medio +1.00  longo +1.14  30d   -   90d   - 
+  VIRADA compra, ciclo longo em compra vs todos n=16    +1.2% p=0.72    +9.8% p=0.46    +9.7% p=0.67
+  VIRADA compra, ciclo longo em compra vs regime n=16    +1.2% p=0.86    +9.8% p=0.72    +9.7% p=0.88
+  VIRADA venda, ciclo longo em venda vs todos  n=5    +24.8% p=0.98   +28.1% p=0.89   +34.7% p=0.82
+  VIRADA venda, ciclo longo em venda vs regime n=5    +24.8% p=0.92   +28.1% p=0.80   +34.7% p=0.78
+      compra 2018-08-16 preco    6291  medio +0.80  longo +0.57  30d   +4%  90d  -11%
+      compra 2019-01-04 preco    3828  medio +0.20  longo +1.14  30d  -11%  90d  +28%
+      compra 2019-02-08 preco    3612  medio +0.20  longo +1.14  30d   +8%  90d  +70%
+      compra 2019-10-01 preco    8315  medio +0.40  longo +0.57  30d  +10%  90d  -13%
+      compra 2019-11-27 preco    7527  medio +1.00  longo +0.71  30d   -4%  90d  +24%
+      compra 2019-12-27 preco    7237  medio +0.00  longo +0.57  30d  +18%  90d   -7%
+      compra 2020-03-23 preco    6486  medio +1.50  longo +1.00  30d  +10%  90d  +43%
+      compra 2022-05-22 preco   30332  medio +1.17  longo +0.57  30d  -32%  90d  -30%
+      compra 2022-06-26 preco   21067  medio +1.33  longo +1.14  30d   +1%  90d  -10%
+      compra 2022-07-26 preco   21182  medio +0.67  longo +1.14  30d   +2%  90d   -9%
+      compra 2022-09-05 preco   19798  medio +0.67  longo +1.43  30d   +2%  90d  -14%
+      compra 2022-11-23 preco   16574  medio +0.50  longo +1.14  30d   +1%  90d  +47%
+      compra 2026-03-04 preco   72667  medio +1.17  longo +0.57  30d   -8%  90d   -8%
+      compra 2026-04-05 preco   68922  medio +0.67  longo +0.57  30d  +17%  90d   -8%
+      compra 2026-06-11 preco   63475  medio +0.67  longo +0.86  30d   +1%  90d  +23%
+      compra 2026-07-11 preco   63893  medio -0.17  longo +0.71  30d   +0%  90d  +29%
+
+  Hoje (2026-11-21): ciclo longo +1.00 | medio prazo +1.17 | STH-MVRV 0.828

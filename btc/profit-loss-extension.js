@@ -64,35 +64,22 @@
   async function loadRealizedPriceData() {
     if (!realizedPriceDataPromise) {
       realizedPriceDataPromise = (async () => {
-        let url = "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics";
-        let params = {
-          assets: "btc",
-          metrics: "PriceUSD,CapMVRVCur",
-          frequency: "1d",
-          start_time: "2012-01-01",
-          page_size: "10000"
-        };
-        const rows = [];
-        while (url) {
-          const suffix = params ? "?" + new URLSearchParams(params).toString() : "";
-          const response = await fetch(url + suffix);
-          if (!response.ok) throw new Error("Coin Metrics API error");
-          const payload = await response.json();
-          for (const row of payload.data || []) {
-            const price = Number(row.PriceUSD);
-            const ratio = Number(row.CapMVRVCur);
-            if (!Number.isFinite(price) || !Number.isFinite(ratio) || ratio <= 0) continue;
-            rows.push({
-              d: row.time.slice(0, 10),
-              t: new Date(row.time).getTime(),
-              price,
-              ratio,
-              realizedPrice: price / ratio
-            });
-          }
-          url = payload.next_page_url || null;
-          params = null;
+        // Mesmo arquivo que o painel usa (btc/data/market.json, gerado pela Action a cada 2h).
+        if (!window.__lbMarketP) {
+          window.__lbMarketP = fetch("/btc/data/market.json").then((response) => {
+            if (!response.ok) throw new Error("market.json " + response.status);
+            return response.json();
+          });
         }
+        const market = await window.__lbMarketP;
+        const priceByDay = new Map(market.price);
+        const rows = [];
+        for (const [d, ratio] of market.mvrv) {
+          const price = priceByDay.get(d);
+          if (!Number.isFinite(price) || !Number.isFinite(ratio) || ratio <= 0) continue;
+          rows.push({ d, t: Date.parse(d + "T00:00:00Z"), price, ratio, realizedPrice: price / ratio });
+        }
+        if (!rows.length) throw new Error("market.json sem pontos");
         return rows;
       })();
     }
